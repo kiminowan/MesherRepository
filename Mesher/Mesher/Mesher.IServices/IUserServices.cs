@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Mesher.IServices
 {
-    public class Class1
+    public interface IUserServices
     {
+        int add();
     }
 }

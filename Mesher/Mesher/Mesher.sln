@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.MVC", "Mesher.MVC\Mesher.MVC.csproj", "{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48BEC619-D4BA-41CD-845B-57E9DDD319E8}
+	EndGlobalSection
+EndGlobal

@@ -5,6 +5,18 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.MVC", "Mesher.MVC\Mesher.MVC.csproj", "{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.API", "Mesher.API\Mesher.API.csproj", "{DADEC473-5096-4517-88E4-3EE32D68328E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.Cache", "Mesher.Cache\Mesher.Cache.csproj", "{A61B49D9-8B55-48A5-936A-6ACE5B53786A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.Common", "Mesher.Common\Mesher.Common.csproj", "{75E04E8B-C671-4A54-9C89-D9AD61ADB0C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.Entity", "Mesher.Entity\Mesher.Entity.csproj", "{E6B3DDD8-47FB-4682-8D65-3CF61BC15B4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.IServices", "Mesher.IServices\Mesher.IServices.csproj", "{7E9D31C4-22B4-4717-81C1-7BDBE9722999}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.Services", "Mesher.Services\Mesher.Services.csproj", "{E8B49586-27B5-4DCF-9F3C-48D7B3C4B2F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +27,30 @@ Global
 		{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E98161F-9DAB-44EA-932E-511F5B2DD5CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DADEC473-5096-4517-88E4-3EE32D68328E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DADEC473-5096-4517-88E4-3EE32D68328E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DADEC473-5096-4517-88E4-3EE32D68328E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DADEC473-5096-4517-88E4-3EE32D68328E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A61B49D9-8B55-48A5-936A-6ACE5B53786A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A61B49D9-8B55-48A5-936A-6ACE5B53786A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A61B49D9-8B55-48A5-936A-6ACE5B53786A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A61B49D9-8B55-48A5-936A-6ACE5B53786A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75E04E8B-C671-4A54-9C89-D9AD61ADB0C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75E04E8B-C671-4A54-9C89-D9AD61ADB0C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75E04E8B-C671-4A54-9C89-D9AD61ADB0C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75E04E8B-C671-4A54-9C89-D9AD61ADB0C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6B3DDD8-47FB-4682-8D65-3CF61BC15B4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6B3DDD8-47FB-4682-8D65-3CF61BC15B4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6B3DDD8-47FB-4682-8D65-3CF61BC15B4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6B3DDD8-47FB-4682-8D65-3CF61BC15B4B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E9D31C4-22B4-4717-81C1-7BDBE9722999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E9D31C4-22B4-4717-81C1-7BDBE9722999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E9D31C4-22B4-4717-81C1-7BDBE9722999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E9D31C4-22B4-4717-81C1-7BDBE9722999}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8B49586-27B5-4DCF-9F3C-48D7B3C4B2F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8B49586-27B5-4DCF-9F3C-48D7B3C4B2F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8B49586-27B5-4DCF-9F3C-48D7B3C4B2F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8B49586-27B5-4DCF-9F3C-48D7B3C4B2F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,48 @@
 @{
     Layout = null;
 }
+<script src="~/Script/jquery-1.7.2-min.js"></script>
+<script>
+    $(function () {
+        $("#update").change(function () {
+            
+            var formData = new FormData($("#tijiao")[0]);
+         
+            $.ajax({
 
+                url: '/User/UploadFile',
+                type: 'post',
+                //不处理数据
+
+                processData: false,
+                //不处理数据类型
+                contentType: false,
+                //没有缓存
+                cache: false,
+                //数据是表单数据
+                data: formData,
+                success: function (data) {
+                    console.log(data);
+                    $("#ima").val(data);
+                    $("#showImage").attr("src", data);
+                }
+            })
+        })
+        $("#btn").click(function () {
+            $.ajax({
+                url: '',
+                type:'post',
+                data: $("#tijiao").serialize();
+
+
+            })
+
+        })
+
+
+    })
+
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -136,12 +177,12 @@
         <a class="logo">LOGO</a>
         <a class="pg_dl" id="i77">注册</a>
     </div>
-    <form name="tijiao" method="post" onsubmit="return check()" action="winford.top">
+    <form id="tijiao" method="post" enctype="multipart/form-data">
         <div class="left"></div>
         <div class="pg_body">
             <div class="menu">用户名:</div>
             <div class="kong">
-                <input id="text1" type="text" name="01" placeholder="请输入用户名" onblur="check()"><span id="div1" class="tian" style="margin-top: 4px">*(为必填)</span>
+                <input id="text1" type="text" name="UserName" placeholder="请输入用户名" onblur="check()"><span id="div1" class="tian" style="margin-top: 4px">*(为必填)</span>
             </div>
             <div class="menu">真实姓名:</div>
             <div class="kong">
@@ -154,7 +195,7 @@
             </div>
             <div class="menu">密码:</div>
             <div class="kong">
-                <input id="text2" type="password" name="02" onblur="check()">
+                <input id="text2" type="password" name="UserPassWord" onblur="check()">
                 <span id="div2" class="tian" style="margin-top: -25px">*(为必填)</span>
             </div>
             <div class="menu">确认密码:</div>
@@ -173,7 +214,8 @@
             </div>
             <div class="menu">头像上传:    </div>
             <div class="kong">
-                <input type="file" name="file" value="选择头像" accept="image/*">
+                <input id="ima" type="hidden" name="UserImage"/>
+                <input id="update" type="file" name="file" value="选择头像" accept="image/*">
             </div>
             <div class="menu">爱好:</div>
             <div class="kong" style="width: 300px;">
@@ -182,15 +224,14 @@
                 篮球 <input type="checkbox" name="favor">
                 足球 <input type="checkbox" name="favor">
             </div>
-            <div class="menu">个人签名:</div>
+            <div class="menu">头像展示:</div>
             <div class="kong">
-                <textarea name="meno" style="width: 280px;height: 40px;">
-                    往后余生，风雪是你。。。。
-                    </textarea>
+                <img  alt="你的头像" id="showImage" width="358" height="411"/>
+                
             </div>
         </div>
         <div class="can">
-            <input id="i111" type="submit" name="002" value="注  册">
+            <input id="btn" type="button" name="002" value="注  册">
             <p style="width: 200px;display: inline-block;"></p>
             <input id="i222" type="button" name="004" value="取  消">
 

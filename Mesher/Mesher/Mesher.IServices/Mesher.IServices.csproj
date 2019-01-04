@@ -44,5 +44,11 @@
     <Compile Include="IUserServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mesher.Entity\Mesher.Entity.csproj">
+      <Project>{e6b3ddd8-47fb-4682-8d65-3cf61bc15b4b}</Project>
+      <Name>Mesher.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

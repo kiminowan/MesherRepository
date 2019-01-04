@@ -17,6 +17,8 @@ namespace Mesher.Entity
         public string UserName { get; set; }
         //密码
         public string UserPassWord { get; set; }
+        //用户头像
+        public string UserImage { get; set; }
         //令牌
         public string Token { get; set; }
         //行政区主键

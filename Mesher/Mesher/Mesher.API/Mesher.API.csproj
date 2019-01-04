@@ -145,6 +145,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Mesher.Entity\Mesher.Entity.csproj">
+      <Project>{e6b3ddd8-47fb-4682-8d65-3cf61bc15b4b}</Project>
+      <Name>Mesher.Entity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mesher.IServices\Mesher.IServices.csproj">
       <Project>{7e9d31c4-22b4-4717-81c1-7bdbe9722999}</Project>
       <Name>Mesher.IServices</Name>

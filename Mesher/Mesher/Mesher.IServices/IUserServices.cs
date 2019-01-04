@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Mesher.IServices
 {
+    using Mesher.Entity;
     public interface IUserServices
     {
-        int add();
+        int UserAdd(User user);
     }
 }

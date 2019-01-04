@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace Mesher.API.Controllers
 {
+    using Mesher.Entity;
     using Mesher.IServices;
     using Mesher.Services;
     [RoutePrefix("Mesher")]
@@ -16,11 +17,16 @@ namespace Mesher.API.Controllers
         /// 属性注入
         /// </summary>
         public IUserServices user { get; set; }
+        /// <summary>
+        /// 用户添加
+        /// </summary>
+        /// <param name="users"></param>
+        /// <returns></returns>
         [Route("Add")]
         [HttpGet]
-        public int Add()
+        public int Add(User users)
         {
-            return user.add();
+            return user.UserAdd(users);
         }
     }
 }

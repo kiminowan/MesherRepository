@@ -10,5 +10,7 @@ namespace Mesher.IServices
     public interface IUserServices
     {
         int UserAdd(User user);
+        List<User> GetUsers();
+        List<User> GetUsersByname(string name, string pass);
     }
 }

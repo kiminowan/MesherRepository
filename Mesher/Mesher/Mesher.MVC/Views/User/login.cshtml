@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+<script src="~/Script/jquery-3.1.1.js"></script>
 
 <!doctype html>
 <html>
@@ -112,7 +113,7 @@
 </head>
 <body style="background-image: url('../../Content/李菲儿.jpg');">
     <div class="wrapper">
-        <form action="#" method="post">
+        <form  method="post" id="f1">
 
 
             <div class="loginBox">
@@ -120,18 +121,17 @@
                     <p><label for="username">用户名：</label></p>
                     <!--autofocus 规定当页面加载时按钮应当自动地获得焦点。 -->
                     <!-- placeholder提供可描述输入字段预期值的提示信息-->
-                    <p><input type="text" id="text" name="text" class="loginInput" autofocus="autofocus" required="required" autocomplete="off" placeholder="请输入邮箱/手机号/账号" value="" /></p>
+                    <p><input type="text" id="text" name="UserName" class="loginInput" autofocus="autofocus" required="required" autocomplete="off" placeholder="请输入邮箱/手机号/账号" value="" /></p>
                     <!-- required 规定必需在提交之前填写输入字段-->
                     <p><label for="password">密码：</label></p>
-                    <p><input type="password" id="password" name="password" class="loginInput" required="required" placeholder="请输入密码" value="" /></p>
+                    <p><input type="password" id="UserPassWord" name="UserPassWord" class="loginInput" required="required" placeholder="请输入密码" value="" /></p>
                     <p><a class="forgetLink" href="#">忘记密码?</a></p>
                     <input id="remember" type="checkbox" name="remember" />
                     <label for="remember">记住登录状态</label>
                 </div>
                 <div class="loginBoxButtons">
 
-
-                    <button class="loginBtn" id="btnl">登录</button>
+                    <input type="button" class="loginBtn" id="btnl" value="登录" />
                     <div><a href="#">新用户注册</a> </div>
                 </div>
             </div>
@@ -141,3 +141,29 @@
 
 
 </html>
+<script>
+    $(function () {
+        $("#btnl").click(function () {
+            alert($("#f1").serialize())
+            $.ajax({
+                url: 'http://localhost:8099/Mesher/LoginByNamePass',
+                data: $("#f1").serialize(),
+                type: 'post',
+                success: function (data) {
+                    if (data > 0) {
+                        alert("登录成功！");
+                    }
+                    else {
+                        alert("登陆失败！！");
+                    }
+                }
+
+
+            })
+
+        })
+
+
+    })
+
+</script>

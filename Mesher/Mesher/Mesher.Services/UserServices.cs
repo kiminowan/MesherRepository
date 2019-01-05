@@ -14,7 +14,11 @@ namespace Mesher.Services
     using Dapper;
     public class UserServices : IUserServices
     {
-
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public int UserAdd(User user)
         {
 
@@ -27,6 +31,33 @@ namespace Mesher.Services
             }
 
         }
-
+        /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <returns></returns>
+        public List<User> GetUsers()
+        {
+            using (OracleConnection conn = DapperHelper.GetConnString())
+            {
+                string sql = string.Format("select * from \"User\"");
+                var collectList = conn.Query<User>(sql,null);
+                return collectList.ToList<User>();
+            }
+        }
+        /// <summary>
+        /// 根据账号密码进行等录
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="pass"></param>
+        /// <returns></returns>
+        public List<User> GetUsersByname(string name,string pass)
+        {
+            using (OracleConnection conn = DapperHelper.GetConnString())
+            {
+                string sql = string.Format("select * from \"User\" where Username='"+name+"' and Userpassword='"+pass+"'");
+                var collectList = conn.Query<User>(sql, null);
+                return collectList.ToList<User>();
+            }
+        }
     }
 }

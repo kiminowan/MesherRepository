@@ -5,6 +5,7 @@
 <script src="~/Script/jquery-1.7.2-min.js"></script>
 <script>
     $(function () {
+        ///上传图片
         $("#update").change(function () {
             
             var formData = new FormData($("#tijiao")[0]);
@@ -29,11 +30,23 @@
                 }
             })
         })
+
+        ///添加事件
         $("#btn").click(function () {
             $.ajax({
-                url: '',
+                url: 'http://localhost:8099/Mesher/Add',
                 type:'post',
-                data: $("#tijiao").serialize();
+                data: $("#tijiao").serialize(),
+                success: function (data) {
+                    if (data != 2) {
+                        location.href = "/User/login";
+
+                    }
+                    else {
+                        alert("用户名重复！请重新注册");
+                        location.reload();
+                    }
+                }
 
 
             })
@@ -177,7 +190,7 @@
         <a class="logo">LOGO</a>
         <a class="pg_dl" id="i77">注册</a>
     </div>
-    <form id="tijiao" method="post" enctype="multipart/form-data">
+    <form id="tijiao" method="post" enctype="multipart/form-data" onsubmit="return check()">
         <div class="left"></div>
         <div class="pg_body">
             <div class="menu">用户名:</div>
@@ -249,8 +262,10 @@
             //用户名验证
             function checkname(){
                 var div = document.getElementById("div1");
+              
                 div.innerHTML = "";
-                var name1 = document.tijiao.text1.value;
+                var name1 = $("#text1").val();
+                
                 if (name1 == "") {
                 div.innerHTML = "用户名不能为空！";
                 document.tijiao.text1.focus();
@@ -277,7 +292,7 @@
             function checkpassword(){
                 var div = document.getElementById("div2");
                 div.innerHTML = "";
-                var password = document.tijiao.text2.value;
+                var password = $("#text2").val();
                 if (password == "") {
                 div.innerHTML = "密码不能为空";
                 document.tijao.text2.focus();
@@ -294,8 +309,8 @@
             function checkrepassword(){
                 var div = document.getElementById("div3");
                 div.innerHTML = "";
-                var password = document.tijiao.text2.value;
-                var repass = document.tijiao.text3.value;
+                var password = $("#text2").val();
+                var repass = $("#text3").val();
                 if (repass == "") {
                 div.innerHTML = "密码不能为空";
                 document.tijiao.text3.focus();
@@ -312,7 +327,7 @@
         function checkEmail(){
             var div = document.getElementById("div4");
             div.innerHTML = "";
-            var email = document.tijiao.text5.value;
+            var email = $("#text5").val();
             var sw = email.indexOf("", 0);
             var sw1 = email.indexOf(".", 0);
             var tt = sw1 - sw;

@@ -76,14 +76,16 @@
         map.on('complete', function () {
             document.getElementById('tip').innerHTML = "地图图块加载完毕！当前地图中心点为：" + map.getCenter();
         });
-
+        var positions = [];
         $.ajax({
             url: "http://localhost:8099/MonitorPoints/GetMonitorPoint",
             type: "get",
             data: {
             },
             success: function (data) {
+                positions = [];
                 $(data).each(function (index, data) {
+                    positions.push([data.Longitude, data.Latitude]);
                     //添加点标记
                     marker = new AMap.Marker({
                         icon: "http://localhost:64754/愤怒的小鸟图标.ico",

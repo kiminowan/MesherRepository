@@ -42,6 +42,7 @@ namespace WebApplicationAutofac
         public static void SetupResolveRules(ContainerBuilder container)
         {
             container.RegisterType<UserServices>().As<IUserServices>();
+            container.RegisterType<MonitorPointServices>().As<IMonitorPointServices>();
         }
     }
 }

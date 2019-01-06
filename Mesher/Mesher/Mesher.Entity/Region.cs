@@ -15,5 +15,7 @@ namespace Mesher.Entity
         public int RegionId { get; set; }
         //行政区名称
         public string RegionName { get; set; }
+        //行政区编号
+        public string Region_code { get; set; }
     }
 }

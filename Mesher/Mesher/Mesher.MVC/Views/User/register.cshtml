@@ -7,9 +7,9 @@
     $(function () {
         ///上传图片
         $("#update").change(function () {
-            
+
             var formData = new FormData($("#tijiao")[0]);
-         
+
             $.ajax({
 
                 url: '/User/UploadFile',
@@ -30,33 +30,38 @@
                 }
             })
         })
+    })
+</script>
+@* <script>
+            ///添加事件
+            $("#btn").click(function () {
+                $.ajax({
+                    url: 'http://localhost:8099/Mesher/Add',
+                    type:'post',
+                    data: $("#tijiao").serialize(),
+                    success: function (data) {
+                        if (data != 2) {
+                            location.href = "/User/login";
 
-        ///添加事件
-        $("#btn").click(function () {
-            $.ajax({
-                url: 'http://localhost:8099/Mesher/Add',
-                type:'post',
-                data: $("#tijiao").serialize(),
-                success: function (data) {
-                    if (data != 2) {
-                        location.href = "/User/login";
-
+                        }
+                        else {
+                            alert("用户名重复！请重新注册");
+                            location.reload();
+                        }
                     }
-                    else {
-                        alert("用户名重复！请重新注册");
-                        location.reload();
-                    }
-                }
 
+
+                })
 
             })
 
+
         })
 
+    </script>*@
+<script src="~/Scripts/axios.js"></script>
+<script src="~/Scripts/vue.js"></script>
 
-    })
-
-</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -190,94 +195,96 @@
         <a class="logo">LOGO</a>
         <a class="pg_dl" id="i77">注册</a>
     </div>
-    <form id="tijiao" method="post" enctype="multipart/form-data" onsubmit="return check()">
-        <div class="left"></div>
-        <div class="pg_body">
-            <div class="menu">用户名:</div>
-            <div class="kong">
-                <input id="text1" type="text" name="UserName" placeholder="请输入用户名" onblur="check()"><span id="div1" class="tian" style="margin-top: 4px">*(为必填)</span>
-            </div>
-            <div class="menu">真实姓名:</div>
-            <div class="kong">
-                <input id="i2" type="text" name="01">
-            </div>
-            <div class="menu">性别:</div>
-            <div class="kong" style="width:200px;">
-                男<input type="radio" name="gender" value="1">
-                女 <input type="radio" name="gender" value="2">
-            </div>
-            <div class="menu">密码:</div>
-            <div class="kong">
-                <input id="text2" type="password" name="UserPassWord" onblur="check()">
-                <span id="div2" class="tian" style="margin-top: -25px">*(为必填)</span>
-            </div>
-            <div class="menu">确认密码:</div>
-            <div class="kong">
-                <input id="text3" type="password" name="01" onblur="check()">
-                <span id="div3" class="tian">*(为必填)</span>
-            </div>
-            <div class="menu">电话号码:</div>
-            <div class="kong">
-                <input id="i5" type="text" name="01">
-            </div>
-            <div class="menu">邮箱地址:</div>
-            <div class="kong">
-                <input id="text4" type="text" name="01" onblur="check()">
-                <span id="div4" class="tian">*(为必填)</span>
-            </div>
-            <div class="menu">头像上传:    </div>
-            <div class="kong">
-                <input id="ima" type="hidden" name="UserImage"/>
-                <input id="update" type="file" name="file" value="选择头像" accept="image/*">
-            </div>
-            <div class="menu">爱好:</div>
-            <div class="kong" style="width: 300px;">
-                撩妹 <input type="checkbox" name="favor">
-                写代码 <input type="checkbox" name="favor">
-                篮球 <input type="checkbox" name="favor">
-                足球 <input type="checkbox" name="favor">
-            </div>
-            <div class="menu">头像展示:</div>
-            <div class="kong">
-                <img  alt="你的头像" id="showImage" width="358" height="411"/>
-                
-            </div>
-        </div>
-        <div class="can">
-            <input id="btn" type="button" name="002" value="注  册">
-            <p style="width: 200px;display: inline-block;"></p>
-            <input id="i222" type="button" name="004" value="取  消">
+    <div id="d1">
+        <form id="tijiao" method="post" enctype="multipart/form-data" onsubmit="return check()">
+            <div class="left"></div>
+            <div class="pg_body">
+                <div class="menu">用户名:</div>
+                <div class="kong">
+                    <input id="text1" type="text" name="UserName" placeholder="请输入用户名" onblur="check()" v-model="name"><span id="div1" class="tian" style="margin-top: 4px">*(为必填)</span>
+                </div>
+                <div class="menu">真实姓名:</div>
+                <div class="kong">
+                    <input id="i2" type="text" name="01">
+                </div>
+                <div class="menu">性别:</div>
+                <div class="kong" style="width:200px;">
+                    男<input type="radio" name="gender" value="1">
+                    女 <input type="radio" name="gender" value="2">
+                </div>
+                <div class="menu">密码:</div>
+                <div class="kong">
+                    <input id="text2" type="password" name="UserPassWord" onblur="check()" v-model="pass">
+                    <span id="div2" class="tian" style="margin-top: -25px">*(为必填)</span>
+                </div>
+                <div class="menu">确认密码:</div>
+                <div class="kong">
+                    <input id="text3" type="password" name="01" onblur="check()">
+                    <span id="div3" class="tian">*(为必填)</span>
+                </div>
+                <div class="menu">电话号码:</div>
+                <div class="kong">
+                    <input id="i5" type="text" name="01">
+                </div>
+                <div class="menu">邮箱地址:</div>
+                <div class="kong">
+                    <input id="text4" type="text" name="01" onblur="check()">
+                    <span id="div4" class="tian">*(为必填)</span>
+                </div>
+                <div class="menu">头像上传:    </div>
+                <div class="kong">
+                    <input id="ima" type="text" name="UserImage" v-model="img" />
+                    <input id="update" type="file" name="file" value="选择头像" accept="image/*">
+                </div>
+                <div class="menu">爱好:</div>
+                <div class="kong" style="width: 300px;">
+                    撩妹 <input type="checkbox" name="favor">
+                    写代码 <input type="checkbox" name="favor">
+                    篮球 <input type="checkbox" name="favor">
+                    足球 <input type="checkbox" name="favor">
+                </div>
+                <div class="menu">头像展示:</div>
+                <div class="kong">
+                    <img alt="你的头像" id="showImage" width="358" height="411" />
 
-        </div>
-    </form>
+                </div>
+            </div>
+            <div class="can">
+                <input id="btn" type="button" name="002" value="注  册" v-on:click="addContact(name,pass,img)">
+                <p style="width: 200px;display: inline-block;"></p>
+                <input id="i222" type="button" name="004" value="取  消">
+
+            </div>
+        </form>
+    </div>
     <script type="text/javascript">
-            //刷新or取消
-            document.getElementById('i77').onclick = function(){
-                location.reload();
-            }
-            document.getElementById('i222').onclick = function(){
-                location.reload();
-            }
+        //刷新or取消
+        document.getElementById('i77').onclick = function () {
+            location.reload();
+        }
+        document.getElementById('i222').onclick = function () {
+            location.reload();
+        }
 
-            //用户名验证
-            function checkname(){
-                var div = document.getElementById("div1");
-              
-                div.innerHTML = "";
-                var name1 = $("#text1").val();
-                
-                if (name1 == "") {
+        //用户名验证
+        function checkname() {
+            var div = document.getElementById("div1");
+
+            div.innerHTML = "";
+            var name1 = $("#text1").val();
+
+            if (name1 == "") {
                 div.innerHTML = "用户名不能为空！";
                 document.tijiao.text1.focus();
                 return false;
             }
-                if (name1.length < 4 || name1.length > 16) {
+            if (name1.length < 4 || name1.length > 16) {
                 div.innerHTML = "长度4-16个字符";
                 document.tijiao.text1.select();
                 return false;
             }
-                var charname1 = name1.toLowerCase();
-                for (var i = 0; i < name1.length; i++) {
+            var charname1 = name1.toLowerCase();
+            for (var i = 0; i < name1.length; i++) {
                 var charname = charname1.charAt(i);
                 if (!(charname >= 0 && charname <= 9) && (!(charname >= 'a' && charname <= 'z')) && (charname != '_')) {
                     div.innerHTML = "用户名包含非法字符";
@@ -285,46 +292,46 @@
                     return false;
                 }
             }
-                return true;
+            return true;
         }
 
-            //密码验证
-            function checkpassword(){
-                var div = document.getElementById("div2");
-                div.innerHTML = "";
-                var password = $("#text2").val();
-                if (password == "") {
+        //密码验证
+        function checkpassword() {
+            var div = document.getElementById("div2");
+            div.innerHTML = "";
+            var password = $("#text2").val();
+            if (password == "") {
                 div.innerHTML = "密码不能为空";
                 document.tijao.text2.focus();
                 return false;
             }
-                if (password.length < 4 || password.length > 16) {
+            if (password.length < 4 || password.length > 16) {
                 div.innerHTML = "密码长度为4-16位";
                 document.tijiao.text2.select();
                 return false;
-                }
-                return true;
+            }
+            return true;
         }
 
-            function checkrepassword(){
-                var div = document.getElementById("div3");
-                div.innerHTML = "";
-                var password = $("#text2").val();
-                var repass = $("#text3").val();
-                if (repass == "") {
+        function checkrepassword() {
+            var div = document.getElementById("div3");
+            div.innerHTML = "";
+            var password = $("#text2").val();
+            var repass = $("#text3").val();
+            if (repass == "") {
                 div.innerHTML = "密码不能为空";
                 document.tijiao.text3.focus();
                 return false;
             }
-                if (password != repass) {
+            if (password != repass) {
                 div.innerHTML = "密码不一致";
                 document.tijiao.text3.select();
                 return false;
             }
-                return true;
+            return true;
         }
         //邮箱验证
-        function checkEmail(){
+        function checkEmail() {
             var div = document.getElementById("div4");
             div.innerHTML = "";
             var email = $("#text5").val();
@@ -332,48 +339,121 @@
             var sw1 = email.indexOf(".", 0);
             var tt = sw1 - sw;
             if (email.length == 0) {
-            div.innerHTML = "邮箱不能为空";
-            document.tijiao.text5.focus();
-            return false;
-        }
+                div.innerHTML = "邮箱不能为空";
+                document.tijiao.text5.focus();
+                return false;
+            }
 
             if (email.indexOf("", 0) == -1) {
-            div.innerHTML = "必须包含@符号";
-            document.tijiao.text5.select();
-            return false;
-        }
+                div.innerHTML = "必须包含@符号";
+                document.tijiao.text5.select();
+                return false;
+            }
 
             if (email.indexOf(".", 0) == -1) {
-            div.innerHTML = "必须包含.符号";
-            document.tijiao.text5.select();
-            return false;
-        }
+                div.innerHTML = "必须包含.符号";
+                document.tijiao.text5.select();
+                return false;
+            }
 
             if (tt == 1) {
-            div.innerHTML = "和.不能一起";
-            document.tijiao.text5.select();
-            return false;
-        }
+                div.innerHTML = "和.不能一起";
+                document.tijiao.text5.select();
+                return false;
+            }
 
             if (sw > sw1) {
-            div.innerHTML  = "符号必须在.之前";
-            document.tijiao.text5.select();
-            return false;
-        }
-            else {
-            return true;
+                div.innerHTML = "符号必须在.之前";
+                document.tijiao.text5.select();
+                return false;
             }
-        return ture;
+            else {
+                return true;
+            }
+            return ture;
         }
 
-            function check(){
+        function check() {
             if (checkname() && checkpassword() && checkrepassword() && checkEmail()) {
-            return true;
+                return true;
             }
             else {
-            return false;
+                return false;
+            }
         }
-    }
     </script>
 </body>
 </html>
+<script type="text/javascript">
+
+        var vm = new Vue({
+            el: "#d1",
+            data: {
+                name: "",
+                pass: "",
+                img: ""
+
+            },
+            mounted() {
+
+            },
+            methods: {
+
+                addContact: function (name, pass, img) {
+                    console.log(img)
+                    var parameters = new URLSearchParams();
+                    parameters.append('UserName', name);
+                    parameters.append('UserPassWord', pass);
+                    parameters.append('UserImage', img);
+                    axios.post('http://localhost:8099/Mesher/Add',  parameters ).then(
+                        (response) => {
+                            console.log(response)
+                            if (response.data ==2) {
+                                alert("用户名重复");
+                            }
+                            else {
+                                alert("添加成功!");
+                            }
+                        },
+                        (response) => {
+                            alert(response.status);
+                        }
+                    ).catch(function (response) {
+                        alert(response);
+                    });
+                },
+                updateContact: function (id, name, phoneno, emailaddress) {
+                    axios.post('@Url.Action("Update", "Student")', { contact: { Id: id, Name: name, PhoneNo: phoneno, EmailAddress: emailaddress} }).then(
+                        (response) => {
+                            this.contactsList = [];
+                            for (var i = 0; i < response.data.length; i++) {
+                                this.contactsList.push(response.data[i]);
+                            }
+                            this.contactsList.push({ Id: "", Name: "", PhoneNo: "", EmailAddress: "" });
+                        },
+                        (response) => {
+                            alert(response.status);
+                        }
+                    ).catch(function (response) {
+                        alert(response);
+                    });
+                },
+                deleteContactById: function (id) {
+                    axios.post('@Url.Action("Delete", "Student")', { id: id }).then(
+                        (response) => {
+                            this.contactsList = [];
+                            for (var i = 0; i < response.data.length; i++) {
+                                this.contactsList.push(response.data[i]);
+                            }
+                            this.contactsList.push({ Id: "", Name: "", PhoneNo: "", EmailAddress: "" });
+                        },
+                        (response) => {
+                            alert(response.status);
+                        }
+                    ).catch(function (response) {
+                        alert(response);
+                    });
+                }
+            }
+        });
+</script>

@@ -23,5 +23,6 @@ namespace Mesher.Entity
         public decimal MinValue { get; set; }
         //数据监测时间
         public DateTime MonitorTime { get; set; }
+        public string PointName { get; set; }
     }
 }

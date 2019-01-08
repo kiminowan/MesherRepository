@@ -17,6 +17,7 @@ namespace Mesher.API.Controllers
     public class MonitorPointApiController : ApiController
     {
         public IMonitorPointServices monitorPoint { get; set; }
+
         [HttpGet]
         [Route("GetMonitorPoint")]
         public List<MonitorPoint> GetMonitorPoint()
@@ -25,5 +26,22 @@ namespace Mesher.API.Controllers
 
             return result;
         }
+        [HttpGet]
+        [Route("GetMinuteDatas")]
+        public List<MinuteData> GetMinuteDatas(int id)
+        {
+            var result = monitorPoint.GetMinuteDatas(id);
+            return result;
+        }
+
+        [HttpGet]
+        [Route("GetPollutants")]
+        public List<Pollutant> GetPollutants()
+        {
+            var result = monitorPoint.GetPollutants();
+            return result;
+        }
+
+
     }
 }

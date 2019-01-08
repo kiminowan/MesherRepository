@@ -10,5 +10,7 @@ namespace Mesher.IServices
     public interface IMonitorPointServices
     {
         List<MonitorPoint> GetMonitorPoints();
+        List<MinuteData> GetMinuteDatas(int id);
+        List<Pollutant> GetPollutants();
     }
 }

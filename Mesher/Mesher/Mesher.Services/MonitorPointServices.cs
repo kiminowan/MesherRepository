@@ -27,5 +27,28 @@ namespace Mesher.Services
                 return collectList.ToList<MonitorPoint>();
             }
         }
+
+        public List<MinuteData> GetMinuteDatas(int id)
+        {
+            using (OracleConnection conn = DapperHelper.GetConnString())
+            {
+                string sql = @"select a.pointname,d.avgvalue from monitorpoint a inner join MonitorPointPollutan b on a.id=b.pointid
+inner join Pollutant c on b.pollutantid=c.id inner join minutedata d on b.id=d.monitor_pollutionid 
+where c.id=:id  order by d.MonitorTime desc";
+                var conditon = new { Id = id };
+                var collectList = conn.Query<MinuteData>(sql, conditon);
+                return collectList.ToList();
+            }
+        }
+
+        public List<Pollutant> GetPollutants()
+        {
+            using (OracleConnection conn = DapperHelper.GetConnString())
+            {
+                string sql = @"select * from Pollutant";
+                var result = conn.Query<Pollutant>(sql, null);
+                return result.ToList();
+            }
+        }
     }
 }

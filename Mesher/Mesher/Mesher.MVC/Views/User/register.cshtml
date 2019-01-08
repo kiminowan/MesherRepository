@@ -231,18 +231,19 @@
                     <input id="text4" type="text" name="01" onblur="check()">
                     <span id="div4" class="tian">*(为必填)</span>
                 </div>
+                <div class="menu">行政区:</div>
+                <div class="kong" style="width: 300px;">
+                    <select id="Select1" v-model="xingzheng">
+                        <option v-for="(contact,index) in contactsList" v-bind:value="contact.RegionId">{{contact.RegionName}}</option>
+
+                    </select>
+                </div>
                 <div class="menu">头像上传:    </div>
                 <div class="kong">
                     <input id="ima" type="text" name="UserImage" v-model="img" />
                     <input id="update" type="file" name="file" value="选择头像" accept="image/*">
                 </div>
-                <div class="menu">爱好:</div>
-                <div class="kong" style="width: 300px;">
-                    撩妹 <input type="checkbox" name="favor">
-                    写代码 <input type="checkbox" name="favor">
-                    篮球 <input type="checkbox" name="favor">
-                    足球 <input type="checkbox" name="favor">
-                </div>
+
                 <div class="menu">头像展示:</div>
                 <div class="kong">
                     <img alt="你的头像" id="showImage" width="358" height="411" />
@@ -391,14 +392,37 @@
             data: {
                 name: "",
                 pass: "",
-                img: ""
+                img: "",
+                contactsList: [],
+                xingzheng:""
 
             },
             mounted() {
-
+                this.getAllContacts();
             },
             methods: {
-
+                ///显示
+                getAllContacts: function () {
+                    ///发起数据请求
+                    axios.get('http://localhost:8099/Mesher/GetRegions'
+                    ).then(
+                        ///成功函数
+                        (response) => {
+                            console.log(response.data)
+                            this.contactsList = [];
+                            for (var i = 0; i < response.data.length; i++) {
+                                this.contactsList.push(response.data[i]);
+                            }
+                           
+                        },
+                        ///失败函数
+                        (response) => {
+                            alert(response.status);
+                        }
+                    ).catch(function (response) {
+                        alert(response);
+                    });
+                },
                 addContact: function (name, pass, img) {
                     console.log(img)
                     var parameters = new URLSearchParams();
@@ -413,6 +437,7 @@
                             }
                             else {
                                 alert("添加成功!");
+                                location.href = "/User/login";
                             }
                         },
                         (response) => {

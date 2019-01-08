@@ -21,6 +21,10 @@ namespace Mesher.API.Controllers
         /// </summary>
         public IUserServices user { get; set; }
         /// <summary>
+        /// 属性注入 行政区
+        /// </summary>
+        public IRegionServices Region { get; set; }
+        /// <summary>
         /// 用户添加
         /// </summary>
         /// <param name="users"></param>
@@ -67,6 +71,15 @@ namespace Mesher.API.Controllers
                 return 0;
             }
 
+        }
+        [Route("GetRegions")]
+        /// <summary>
+        /// 获取行政区的编号 名称
+        /// </summary>
+        /// <returns></returns>
+        public List<Region> GetRegions()
+        {
+            return Region.GetRegions();
         }
     }
 }

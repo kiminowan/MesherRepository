@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IMonitorPointServices.cs" />
+    <Compile Include="IRegionServices.cs" />
     <Compile Include="IUserServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

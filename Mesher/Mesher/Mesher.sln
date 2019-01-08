@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.Common", "Mesher.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mesher.Cache", "Mesher.Cache\Mesher.Cache.csproj", "{A61B49D9-8B55-48A5-936A-6ACE5B53786A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dataprocessing", "Dataprocessing\Dataprocessing.csproj", "{8C799E59-C08B-48FD-BF60-E23CF107D220}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{A61B49D9-8B55-48A5-936A-6ACE5B53786A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A61B49D9-8B55-48A5-936A-6ACE5B53786A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A61B49D9-8B55-48A5-936A-6ACE5B53786A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C799E59-C08B-48FD-BF60-E23CF107D220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C799E59-C08B-48FD-BF60-E23CF107D220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C799E59-C08B-48FD-BF60-E23CF107D220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C799E59-C08B-48FD-BF60-E23CF107D220}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

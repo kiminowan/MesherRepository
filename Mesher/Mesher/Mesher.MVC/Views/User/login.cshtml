@@ -15,24 +15,26 @@
         }
 
         .wrapper {
-            margin: 140px 0 140px auto;
+            margin: 240px 0 40px auto;
             width: 1200px;
         }
 
         .loginBox {
             background-color: #F0F4F6;
+            opacity: 0.8;
             /*上divcolor*/
             border: 1px solid #BfD6E1;
             border-radius: 5px;
             color: #444;
             font: 14px 'Microsoft YaHei', '微软雅黑';
-            margin: 0 auto;
+            margin: 20px auto;
             width: 388px
         }
 
             .loginBox .loginBoxCenter {
                 border-bottom: 1px solid #DDE0E8;
-                padding: 24px;
+               
+                    padding: 24px;
             }
 
                 .loginBox .loginBoxCenter p {
@@ -109,11 +111,38 @@
             .loginBox label[for="remember"] {
                 font: 11px Arial;
             }
+        video {
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+            min-width: 100%;
+            min-height: 100%;
+            height: auto;
+            width: auto;
+            /*加滤镜*/
+            /*-webkit-filter: grayscale(100%);*/
+            /*filter:grayscale(100%);*/
+            z-index: -11
+        }
+
+        source {
+            min-width: 100%;
+            min-height: 100%;
+            height: auto;
+            width: auto;
+        } 
     </style>
 </head>
-<body style="background-image: url('../../Content/李菲儿.jpg');">
+<body>
+    <video autoplay="autoplay" loop="loop" muted>
+
+      
+            <source src="~/imagess/login.mp4" type="video/mp4" />
+       
+
+    </video>
     <div class="wrapper">
-        <form  method="post" id="f1">
+        <form method="post" id="f1">
 
 
             <div class="loginBox">
@@ -150,8 +179,11 @@
                 data: $("#f1").serialize(),
                 type: 'post',
                 success: function (data) {
+                    
                     if (data > 0) {
                         alert("登录成功！");
+                        location.href = "/MonitorPoint/Index?data=" + data;
+                        
                     }
                     else {
                         alert("登陆失败！！");

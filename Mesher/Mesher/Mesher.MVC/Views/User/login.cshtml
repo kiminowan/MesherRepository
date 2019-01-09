@@ -154,14 +154,14 @@
                     <!-- required 规定必需在提交之前填写输入字段-->
                     <p><label for="password">密码：</label></p>
                     <p><input type="password" id="UserPassWord" name="UserPassWord" class="loginInput" required="required" placeholder="请输入密码" value="" /></p>
-                    <p><a class="forgetLink" href="#">忘记密码?</a></p>
-                    <input id="remember" type="checkbox" name="remember" />
-                    <label for="remember">记住登录状态</label>
+                    <p><a class="forgetLink" href="#" id="wj">忘记密码?</a></p>
+                    <input id="remember" type="checkbox" name="remember" checked="checked"/>
+                    <label for="remember" >同意用户规范</label>
                 </div>
                 <div class="loginBoxButtons">
 
                     <input type="button" class="loginBtn" id="btnl" value="登录" />
-                    <div><a href="#">新用户注册</a> </div>
+                    <div><a href="/User/register">新用户注册</a> </div>
                 </div>
             </div>
         </form>
@@ -172,27 +172,40 @@
 </html>
 <script>
     $(function () {
+        $("#wj").click(function () {
+            alert("系统维护中！");
+        })
         $("#btnl").click(function () {
-            alert($("#f1").serialize())
-            $.ajax({
-                url: 'http://localhost:8099/Mesher/LoginByNamePass',
-                data: $("#f1").serialize(),
-                type: 'post',
-                success: function (data) {
-                    
-                    if (data > 0) {
-                        alert("登录成功！");
-                        location.href = "/MonitorPoint/Index?data=" + data;
-                        
+            if ($("#remember").is(':checked')) {
+                $.ajax({
+                    url: 'http://localhost:8099/Mesher/LoginByNamePass',
+                    data: $("#f1").serialize(),
+                    type: 'post',
+                    success: function (data) {
+
+                        if (data > 0) {
+                            
+                            location.href = "/MonitorPoint/Index?data=" + data;
+
+                        }
+                        else {
+
+                            if (confirm("登录失败，是否前去注册")) {
+                                location.href = "/User/register";
+                            }
+                            else {
+                                return;
+                            }                           
+                        }
                     }
-                    else {
-                        alert("登陆失败！！");
-                        return;
-                    }
-                }
 
 
-            })
+                })
+            }
+            else {
+                alert("请同意用户规范！");
+            }
+           
 
         })
 

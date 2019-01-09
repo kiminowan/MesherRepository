@@ -82,16 +82,62 @@
             success: function (data) {
                 positions = [];
                 $(data).each(function (index, data) {
+                    console.log(data);
+                    if (data.PointType == 9) {
+                        //添加点标记信息窗体
+                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
+                        isCustom: true,  //使用自定义窗体
+                            marker = new AMap.Marker({
+                                icon: "http://localhost:8099/Content/dian.ico",
+                                position: [data.Longitude, data.Latitude],
+                                map: map
+                            });
+                    }
+                    else if (data.PointType == 10) {
+                        //添加点标记信息窗体
+                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
+                        isCustom: true,  //使用自定义窗体
+                            marker = new AMap.Marker({
+                                icon: "http://localhost:8099/Content/6.ico",
+                                position: [data.Longitude, data.Latitude],
+                                map: map
+                            });
 
-                    //添加点标记信息窗体
-                    var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
-                    isCustom: true,  //使用自定义窗体
-                        marker = new AMap.Marker({
-                            icon: "http://localhost:8099/Content/dian.ico",
-                            position: [data.Longitude, data.Latitude],
-                            map: map
-                        });
+                    }
+                    else if (data.PointType == 11) {
+                        //添加点标记信息窗体
+                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
+                        isCustom: true,  //使用自定义窗体
+                            marker = new AMap.Marker({
+                                icon: "http://localhost:8099/Content/o3.ico",
+                                position: [data.Longitude, data.Latitude],
+                                map: map
+                            });
 
+                    }
+                    else if (data.PointType == 12) {
+                        //添加点标记信息窗体
+                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
+                        isCustom: true,  //使用自定义窗体
+                            marker = new AMap.Marker({
+                                icon: "http://localhost:8099/Content/kl.ico",
+                                position: [data.Longitude, data.Latitude],
+                                map: map
+                            });
+
+                    }
+                    else if (data.PointType == 13) {
+                        //添加点标记信息窗体
+                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
+                        isCustom: true,  //使用自定义窗体
+                            marker = new AMap.Marker({
+                                icon: "http://localhost:8099/Content/xx.ico",
+                                position: [data.Longitude, data.Latitude],
+                                map: map
+                            });
+
+                    }
+                       
                     //marker.content = '监测点名称：' + data.PointName + "</br>" + '设备编号：' + data.EquipmentCode + "</br>" + '监测点类型：' + data.PointType + "</br>" + '行政区编号：' + data.RegionCode + "</br>" + '状态：' + data.Status + "</br>" + '更新时间：' + data.UpdateDate + "</br>";
                     //marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointType + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
                     marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointType + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";

@@ -119,7 +119,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\6.ico" />
     <Content Include="Content\dian.ico" />
+    <Content Include="Content\kl.ico" />
+    <Content Include="Content\o3.ico" />
+    <Content Include="Content\xx.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>

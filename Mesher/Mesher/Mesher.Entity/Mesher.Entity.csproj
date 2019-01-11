@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CityInfo.cs" />
     <Compile Include="DataList.cs" />
     <Compile Include="DayData.cs" />
     <Compile Include="HourData.cs" />

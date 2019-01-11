@@ -34,7 +34,7 @@ namespace Mesher.Services
             {
                 string sql = @"select a.pointname,d.avgvalue from monitorpoint a inner join MonitorPointPollutan b on a.id=b.pointid
 inner join Pollutant c on b.pollutantid=c.id inner join minutedata d on b.id=d.monitor_pollutionid 
-where c.id=:id  order by d.MonitorTime desc";
+where c.id=:id";
                 var conditon = new { Id = id };
                 var collectList = conn.Query<MinuteData>(sql, conditon);
                 return collectList.ToList();
@@ -48,6 +48,19 @@ where c.id=:id  order by d.MonitorTime desc";
                 string sql = @"select * from Pollutant";
                 var result = conn.Query<Pollutant>(sql, null);
                 return result.ToList();
+            }
+        }
+
+        public List<MinuteData> GetAqi(int id)
+        {
+            using (OracleConnection conn = DapperHelper.GetConnString())
+            {
+                string sql = @"select a.pointname,d.avgvalue from monitorpoint a inner join MonitorPointPollutan b on a.id=b.pointid
+inner join Pollutant c on b.pollutantid=c.id inner join minutedata d on b.id=d.monitor_pollutionid 
+where c.id=id order by d.avgvalue desc";
+                var conditon = new { Id = id };
+                var collectList = conn.Query<MinuteData>(sql, conditon);
+                return collectList.ToList();
             }
         }
     }

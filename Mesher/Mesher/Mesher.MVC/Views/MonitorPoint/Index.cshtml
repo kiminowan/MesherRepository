@@ -39,12 +39,24 @@
             background-color: #25A5F7;
             border-radius: 3px;
         }*/
+        ul {
+            float: left;
+            list-style: none;
+            width: 100px;
+        }
+        #tab td{
+            width:100px;
+        }
+        #tan td{
+            width:100px;
+        }
     </style>
 
 </head>
 <body>
-    <div style="position:fixed;left:0;top:50px;width:200px;height:100%;background-color:gray;z-index:10000000">
-        <input type="text" style="width:100px;" /><input type="button" value="搜索" />
+    <div style="position:fixed;left:0;top:50px;width:200px;height:100%;background-color:white;z-index:10000000">
+        <input type="text" style="width:100px;" /><input type="button" value="搜索"  />
+        <h4 style="background-color:aquamarine; text-align:center;">站点排名</h4>
         <table id="tab">
             <tr>
                 <td>排名</td>
@@ -53,9 +65,36 @@
             </tr>
         </table>
     </div>
-    <div style="position:fixed;top:0;width:100%;height:50px;background-color:red;z-index:10000000" id="div1">
-        <span>大气环境网格化监管系统</span>
-        <input type="text" style="margin-left:1200px; width:100px;" /><input type="button" value="搜索" style="width:50px;float:right;" />
+    <div style="position:fixed;top:0;width:100%;height:50px;background-color:black;z-index:10000000">
+        <h3>大气环境网格化监管系统</h3>
+        <input type="text" style="margin-left:1200px; width:100px;" /><input type="button" value="搜索" style="width:50px;float:right; background-color:white;" />
+    </div>
+
+    <div style="position:fixed;right:0;top:50px;width:200px;height:100%;background-color:white;z-index:10000000">
+        
+                                 <h4 style="background-color:aquamarine;">天气预报</h4>                
+                                                  <ul>
+                                                      <li>高温:</li>
+                                                      <li>低温:</li>
+                                                      <li>风向:</li>
+                                                      <li>天气:</li>
+                                                  </ul>
+                                                  <ul id="tal">
+                                                      
+                                                  </ul>
+        <h5 style="text-align:center;">预警排名</h5>
+                                                  <table id="tan">
+                                                      <tr>
+                                                          <td>排名</td>
+                                                          <td>站点名称</td>
+                                                          <td>AQI</td>
+                                                      </tr>
+                                                  </table>
+                                                 
+    </div>
+    
+    <div id="div1" style="position:fixed;top:70px;left:400px;width:420px;height:40px;background-color:green;z-index:10000000">
+        
     </div>
     <div id="container"></div>
     <div id="tip" class="info">地图正在加载</div>
@@ -82,7 +121,7 @@
             success: function (data) {
                 positions = [];
                 $(data).each(function (index, data) {
-                    console.log(data);
+                    //console.log(data);
                     if (data.PointType == 9) {
                         //添加点标记信息窗体
                         var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
@@ -137,7 +176,7 @@
                             });
 
                     }
-                       
+
                     //marker.content = '监测点名称：' + data.PointName + "</br>" + '设备编号：' + data.EquipmentCode + "</br>" + '监测点类型：' + data.PointType + "</br>" + '行政区编号：' + data.RegionCode + "</br>" + '状态：' + data.Status + "</br>" + '更新时间：' + data.UpdateDate + "</br>";
                     //marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointType + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
                     marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointType + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
@@ -155,7 +194,9 @@
 
         $(function () {
             show();
-            showPolluation()
+            showPolluation();
+            Weather();
+            Warning();
         })
 
         function show() {
@@ -165,7 +206,7 @@
                 type: 'get',
                 success: function (data) {
                     $(data).each(function (index, data) {
-                        $("#tab").append("<tr><td>" + data.Id + "</td><td>" + data.PointName + "</td><td>" + data.AVGValue + "</td></tr>")
+                        $("#tab").append("<tr><td>" + data.Id + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue + "</td></tr>")
                     })
                 }
             })
@@ -176,17 +217,70 @@
                 url: "http://localhost:8099/MonitorPoints/GetPollutants",
                 type: "get",
                 success: function (data) {
+                    
                     $(data).each(function (index, data) {
-                        $("#div1").append("<input type='button' value=" + data.PollutantName + " onclick='btnPo(" + data.Id + ")' />")
+                        console.log(data.Id);
+                        $("#div1").append("<input style='width: 60px; height: 40px;' type='button' value=" + data.PollutantName + " onclick='btnPo(" + data.Id + ")' />")
                     })
                 }
 
             })
         }
 
-        function btnPo() {
-            show();
+        function btnPo(id) {
+            $.ajax({
+                url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
+                data: { Id: id },
+                type: 'get',
+                success: function (data) {
+                    $(data).each(function (index, data) {
+                        $("#tab").append("<tr><td>" + data.Id + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue + "</td></tr>")
+                    })
+                }
+            })
         }
+
+        function Weather() {
+            $.ajax({
+                url: '/MonitorPoint/GetCityInfos',
+                type: 'get',
+                success: function (data) {
+                    $.ajax({
+                        url: "http://t.weather.sojson.com/api/weather/city/" + data,
+                        type: "get",
+                        success: function (data) {
+                            console.log(data.data.forecast);
+                            $(data).each(function (index, data) {                             
+                                $("#tal").append("<li>" + data.data.forecast[0].high + "</li><li>" + data.data.forecast[0].low + "</li><li>" + data.data.forecast[0].fx + "</li><li>" + data.data.forecast[0].type+"</li>")
+                                //$("#tal").append("<tr><td>" + data.data.forecast[0].high + "</td></tr><tr><td>" + data.data.forecast[0].low + "</td></tr><tr><td>" + data.data.forecast[0].fx + "</td></tr><tr><td>" + data.data.forecast[0].type +"</td></tr>")
+                            })
+                        }
+                    })
+                }
+                
+            })
+        }
+
+        function bntLj() {
+            
+        }
+
+        function Warning() {
+            $.ajax({
+                url: "http://localhost:8099/MonitorPoints/GetMinuteDatas",
+                type: "get",
+                data: { id:17 },
+                success: function (data) {
+                    console.log(data);
+                    $(data).each(function (index, data) {
+                        $("#tan").append("<tr><td>" + data.Id + "</td><td>" + data.PointName + "</td><td>" + data.AVGValue + "</td></tr>")
+                    })
+                }
+            })
+        }
+
+
+
     </script>
     <table class="table-responsive">
         <tr>

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AQICompute.cs" />
     <Compile Include="MonitorPointServices.cs" />
     <Compile Include="RegionServices.cs" />
     <Compile Include="UserServices.cs" />

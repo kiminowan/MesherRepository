@@ -92,7 +92,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap-3.3.7-dist\js\npm.js" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap-theme.css" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap-theme.min.css" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap.css" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap.min.css" />
+    <Content Include="Content\BootstrapSouce\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\BootstrapSouce\js\bootstrap.js" />
+    <Content Include="Content\BootstrapSouce\js\bootstrap.min.js" />
+    <Content Include="Content\BootstrapSouce\js\html5shiv.js" />
+    <Content Include="Content\BootstrapSouce\js\jquery.js" />
+    <Content Include="Content\BootstrapSouce\js\jquery.min.js" />
+    <Content Include="Content\BootstrapSouce\js\npm.js" />
+    <Content Include="Content\BootstrapSouce\js\respond.min.js" />
     <Content Include="Global.asax" />
     <Content Include="imagess\cxl.mp4" />
     <Content Include="imagess\login.mp4" />
@@ -111,6 +131,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap-theme.css.map" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap.css.map" />
+    <Content Include="Content\BootstrapSouce\css\bootstrap.min.css.map" />
+    <Content Include="Content\BootstrapSouce\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\BootstrapSouce\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\BootstrapSouce\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\BootstrapSouce\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="packages.config" />
     <Content Include="Views\User\register.cshtml" />
     <Content Include="Views\User\login.cshtml" />

@@ -65,7 +65,7 @@ namespace Mesher.API.Controllers
             List<User> get = user.GetUsersByname(yname, t2);
             if (get.Count>0)
             {
-                return 1;
+                return get.FirstOrDefault().Id;
             }
             else {
                 return 0;

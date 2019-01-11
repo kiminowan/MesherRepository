@@ -15,24 +15,26 @@
         }
 
         .wrapper {
-            margin: 140px 0 140px auto;
+            margin: 240px 0 40px auto;
             width: 1200px;
         }
 
         .loginBox {
             background-color: #F0F4F6;
+            opacity: 0.8;
             /*上divcolor*/
             border: 1px solid #BfD6E1;
             border-radius: 5px;
             color: #444;
             font: 14px 'Microsoft YaHei', '微软雅黑';
-            margin: 0 auto;
+            margin: 20px auto;
             width: 388px
         }
 
             .loginBox .loginBoxCenter {
                 border-bottom: 1px solid #DDE0E8;
-                padding: 24px;
+               
+                    padding: 24px;
             }
 
                 .loginBox .loginBoxCenter p {
@@ -109,11 +111,38 @@
             .loginBox label[for="remember"] {
                 font: 11px Arial;
             }
+        video {
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+            min-width: 100%;
+            min-height: 100%;
+            height: auto;
+            width: auto;
+            /*加滤镜*/
+            /*-webkit-filter: grayscale(100%);*/
+            /*filter:grayscale(100%);*/
+            z-index: -11
+        }
+
+        source {
+            min-width: 100%;
+            min-height: 100%;
+            height: auto;
+            width: auto;
+        } 
     </style>
 </head>
-<body style="background-image: url('../../Content/李菲儿.jpg');">
+<body>
+    <video autoplay="autoplay" loop="loop" muted>
+
+      
+            <source src="~/imagess/login.mp4" type="video/mp4" />
+       
+
+    </video>
     <div class="wrapper">
-        <form  method="post" id="f1">
+        <form method="post" id="f1">
 
 
             <div class="loginBox">
@@ -125,14 +154,14 @@
                     <!-- required 规定必需在提交之前填写输入字段-->
                     <p><label for="password">密码：</label></p>
                     <p><input type="password" id="UserPassWord" name="UserPassWord" class="loginInput" required="required" placeholder="请输入密码" value="" /></p>
-                    <p><a class="forgetLink" href="#">忘记密码?</a></p>
-                    <input id="remember" type="checkbox" name="remember" />
-                    <label for="remember">记住登录状态</label>
+                    <p><a class="forgetLink" href="#" id="wj">忘记密码?</a></p>
+                    <input id="remember" type="checkbox" name="remember" checked="checked"/>
+                    <label for="remember" >同意用户规范</label>
                 </div>
                 <div class="loginBoxButtons">
 
                     <input type="button" class="loginBtn" id="btnl" value="登录" />
-                    <div><a href="#">新用户注册</a> </div>
+                    <div><a href="/User/register">新用户注册</a> </div>
                 </div>
             </div>
         </form>
@@ -143,24 +172,40 @@
 </html>
 <script>
     $(function () {
+        $("#wj").click(function () {
+            alert("系统维护中！");
+        })
         $("#btnl").click(function () {
-            alert($("#f1").serialize())
-            $.ajax({
-                url: 'http://localhost:8099/Mesher/LoginByNamePass',
-                data: $("#f1").serialize(),
-                type: 'post',
-                success: function (data) {
-                    if (data > 0) {
-                        alert("登录成功！");
+            if ($("#remember").is(':checked')) {
+                $.ajax({
+                    url: 'http://localhost:8099/Mesher/LoginByNamePass',
+                    data: $("#f1").serialize(),
+                    type: 'post',
+                    success: function (data) {
+
+                        if (data > 0) {
+                            
+                            location.href = "/MonitorPoint/Index?data=" + data;
+
+                        }
+                        else {
+
+                            if (confirm("登录失败，是否前去注册")) {
+                                location.href = "/User/register";
+                            }
+                            else {
+                                return;
+                            }                           
+                        }
                     }
-                    else {
-                        alert("登陆失败！！");
-                        return;
-                    }
-                }
 
 
-            })
+                })
+            }
+            else {
+                alert("请同意用户规范！");
+            }
+           
 
         })
 

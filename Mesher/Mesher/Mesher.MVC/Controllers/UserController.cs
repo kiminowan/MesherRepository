@@ -20,7 +20,11 @@ namespace Mesher.MVC.Controllers
         {
             return View();
         }
-
+        //测试1
+        public ActionResult video()
+        {
+            return View();
+        }
 
         public string UploadFile()
         {

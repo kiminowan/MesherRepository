@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,13 +13,13 @@
     <title>地图加载完成事件</title>
     <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-    <link href="~/Content/BootstrapSouce/css/bootstrap.css" rel="stylesheet" />
-    <script src="~/Content/BootstrapSouce/js/bootstrap.min.js"></script>
 
-    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/jquery-1.10.2.js"></script>
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <script src="~/Script/jquery-3.1.1.js"></script>
+
     <style>
         html, body, #container {
             height: 100%;
@@ -63,7 +63,7 @@
 </head>
 <body>
     <div style="position:fixed;left:0;top:50px;width:200px;height:100%;background-color:white;z-index:10000000">
-        <input type="text" style="width:100px;" /><input type="button" value="搜索"  />
+        <input type="text" style="width:100px;" /><input type="button" value="搜索" />
         <h4 style="background-color:aquamarine; text-align:center;">站点排名</h4>
         <table id="tab">
             <tr>
@@ -75,42 +75,56 @@
     </div>
     <div style="position:fixed;top:0;width:100%;height:50px;background-color:black;z-index:10000000">
         <span style="color:white;font-size:35px;">大气环境网格化监管系统</span>
-        <span style="color:white;margin-left:600px;"><a href="#" style="color:white">实时监测</a></span>
-        <select style="width:100px;height:30px">
-            <option value="value">折线图</option>
-            <option value="value">曲线图</option>
-        </select>
-        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            确定<span class="caret"></span>
-        </button>
-
+        <span style="color:white;margin-left:600px;"><a href="/AnalyzeEcharts/Index" style="color:white">实时监测</a></span>
+        <span style="margin-left:15px;display: inline-block;position: relative;">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                统计分析<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="/AnalyzeEcharts/Index">多站点污染物分析</a></li>
+                <li><a href="/AnalyzeEcharts/Index">单站点污染物分析</a></li>
+                <li><a href="/AnalyzeEcharts/Index">月对比度分析</a></li>
+                <li><a href="/AnalyzeEcharts/Index">大气常规站污染分析</a></li>
+                <li><a href="/AnalyzeEcharts/Index">多站点年度污染分析</a></li>
+                <li><a href="/AnalyzeEcharts/Index">单站点年度污染分析</a></li>
+                <li><a href="/AnalyzeEcharts/Index">超国控点预警数据统计</a></li>
+                <li><a href="/AnalyzeEcharts/Index">站点数据排名统计</a></li>
+                <li><a href="/AnalyzeEcharts/Index">预警信息查询</a></li>
+                <li><a href="/AnalyzeEcharts/Index">站点基本信息查询</a></li>
+                <li><a href="/AnalyzeEcharts/Index">污染分析报告</a></li>
+                <li><a href="/AnalyzeEcharts/Index">监测数据查询</a></li>
+                <li><a href="/AnalyzeEcharts/Index">城市历史变化趋势</a></li>
+                <li><a href="/AnalyzeEcharts/Index">城市累积变化趋势</a></li>
+            </ul>
+        </span>
+        <span class="color:white">
+            <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=ta&skin=peach" frameborder="0" style="color:white" width="260" height="24" allowtransparency="true"></iframe>
+        </span>
     </div>
 
     <div style="position:fixed;right:0;top:50px;width:200px;height:100%;background-color:white;z-index:10000000">
-        
-                                 <h4 style="background-color:aquamarine;">天气预报</h4>                
-                                                  <ul>
-                                                      <li>高温:</li>
-                                                      <li>低温:</li>
-                                                      <li>风向:</li>
-                                                      <li>天气:</li>
-                                                  </ul>
-                                                  <ul id="tal">
-                                                      
-                                                  </ul>
+
+        <h4 style="background-color:aquamarine;">天气预报</h4>
+        <ul>
+            <li>高温:</li>
+            <li>低温:</li>
+            <li>风向:</li>
+            <li>天气:</li>
+        </ul>
+        <ul id="tal"></ul>
         <h5 style="text-align:center;">预警排名</h5>
-                                                  <table id="tan">
-                                                      <tr>
-                                                          <td>排名</td>
-                                                          <td>站点名称</td>
-                                                          <td>AQI</td>
-                                                      </tr>
-                                                  </table>
-                                                 
+        <table id="tan">
+            <tr>
+                <td>排名</td>
+                <td>站点名称</td>
+                <td>AQI</td>
+            </tr>
+        </table>
+
     </div>
-    
+
     <div id="div1" style="position:fixed;top:70px;left:400px;width:420px;height:40px;background-color:green;z-index:10000000">
-        
+
     </div>
     <div id="container"></div>
     <div id="tip" class="info">地图正在加载</div>
@@ -233,7 +247,7 @@
                 url: "http://localhost:8099/MonitorPoints/GetPollutants",
                 type: "get",
                 success: function (data) {
-                    
+
                     $(data).each(function (index, data) {
                         console.log(data.Id);
                         $("#div1").append("<input style='width: 60px; height: 40px;' type='button' value=" + data.PollutantName + " onclick='btnPo(" + data.Id + ")' />")
@@ -266,26 +280,26 @@
                         type: "get",
                         success: function (data) {
                             console.log(data.data.forecast);
-                            $(data).each(function (index, data) {                             
-                                $("#tal").append("<li>" + data.data.forecast[0].high + "</li><li>" + data.data.forecast[0].low + "</li><li>" + data.data.forecast[0].fx + "</li><li>" + data.data.forecast[0].type+"</li>")
+                            $(data).each(function (index, data) {
+                                $("#tal").append("<li>" + data.data.forecast[0].high + "</li><li>" + data.data.forecast[0].low + "</li><li>" + data.data.forecast[0].fx + "</li><li>" + data.data.forecast[0].type + "</li>")
                                 //$("#tal").append("<tr><td>" + data.data.forecast[0].high + "</td></tr><tr><td>" + data.data.forecast[0].low + "</td></tr><tr><td>" + data.data.forecast[0].fx + "</td></tr><tr><td>" + data.data.forecast[0].type +"</td></tr>")
                             })
                         }
                     })
                 }
-                
+
             })
         }
 
         function bntLj() {
-            
+
         }
 
         function Warning() {
             $.ajax({
                 url: "http://localhost:8099/MonitorPoints/GetMinuteDatas",
                 type: "get",
-                data: { id:17 },
+                data: { id: 17 },
                 success: function (data) {
                     console.log(data);
                     $(data).each(function (index, data) {

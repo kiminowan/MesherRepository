@@ -113,6 +113,7 @@
     <Content Include="Content\BootstrapSouce\js\jquery.min.js" />
     <Content Include="Content\BootstrapSouce\js\npm.js" />
     <Content Include="Content\BootstrapSouce\js\respond.min.js" />
+    <Content Include="Content\jquery-1.10.2.js" />
     <Content Include="Global.asax" />
     <Content Include="imagess\cxl.mp4" />
     <Content Include="imagess\login.mp4" />
@@ -122,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AnalyzeEchartsController.cs" />
     <Compile Include="Controllers\MonitorPointController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -152,6 +154,7 @@
     <Content Include="Views\User\login.cshtml" />
     <Content Include="Views\MonitorPoint\Index.cshtml" />
     <Content Include="Views\User\video.cshtml" />
+    <Content Include="Views\AnalyzeEcharts\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

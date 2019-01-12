@@ -12,22 +12,27 @@ namespace Mesher.Services
     using Oracle.ManagedDataAccess;
     using Mesher.Entity;
     using Dapper;
+
     public class MonitorPointServices:IMonitorPointServices
     {
         /// <summary>
-        /// 显示
+        /// 显示标记点
         /// </summary>
         /// <returns></returns>
         public List<MonitorPoint> GetMonitorPoints()
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
             {
-                string sql = string.Format("select * from MonitorPoint");
-                var collectList = conn.Query<MonitorPoint>(sql, null);
-                return collectList.ToList<MonitorPoint>();
+                string sql = @"select a.*,b.pointtypename from monitorpoint a inner join pointtype b on a.pointtype=b.id";
+                var result = conn.Query<MonitorPoint>(sql, null);
+                return result.ToList();
             }
         }
-
+        /// <summary>
+        /// 站点排名
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<MinuteData> GetMinuteDatas(int id)
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
@@ -40,7 +45,10 @@ where c.id=:id";
                 return collectList.ToList();
             }
         }
-
+        /// <summary>
+        /// 获取所有的污染物
+        /// </summary>
+        /// <returns></returns>
         public List<Pollutant> GetPollutants()
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
@@ -50,7 +58,11 @@ where c.id=:id";
                 return result.ToList();
             }
         }
-
+        /// <summary>
+        /// 预警排名
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public List<MinuteData> GetAqi(int id)
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
@@ -62,6 +74,22 @@ where c.id=id order by d.avgvalue desc";
                 var collectList = conn.Query<MinuteData>(sql, conditon);
                 return collectList.ToList();
             }
+        }
+        /// <summary>
+        /// 根据登录用户Id查找行政区
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<Region> GetRegionname(int id)
+        {
+            using (OracleConnection conn = DapperHelper.GetConnString())
+            {
+                string sql = "select b.regionname from \"User\" a inner join Region b on a.regionid=b.id where a.id=:id";
+                var conditon = new { Id = id };
+                var collectList = conn.Query<Region>(sql, conditon);
+                return collectList.ToList();
+            }
+
         }
     }
 }

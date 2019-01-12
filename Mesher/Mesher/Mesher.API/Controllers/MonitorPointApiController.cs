@@ -16,8 +16,14 @@ namespace Mesher.API.Controllers
     [RoutePrefix("MonitorPoints")]
     public class MonitorPointApiController : ApiController
     {
+        /// <summary>
+        /// 属性注入
+        /// </summary>
         public IMonitorPointServices monitorPoint { get; set; }
-
+        /// <summary>
+        /// 获取标记点
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetMonitorPoint")]
         public List<MonitorPoint> GetMonitorPoint()
@@ -26,6 +32,12 @@ namespace Mesher.API.Controllers
 
             return result;
         }
+
+        /// <summary>
+        /// 站点排名
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetMinuteDatas")]
         public List<MinuteData> GetMinuteDatas(int id)
@@ -34,12 +46,30 @@ namespace Mesher.API.Controllers
             return result;
         }
 
+        /// <summary>
+        /// 获取所有污染物
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("GetPollutants")]
         public List<Pollutant> GetPollutants()
         {
             var result = monitorPoint.GetPollutants();
             return result;
+        }
+
+        /// <summary>
+        /// 根据登录Id获取行政区名称
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetRegionname")]
+        public List<Region> GetRegionname(int id)
+        {
+            var result = monitorPoint.GetRegionname(id);
+            return result;
+
         }
 
 

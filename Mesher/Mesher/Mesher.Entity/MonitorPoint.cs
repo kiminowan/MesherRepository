@@ -31,5 +31,6 @@ namespace Mesher.Entity
         public DateTime UpdateDate { get; set; }
         //距离最近的国控点
         public int NearlyStation { get; set; }
+        public string PointTypeName { get; set; }
     }
 }

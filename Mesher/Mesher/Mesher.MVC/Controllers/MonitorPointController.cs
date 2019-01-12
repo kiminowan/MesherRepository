@@ -17,8 +17,13 @@ namespace Mesher.MVC.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 根据行政区名称获取城市code用于调天气预报
+        /// </summary>
+        /// <param name="cityname"></param>
+        /// <returns></returns>
         [HttpGet]
-        public string GetCityInfos()
+        public string GetCityInfos(string cityname)
         {
             string file = "C:\\Users\\赵新宇\\Source\\Repos\\WebApplication8\\WebApplication8\\_city.json";
 
@@ -29,7 +34,7 @@ namespace Mesher.MVC.Controllers
                     List<CityInfo> cityInfos = new JsonSerializer().Deserialize<List<CityInfo>>(reader);
                     foreach (var item in cityInfos)
                     {
-                        if (item.city_name == "北京")
+                        if (item.city_name == cityname)
                         {
                             return item.city_code;
                         }

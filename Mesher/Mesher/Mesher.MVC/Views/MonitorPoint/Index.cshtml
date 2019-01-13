@@ -127,7 +127,6 @@
 
     </div>
     <div id="container"></div>
-    <div id="tip" class="info">地图正在加载</div>
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=	7a7783a78617cf97207a84f671999cee"></script>
     @*左上角控件引用*@
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
@@ -138,9 +137,6 @@
             resizeEnable: true,
             center: [116.397428, 39.90923],
             zoom: 6
-        });
-        map.on('complete', function () {
-            document.getElementById('tip').innerHTML = "地图图块加载完毕！当前地图中心点为：" + map.getCenter();
         });
         var positions = [];
         $.ajax({

@@ -12,6 +12,10 @@ namespace Mesher.Services
     /// </summary>
     public class AQICompute
     {
+        public int GetAllAQI(`)
+        {
+
+        }
         public int GetAQI(decimal pm2,decimal co,decimal no2,decimal o3,decimal so2,decimal pm10)
         {
             //实例化几个计算AQI需要的参数

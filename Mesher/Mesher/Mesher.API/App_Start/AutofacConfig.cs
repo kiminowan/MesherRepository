@@ -44,6 +44,7 @@ namespace WebApplicationAutofac
             container.RegisterType<UserServices>().As<IUserServices>();
             container.RegisterType<MonitorPointServices>().As<IMonitorPointServices>();
             container.RegisterType<RegionServices>().As<IRegionServices>();
+            container.RegisterType<CxlMonthAnalizeServers>().As<ICxlMonthAnalizeServers>();
         }
     }
 }

@@ -156,6 +156,7 @@
     <Content Include="Views\MonitorPoint\Index.cshtml" />
     <Content Include="Views\User\video.cshtml" />
     <Content Include="Views\AnalyzeEcharts\Index.cshtml" />
+    <Content Include="Views\MonitorPoint\CxlMon.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

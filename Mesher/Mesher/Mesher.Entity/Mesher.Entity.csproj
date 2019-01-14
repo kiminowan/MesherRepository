@@ -48,6 +48,7 @@
     <Compile Include="MinuteData.cs" />
     <Compile Include="MonitorPoint.cs" />
     <Compile Include="MonitorPointPollutan.cs" />
+    <Compile Include="MonthAnalizeData.cs" />
     <Compile Include="MonthData.cs" />
     <Compile Include="PointType.cs" />
     <Compile Include="Pollutant.cs" />

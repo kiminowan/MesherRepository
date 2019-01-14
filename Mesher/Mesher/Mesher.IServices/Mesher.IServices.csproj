@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICxlMonthAnalizeServers.cs" />
     <Compile Include="IMonitorPointServices.cs" />
     <Compile Include="IRegionServices.cs" />
     <Compile Include="IUserServices.cs" />

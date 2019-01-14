@@ -62,9 +62,11 @@
 
 </head>
 <body>
+    
     <div style="position:fixed;left:0;top:50px;width:200px;height:100%;background-color:white;z-index:10000000">
         <input type="text" style="width:100px;" /><input type="button" value="搜索" />
         <h4 style="background-color:aquamarine; text-align:center;">站点排名</h4>
+        
         <table id="tab">
             <tr>
                 <td>排名 @Request.QueryString["data"]</td>
@@ -83,7 +85,9 @@
             <ul class="dropdown-menu">
                 <li><a href="/AnalyzeEcharts/Index">多站点污染物分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">单站点污染物分析</a></li>
-                <li><a href="/AnalyzeEcharts/Index">月对比度分析</a></li>
+                <li><a href="/MonitorPoint/CxlMon?Code=@Request.QueryString["data"]">月度数据分析</a></li>
+                
+                
                 <li><a href="/AnalyzeEcharts/Index">大气常规站污染分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">多站点年度污染分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">单站点年度污染分析</a></li>

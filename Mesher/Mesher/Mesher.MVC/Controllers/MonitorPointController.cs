@@ -45,6 +45,11 @@ namespace Mesher.MVC.Controllers
                 }
             }
         }
+        public ActionResult CxlMon()
+        {
+
+            return View();
+        }
     }
 
     

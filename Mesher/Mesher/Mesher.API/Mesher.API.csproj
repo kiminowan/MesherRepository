@@ -130,6 +130,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\CxlMonthDataController.cs" />
     <Compile Include="Controllers\MonitorPointApiController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">

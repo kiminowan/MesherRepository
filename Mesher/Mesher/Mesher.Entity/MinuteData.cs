@@ -11,8 +11,6 @@ namespace Mesher.Entity
     /// </summary>
     public class MinuteData
     {
-        //主键ID
-        public int Id { get; set; }
         //浓度均值
         public decimal AVGValue { get; set; }
         //监测点污染物关联表ID
@@ -23,6 +21,5 @@ namespace Mesher.Entity
         public decimal MinValue { get; set; }
         //数据监测时间
         public DateTime MonitorTime { get; set; }
-        public string PointName { get; set; }
     }
 }

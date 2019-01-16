@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mesher.Services
-{
     /// <summary>
     /// AQI计算公式
     /// </summary>
@@ -241,4 +239,4 @@ namespace Mesher.Services
         public int PM2 { get; set; }
         public int IAQI { get; set; }
     }
-}
+

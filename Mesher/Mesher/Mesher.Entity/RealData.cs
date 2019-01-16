@@ -19,5 +19,9 @@ namespace Mesher.Entity
         public int Monitor_PollutionId { get; set; }
         //数据抓取时间
         public DateTime CreateTime { get; set; }
+        //站点ID
+        public int PointID { get; set; }
+        //污染物ID
+        public int PollutantID { get; set; }
     }
 }

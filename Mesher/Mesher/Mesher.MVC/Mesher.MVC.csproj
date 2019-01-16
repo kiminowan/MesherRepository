@@ -92,6 +92,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BootstrapSouce\css\bootstrap-theme.css" />
+    <Content Include="BootstrapSouce\css\bootstrap-theme.min.css" />
+    <Content Include="BootstrapSouce\css\bootstrap.css" />
+    <Content Include="BootstrapSouce\css\bootstrap.min.css" />
+    <Content Include="BootstrapSouce\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="BootstrapSouce\js\bootstrap.js" />
+    <Content Include="BootstrapSouce\js\bootstrap.min.js" />
+    <Content Include="BootstrapSouce\js\html5shiv.js" />
+    <Content Include="BootstrapSouce\js\jquery.js" />
+    <Content Include="BootstrapSouce\js\jquery.min.js" />
+    <Content Include="BootstrapSouce\js\npm.js" />
+    <Content Include="BootstrapSouce\js\respond.min.js" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap-3.3.7-dist\css\bootstrap.css" />
@@ -118,6 +130,30 @@
     <Content Include="imagess\cxl.mp4" />
     <Content Include="imagess\login.mp4" />
     <Content Include="line-aqi.html" />
+    <Content Include="My97DatePicker\demo.htm" />
+    <Content Include="My97DatePicker\My97DatePicker\calendar.js" />
+    <Content Include="My97DatePicker\My97DatePicker\lang\en.js" />
+    <Content Include="My97DatePicker\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="My97DatePicker\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="My97DatePicker\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="My97DatePicker\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="My97DatePicker\My97DatePicker\skin\default\img.gif" />
+    <Content Include="My97DatePicker\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="My97DatePicker\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="My97DatePicker\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="My97DatePicker\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="My97DatePicker\My97DatePicker\WdatePicker.js" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\readme.txt" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="My97DatePicker\My97DatePicker\开发包\skin\whyGreen\img.gif" />
     <Content Include="Script\jquery-1.7.2-min.js" />
     <Content Include="Script\jquery-3.1.1.js" />
     <Content Include="Web.config" />
@@ -150,6 +186,14 @@
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="BootstrapSouce\css\bootstrap-theme.css.map" />
+    <Content Include="BootstrapSouce\css\bootstrap-theme.min.css.map" />
+    <Content Include="BootstrapSouce\css\bootstrap.css.map" />
+    <Content Include="BootstrapSouce\css\bootstrap.min.css.map" />
+    <Content Include="BootstrapSouce\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="BootstrapSouce\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="BootstrapSouce\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="BootstrapSouce\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="packages.config" />
     <Content Include="Views\User\register.cshtml" />
     <Content Include="Views\User\login.cshtml" />
@@ -157,6 +201,8 @@
     <Content Include="Views\User\video.cshtml" />
     <Content Include="Views\AnalyzeEcharts\Index.cshtml" />
     <Content Include="Views\MonitorPoint\CxlMon.cshtml" />
+    <Content Include="Views\MonitorPoint\CxlMon - 复制.cshtml" />
+    <Content Include="Views\MonitorPoint\CxlMonEcharts.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

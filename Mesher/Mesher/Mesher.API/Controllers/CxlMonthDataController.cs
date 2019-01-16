@@ -9,7 +9,7 @@ namespace Mesher.API.Controllers
 {
     using Mesher.Entity;
     using Mesher.IServices;
-    [RoutePrefix("MonitorPoints")]
+    [RoutePrefix("caoxiaole")]
     public class CxlMonthDataController : ApiController
     {
         
@@ -17,12 +17,22 @@ namespace Mesher.API.Controllers
         /// 属性注入
         /// </summary>
         public ICxlMonthAnalizeServers cxlMonthAnalizeServers { get; set; }
-        [HttpPost]
+
         [Route("GetMonthAnalizeDatas")]
-        public List<MonthAnalizeData> GetMonthAnalizeDatas(string Code)
+        [HttpGet]
+        
+        public List<MonthAnalizeData> GetMonthAnalizeDatas(int Code, DateTime time)
         {
 
-            return cxlMonthAnalizeServers.GetMonthAnalizeDatas(Code);
+            return cxlMonthAnalizeServers.GetMonthAnalizeDatas(Code,time);
+        }
+        [Route("GetMonitorPoints")]
+        [HttpGet]
+
+        public List<MonitorPoint> GetMonitorPoints(int Code)
+        {
+
+            return cxlMonthAnalizeServers.GetMonitorPoints(Code);
         }
     }
 }

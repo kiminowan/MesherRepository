@@ -1,0 +1,123 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+    <script src="~/Script/jquery-3.1.1.js"></script>
+
+</head>
+                <body>
+                    <div id="container" style="height: 100%"></div>
+                </body>
+
+</html >
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    app.title = '笛卡尔坐标系上的热力图';
+
+    var month = ['1', '2', '3', '4', '5', '6', '7',
+        '8', '9', '10', '11', '12'
+    ];
+
+    var Days = [];
+    for (var i = 1; i < 100; i++) {
+        Days.push(i);
+    } 
+   
+
+    var datas = [];
+    $(function () {
+
+    })
+
+    function show() {
+        $.ajax({
+            url: 'http://localhost:8099/GetHourDatas',
+            type: 'get',
+            data: {
+                polluantid: 11,
+                monitortime:2018
+            },
+            success: function (data) {
+                $(data).each(function (index, data) {
+                    var date = new Date(data.MonitorTime)
+                    datas.push([Math.ceil((date - new Date(date.getFullYear().toString()) + 1000 * 60 * 60 * 9) / (24 * 60 * 60 * 1000)) - 1, date.getHours(), data.AVGValue])
+                })
+            }
+        })
+    }
+
+    datas = datas.map(function (item) {
+        return [item[1], item[0], item[2] || '-'];
+    });
+
+    option = {
+        tooltip: {
+            position: 'top'
+        },
+        animation: false,
+        grid: {
+            height: '50%',
+            y: '10%'
+        },
+        xAxis: {
+            type: 'category',
+            data: Days,
+            splitArea: {
+                show: true
+            }
+        },
+        yAxis: {
+            type: 'category',
+            data: month,
+            splitArea: {
+                show: true
+            }
+        },
+        visualMap: {
+            min: 0,
+            max: 10,
+            calculable: true,
+            orient: 'horizontal',
+            left: 'center',
+            bottom: '15%'
+        },
+        series: [{
+            name: 'Punch Card',
+            type: 'heatmap',
+            data: datas,
+            label: {
+                normal: {
+                    show: true
+                }
+            },
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    };;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+
+</script>

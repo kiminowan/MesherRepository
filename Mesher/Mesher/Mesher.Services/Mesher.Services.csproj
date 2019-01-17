@@ -50,6 +50,7 @@
     <Compile Include="AQICompute.cs" />
     <Compile Include="CxlMonthAnalizeServers.cs" />
     <Compile Include="DataCommonServices.cs" />
+    <Compile Include="HotServices.cs" />
     <Compile Include="MinuteDataServices.cs" />
     <Compile Include="MonitorPointServices.cs" />
     <Compile Include="RegionServices.cs" />

@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IDataCommonServices.cs" />
     <Compile Include="ICxlMonthAnalizeServers.cs" />
+    <Compile Include="IHotService.cs" />
     <Compile Include="IMonitorPointServices.cs" />
     <Compile Include="IRegionServices.cs" />
     <Compile Include="IUserServices.cs" />

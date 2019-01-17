@@ -13,13 +13,13 @@ namespace Mesher.IServices
         /// 显示标记点
         /// </summary>
         /// <returns></returns>
-        List<MonitorPoint> GetMonitorPoints();
+        List<MonitorPoint> GetMonitorPoints(int id);
         /// <summary>
         /// 站点排名
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<MinuteData> GetMinuteDatas(int id);
+        List<MinuteData> GetMinuteDatas(int id, int userid);
         /// <summary>
         /// 获取所有的污染物
         /// </summary>

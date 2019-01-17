@@ -26,9 +26,9 @@ namespace Mesher.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetMonitorPoint")]
-        public List<MonitorPoint> GetMonitorPoint()
+        public List<MonitorPoint> GetMonitorPoint(int id)
         {
-            var result = monitorPoint.GetMonitorPoints();
+            var result = monitorPoint.GetMonitorPoints(id);
 
             return result;
         }
@@ -40,9 +40,9 @@ namespace Mesher.API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetMinuteDatas")]
-        public List<MinuteData> GetMinuteDatas(int id)
+        public List<MinuteData> GetMinuteDatas(int id,int userid)
         {
-            var result = monitorPoint.GetMinuteDatas(id);
+            var result = monitorPoint.GetMinuteDatas(id, userid);
             return result;
         }
 

@@ -1,11 +1,13 @@
 ﻿
 @{
-    Layout = null;
+                /**/
+
+                Layout = null;
 }
 
 <!DOCTYPE html>
 
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,13 +15,10 @@
     <title>地图加载完成事件</title>
     <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-
     <script src="~/Content/jquery-1.10.2.js"></script>
     <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
     <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
-
-
     <style>
         html, body, #container {
             height: 100%;
@@ -51,6 +50,10 @@
             width: 100px;
         }
 
+            ul li {
+                width: 100px;
+            }
+
         #tab td {
             width: 100px;
         }
@@ -62,19 +65,21 @@
 
 </head>
 <body>
-    
+
+    //左侧侧边栏
     <div style="position:fixed;left:0;top:50px;width:200px;height:100%;background-color:white;z-index:10000000">
         <input type="text" style="width:100px;" /><input type="button" value="搜索" />
         <h4 style="background-color:aquamarine; text-align:center;">站点排名</h4>
-        
         <table id="tab">
             <tr>
-                <td>排名 @Request.QueryString["data"]</td>
+                <td>排名</td>
                 <td>站点名称</td>
                 <td>浓度</td>
             </tr>
         </table>
     </div>
+
+    //上方
     <div style="position:fixed;top:0;width:100%;height:50px;background-color:black;z-index:10000000">
         <span style="color:white;font-size:35px;">大气环境网格化监管系统</span>
         <span style="color:white;margin-left:600px;"><a href="/AnalyzeEcharts/Index" style="color:white">实时监测</a></span>
@@ -82,12 +87,12 @@
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                 统计分析<span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
+            <ul style="z-index:100000001" class="dropdown-menu">
                 <li><a href="/AnalyzeEcharts/Index">多站点污染物分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">单站点污染物分析</a></li>
                 <li><a href="/MonitorPoint/CxlMon?Code=@Request.QueryString["data"]">月度数据分析</a></li>
-                
-                
+
+
                 <li><a href="/MonitorPoint/CxlMonEcharts?Code=@Request.QueryString["data"]">大气常规站污染分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">多站点年度污染分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">单站点年度污染分析</a></li>
@@ -106,7 +111,8 @@
         </span>
     </div>
 
-    <div style="position:fixed;right:0;top:50px;width:200px;height:100%;background-color:white;z-index:10000000">
+    //右侧侧边栏
+    <div style="position:fixed;right:0;top:50px;width:200px;height:100%;background-color:white;z-index:1000">
 
         <h4 style="background-color:aquamarine;">天气预报</h4>
         <ul>
@@ -127,28 +133,52 @@
 
     </div>
 
+    //污染物按钮栏
     <div id="div1" style="position:fixed;top:70px;left:400px;width:420px;height:40px;background-color:green;z-index:10000000">
-
     </div>
     <div id="container"></div>
+    <div id="tip" class="info">地图正在加载</div>
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=	7a7783a78617cf97207a84f671999cee"></script>
     @*左上角控件引用*@
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
     <script src="~/Script/jquery-3.1.1.js"></script>
     <script type="text/javascript">
+        //登录用户Id
+        var ids =@Request.QueryString["data"];
+
         //初始化地图对象，加载地图
         var marker, map = new AMap.Map("container", {
             resizeEnable: true,
             center: [116.397428, 39.90923],
             zoom: 6
         });
+        map.on('complete', function () {
+            document.getElementById('tip').innerHTML = "地图图块加载完毕！当前地图中心点为：" + map.getCenter();
+        });
         var positions = [];
         $.ajax({
             url: "http://localhost:8099/MonitorPoints/GetMonitorPoint",
             type: "get",
             data: {
+                id: ids
             },
             success: function (data) {
+                $.ajax({
+                    url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
+                    data: {
+                        id: 17,
+                        userid: ids,
+                    },
+                    type: 'get',
+                    success: function (data) {
+
+                        console.log(data)
+                        $(data).each(function (index, data) {
+                            $("#tab").append("<tr><td>" + data.Id + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue + "</td></tr>")
+                        })
+                    }
+                })
+                console.log(data);
                 positions = [];
                 $(data).each(function (index, data) {
                     //console.log(data);
@@ -209,7 +239,7 @@
 
                     //marker.content = '监测点名称：' + data.PointName + "</br>" + '设备编号：' + data.EquipmentCode + "</br>" + '监测点类型：' + data.PointType + "</br>" + '行政区编号：' + data.RegionCode + "</br>" + '状态：' + data.Status + "</br>" + '更新时间：' + data.UpdateDate + "</br>";
                     //marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointType + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
-                    marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointType + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
+                    marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointTypeName + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
                     marker.on('click', markerClick);
                     //marker.emit('click', { target: marker });
 
@@ -217,31 +247,44 @@
                         infoWindow.setContent(e.target.content);
                         infoWindow.open(map, e.target.getPosition());
                     }
+
                     map.setFitView();
                 })
             }
         })
 
+
+
+        //文档就绪函数
         $(function () {
-            show();
+            //show();
             showPolluation();
-            Weather();
+            GetRegion();
             Warning();
         })
 
-        function show() {
-            $.ajax({
-                url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
-                data: { Id: 11 },
-                type: 'get',
-                success: function (data) {
-                    $(data).each(function (index, data) {
-                        $("#tab").append("<tr><td>" + data.Id + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue + "</td></tr>")
-                    })
-                }
-            })
-        }
 
+        //站点排名
+        //function show() {
+        //    $.ajax({
+        //        url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
+        //        data: {
+        //            id: 17,
+        //            userid: id,
+        //        },
+        //        type: 'get',
+        //        success: function (data) {
+
+        //            console.log(data)
+        //            $(data).each(function (index, data) {
+        //                $("#tab").append("<tr><td>" + data.Id + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue + "</td></tr>")
+
+        //            })
+        //        }
+        //    })
+        //}
+
+        //显示污染物按钮
         function showPolluation() {
             $.ajax({
                 url: "http://localhost:8099/MonitorPoints/GetPollutants",
@@ -257,10 +300,14 @@
             })
         }
 
+        //根据不同按钮获取不同污染物浓度
         function btnPo(id) {
             $.ajax({
                 url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
-                data: { Id: id },
+                data: {
+                    Id: id,
+                    userid: ids
+                },
                 type: 'get',
                 success: function (data) {
                     $(data).each(function (index, data) {
@@ -270,38 +317,46 @@
             })
         }
 
-        function Weather() {
+        //调天气预报接口
+        function GetRegion() {
             $.ajax({
-                url: '/MonitorPoint/GetCityInfos',
+                url: 'http://localhost:8099/MonitorPoints/GetRegionname',
                 type: 'get',
+                data: { id: ids },
                 success: function (data) {
+
                     $.ajax({
-                        url: "http://t.weather.sojson.com/api/weather/city/" + data,
-                        type: "get",
+                        url: '/MonitorPoint/GetCityInfos',
+                        type: 'get',
+                        data: { cityname: data[0].RegionName },
                         success: function (data) {
-                            console.log(data.data.forecast);
-                            $(data).each(function (index, data) {
-                                $("#tal").append("<li>" + data.data.forecast[0].high + "</li><li>" + data.data.forecast[0].low + "</li><li>" + data.data.forecast[0].fx + "</li><li>" + data.data.forecast[0].type + "</li>")
-                                //$("#tal").append("<tr><td>" + data.data.forecast[0].high + "</td></tr><tr><td>" + data.data.forecast[0].low + "</td></tr><tr><td>" + data.data.forecast[0].fx + "</td></tr><tr><td>" + data.data.forecast[0].type +"</td></tr>")
+
+                            $.ajax({
+                                url: "http://t.weather.sojson.com/api/weather/city/" + data,
+                                type: "get",
+                                success: function (data) {
+
+                                    $(data).each(function (index, data) {
+                                        $("#tal").append("<li>" + data.data.forecast[0].high + "</li><li>" + data.data.forecast[0].low + "</li><li>" + data.data.forecast[0].fx + "</li><li>" + data.data.forecast[0].type + "</li>")
+
+                                    })
+                                }
                             })
                         }
+
                     })
                 }
-
             })
         }
 
-        function bntLj() {
-
-        }
-
+        //预警排名
         function Warning() {
             $.ajax({
                 url: "http://localhost:8099/MonitorPoints/GetMinuteDatas",
                 type: "get",
-                data: { id: 17 },
+                data: { id:17 },
                 success: function (data) {
-                    console.log(data);
+
                     $(data).each(function (index, data) {
                         $("#tan").append("<tr><td>" + data.Id + "</td><td>" + data.PointName + "</td><td>" + data.AVGValue + "</td></tr>")
                     })
@@ -312,5 +367,10 @@
 
 
     </script>
+    <table class="table-responsive">
+        <tr>
+            <td></td>
+        </tr>
+    </table>
 </body>
 </html>

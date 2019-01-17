@@ -1,18 +1,18 @@
 ﻿
 @{
-                /**/
+    /**/
 
-                Layout = null;
+    Layout = null;
 }
 
 <!DOCTYPE html>
-
+    
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <title>地图加载完成事件</title>
+    <title>大气环境网格化监管系统 </title>
     <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
     <script src="~/Content/jquery-1.10.2.js"></script>
@@ -74,7 +74,7 @@
             <tr>
                 <td>排名</td>
                 <td>站点名称</td>
-                <td>浓度</td>
+                <td id="pollution">AQI</td>
             </tr>
         </table>
     </div>
@@ -106,14 +106,14 @@
                 <li><a href="/AnalyzeEcharts/Index">城市累积变化趋势</a></li>
             </ul>
         </span>
-        <span class="color:white">
-            <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=ta&skin=peach" frameborder="0" style="color:white" width="260" height="24" allowtransparency="true"></iframe>
-        </span>
+
     </div>
 
     //右侧侧边栏
     <div style="position:fixed;right:0;top:50px;width:200px;height:100%;background-color:white;z-index:1000">
-
+        <span class="color:white">
+            <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=ta&skin=peach" frameborder="0" style="color:white" width="260" height="24" allowtransparency="true"></iframe>
+        </span>
         <h4 style="background-color:aquamarine;">天气预报</h4>
         <ul>
             <li>高温:</li>
@@ -133,11 +133,9 @@
 
     </div>
 
-    //污染物按钮栏
     <div id="div1" style="position:fixed;top:70px;left:400px;width:420px;height:40px;background-color:green;z-index:10000000">
     </div>
     <div id="container"></div>
-    <div id="tip" class="info">地图正在加载</div>
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=	7a7783a78617cf97207a84f671999cee"></script>
     @*左上角控件引用*@
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
@@ -145,17 +143,28 @@
     <script type="text/javascript">
         //登录用户Id
         var ids =@Request.QueryString["data"];
-
         //初始化地图对象，加载地图
         var marker, map = new AMap.Map("container", {
             resizeEnable: true,
             center: [116.397428, 39.90923],
             zoom: 6
         });
-        map.on('complete', function () {
-            document.getElementById('tip').innerHTML = "地图图块加载完毕！当前地图中心点为：" + map.getCenter();
-        });
         var positions = [];
+        $.ajax({
+            url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
+            data: {
+                id: 11,
+                userid: ids,
+            },
+            type: 'get',
+            success: function (data) {
+
+                console.log(data)
+                $(data).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue.toFixed(0) + "</td></tr>")
+                })
+            }
+        })
         $.ajax({
             url: "http://localhost:8099/MonitorPoints/GetMonitorPoint",
             type: "get",
@@ -163,21 +172,7 @@
                 id: ids
             },
             success: function (data) {
-                $.ajax({
-                    url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
-                    data: {
-                        id: 17,
-                        userid: ids,
-                    },
-                    type: 'get',
-                    success: function (data) {
 
-                        console.log(data)
-                        $(data).each(function (index, data) {
-                            $("#tab").append("<tr><td>" + data.Id + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue + "</td></tr>")
-                        })
-                    }
-                })
                 console.log(data);
                 positions = [];
                 $(data).each(function (index, data) {
@@ -293,7 +288,7 @@
 
                     $(data).each(function (index, data) {
                         console.log(data.Id);
-                        $("#div1").append("<input style='width: 60px; height: 40px;' type='button' value=" + data.PollutantName + " onclick='btnPo(" + data.Id + ")' />")
+                        $("#div1").append("<input style='width: 60px; height: 40px;' type='button' value=" + data.PollutantName + " onclick='btnPo(" + data.Id + ",\"" + data.PollutantName+"\")' />")
                     })
                 }
 
@@ -301,7 +296,8 @@
         }
 
         //根据不同按钮获取不同污染物浓度
-        function btnPo(id) {
+        function btnPo(id, name) {
+            $("#pollution").text(name);
             $.ajax({
                 url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
                 data: {
@@ -310,13 +306,20 @@
                 },
                 type: 'get',
                 success: function (data) {
-                    $(data).each(function (index, data) {
-                        $("#tab").append("<tr><td>" + data.Id + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue + "</td></tr>")
-                    })
+                    $("#tab tr").not(":first").remove();
+                    if (id == 13) {
+                        $(data).each(function (index, data) {
+                            $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue.toFixed(4) + "</td></tr>")
+                        })
+                    }
+                    else {
+                        $(data).each(function (index, data) {
+                            $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue.toFixed(0) + "</td></tr>")
+                        })
+                    }
                 }
             })
         }
-
         //调天气预报接口
         function GetRegion() {
             $.ajax({
@@ -354,11 +357,11 @@
             $.ajax({
                 url: "http://localhost:8099/MonitorPoints/GetMinuteDatas",
                 type: "get",
-                data: { id:17 },
+                data: { id: 11, userid:ids },
                 success: function (data) {
 
                     $(data).each(function (index, data) {
-                        $("#tan").append("<tr><td>" + data.Id + "</td><td>" + data.PointName + "</td><td>" + data.AVGValue + "</td></tr>")
+                        $("#tan").append("<tr><td>" + (index+1) + "</td><td>" + data.PointName + "</td><td>" + data.AVGValue.toFixed(0) + "</td></tr>")
                     })
                 }
             })

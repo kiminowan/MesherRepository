@@ -20,6 +20,8 @@ using Oracle.ManagedDataAccess;
         /// <returns></returns>
         public static OracleConnection GetConnString()
         {
+        
+        
             return new OracleConnection(connString);
         }
 

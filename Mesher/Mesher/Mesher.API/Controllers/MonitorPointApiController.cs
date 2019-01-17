@@ -29,18 +29,29 @@ namespace Mesher.API.Controllers
         public List<MonitorPoint> GetMonitorPoint(int id)
         {
             var result = monitorPoint.GetMonitorPoints(id);
-
             return result;
+        }
+
+        /// <summary>
+        /// 获取最新分钟数据处理时间
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDateTime")]
+        public string GetDateTime()
+        {
+            var result = monitorPoint.GetDateTime();
+            return result.ToString();
         }
 
         /// <summary>
         /// 站点排名
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns></returns> 
         [HttpGet]
         [Route("GetMinuteDatas")]
-        public List<MinuteData> GetMinuteDatas(int id,int userid)
+        public List<MinuteShowData> GetMinuteDatas(int id, int userid)
         {
             var result = monitorPoint.GetMinuteDatas(id, userid);
             return result;

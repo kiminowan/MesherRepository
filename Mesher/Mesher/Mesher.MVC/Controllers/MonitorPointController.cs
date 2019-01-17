@@ -25,6 +25,7 @@ namespace Mesher.MVC.Controllers
         [HttpGet]
         public string GetCityInfos(string cityname)
         {
+            
             string file = Server.MapPath("~/Content/_city.json");
 
             using (System.IO.StreamReader streamreader = System.IO.File.OpenText(file))

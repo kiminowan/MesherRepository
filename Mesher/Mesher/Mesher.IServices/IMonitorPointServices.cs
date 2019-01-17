@@ -14,12 +14,18 @@ namespace Mesher.IServices
         /// </summary>
         /// <returns></returns>
         List<MonitorPoint> GetMonitorPoints(int id);
+
+        /// <summary>
+        /// 获取最新分钟数据处理时间
+        /// </summary>
+        /// <returns></returns>
+        DateTime GetDateTime();
         /// <summary>
         /// 站点排名
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List<MinuteData> GetMinuteDatas(int id, int userid);
+        List<MinuteShowData> GetMinuteDatas(int id, int userid);
         /// <summary>
         /// 获取所有的污染物
         /// </summary>

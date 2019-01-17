@@ -203,6 +203,9 @@
     <Content Include="Views\MonitorPoint\CxlMon - 复制.cshtml" />
     <Content Include="Views\MonitorPoint\CxlMonEcharts.cshtml" />
     <Content Include="Views\MonitorPoint\Index.cshtml" />
+    <Content Include="Views\AnalyzeEcharts\Index2.cshtml" />
+    <Content Include="Views\AnalyzeEcharts\SingleSite.cshtml" />
+    <Content Include="Views\AnalyzeEcharts\ManyPollutants.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

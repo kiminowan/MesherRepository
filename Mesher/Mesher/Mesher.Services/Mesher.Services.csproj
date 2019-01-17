@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyzeEchartsServices.cs" />
     <Compile Include="AQICompute.cs" />
     <Compile Include="CxlMonthAnalizeServers.cs" />
     <Compile Include="DataCommonServices.cs" />

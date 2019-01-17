@@ -1,0 +1,174 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ManyPollutants</title>
+</head>
+<body style="height: 100%; margin: 0">
+    <div style="height: 100%;width:10%;float:left;background-color:aqua;">
+        <br />
+        <input type="text" style="width:110px;" name="PointName" />  <button onclick="btnSearch()">搜索</button>
+
+        <h4 style="background-color:aquamarine; text-align:center;">站点列表</h4>
+        <table id="tab">
+            <tr>
+                <td><input type="checkbox" name="Id" />站点名称</td>
+            </tr>
+        </table>
+
+    </div>
+    <div id="div1" style="position:fixed;top:70px;left:400px;width:350px;height:25px;z-index:10000000">
+
+    </div>
+
+    <div style="margin-left:500px; height:80px;">
+        <br />
+        <input class="Wdate" type="text" onClick="WdatePicker()" name="StartTime" />
+        <input class="Wdate" type="text" onClick="WdatePicker()" name="EndTime" />
+        <input type="button" onclick="btnSearch()" value="搜索" />
+
+    </div>
+
+    <div id="container" style="height: 90%;width:90%;float:left">
+
+    </div>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+    <script src="~/Content/jquery-1.10.2.js"></script>
+    @*日期控件*@
+    <script src="~/Content/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+            show();
+            AnalyzeEchart();
+            showPolluation();
+        })
+        function btnSearch() {
+            AnalyzeEchart();
+        }
+        //污染物
+        function showPolluation() {
+            $.ajax({
+                url: "http://localhost:8099/AnalyzeEcharts/GetSingleSite",
+                type: "get",
+                success: function (data) {
+
+                    $(data).each(function (index, data) {
+                        //alert(data.Id);
+                        $("#div1").append("<input style='width: 50px; height: 25px;' type='button' value=" + data.PollutantName + " />")
+                    })
+                }
+
+            })
+        }
+        var datas = [];
+        //左侧边栏
+        function show() {
+            $.ajax({
+                url: 'http://localhost:8099/AnalyzeEcharts/GetMonitorPoints',
+                type: 'get',
+                data: {
+                    PointName: $("input[name=PointName]").val()
+                },
+                success: function (data) {
+                    $("#tab tr").not(":first").remove();
+                    $(data).each(function (index, data) {
+                        $("#tab").append("<tr><td><input type=\"checkbox\" name=" + data.Id + " onclick=\"alert(" + data.Id + ")\" />" + data.PointName + "</td></tr>")
+                    })
+                }
+            })
+        }
+        //Echarts图
+        function AnalyzeEchart() {
+            $.ajax({
+                url: 'http://localhost:8099/AnalyzeEcharts/GetAnalyzeEcharts',
+                data: {
+                    StartName: $("input[name=StartName]").val(),
+                    EndTime: $("input[name=EndTime]").val()
+                },
+                type: 'get',
+                success: function (data) {
+                    datas = [];
+                    $(data).each(function (index, data) {
+                        datas.push([data.MonitorTime, data.AVGValue, data.PollutantName]);
+                    })
+
+                    var dom = document.getElementById("container");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+                    option = null;
+                    myChart.setOption(option = {
+                        title: {
+                            text: '多站点污染物分析'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        xAxis: {
+                            data: datas.map(function (item) {
+                                return item[0];
+                            })
+                        },
+                        yAxis: {
+                            splitLine: {
+                                show: false
+                            }
+                        },
+
+                        dataZoom: [{
+                            startValue: '2019-01-01'
+                        }, {
+                            type: 'inside'
+                        }],
+                        series: {
+                            name: 'AQI',
+                            type: 'line',
+                            data: datas.map(function (item) {
+                                return item[1];
+                            }),
+                            markLine: {
+                                silent: true,
+                                data: [{
+                                    yAxis: 0
+                                }, {
+                                    yAxis: 50
+                                }, {
+                                    yAxis: 100
+                                }, {
+                                    yAxis: 150
+                                }, {
+                                    yAxis: 200
+                                }, {
+                                    yAxis: 250
+                                }, {
+                                    yAxis: 300
+                                }]
+                            }
+                        }
+                    });
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                }
+            })
+        }
+
+
+    </script>
+</body>
+</html>

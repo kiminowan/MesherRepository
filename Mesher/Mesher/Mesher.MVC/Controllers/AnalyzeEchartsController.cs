@@ -13,5 +13,17 @@ namespace Mesher.MVC.Controllers
         {
             return View();
         }
+        public ActionResult Index2()
+        {
+            return View();
+        }
+        public ActionResult ManyPollutants()
+        {
+            return View();
+        }
+        public ActionResult SingleSite()
+        {
+            return View();
+        }
     }
 }

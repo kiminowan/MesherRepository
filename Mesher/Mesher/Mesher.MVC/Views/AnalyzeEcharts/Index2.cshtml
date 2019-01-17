@@ -1,0 +1,123 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="height:100%;margin:0">
+    <div>
+        <div>
+            <input class="Wdate" type="text" onClick="WdatePicker()" name="a" />
+            <input class="Wdate" type="text" onClick="WdatePicker()" name="b" />
+            <input type="button" value="搜索" onclick="btn()" />
+        </div>
+
+        <div id="container" style="height:700px;width:100%;float:left">
+
+        </div>
+    </div>
+    @*Echarts图引用*@
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+    @*日期控件引用*@
+    <script src="~/Content/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
+    @*JS引用*@
+    <script src="~/Content/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            AnalyzeEchart();
+        })
+        function btn() {
+            alert($("input[name=a]").val());
+            alert($("input[name=b]").val());
+        }
+        var datas = [];
+        //Echarts图
+        function AnalyzeEchart() {
+            $.ajax({
+                url: 'http://localhost:8099/AnalyzeEcharts/GetAnalyzeEcharts',
+                data: {},
+                type: 'get',
+                success: function (data) {
+                    datas = [];
+                    $(data).each(function (index, data) {
+                        datas.push([data.MonitorTime, data.AVGValue, data.PollutantName]);
+                    })
+
+                    var dom = document.getElementById("container");
+                    var myChart = echarts.init(dom);
+                    var app = {};
+                    option = null;
+                    myChart.setOption(option = {
+                        title: {
+                            text: '多站点污染物分析'
+                        },
+                        tooltip: {
+                            trigger: 'axis'
+                        },
+                        xAxis: {
+                            data: datas.map(function (item) {
+                                return item[0];
+                            })
+                        },
+                        yAxis: {
+                            splitLine: {
+                                show: false
+                            }
+                        },
+
+                        dataZoom: [{
+                            startValue: '2019-01-01'
+                        }, {
+                            type: 'inside'
+                        }],
+                        series: {
+                            name: 'AQI',
+                            type: 'line',
+                            data: datas.map(function (item) {
+                                return item[1];
+                            }),
+                            markLine: {
+                                silent: true,
+                                data: [{
+                                    yAxis: 0
+                                }, {
+                                    yAxis: 50
+                                }, {
+                                    yAxis: 100
+                                }, {
+                                    yAxis: 150
+                                }, {
+                                    yAxis: 200
+                                }, {
+                                    yAxis: 250
+                                }, {
+                                    yAxis: 300
+                                }]
+                            }
+                        }
+                    });
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                }
+            })
+        }
+    </script>
+
+</body>
+</html>

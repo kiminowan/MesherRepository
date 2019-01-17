@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAnalyzeEchartsServices.cs" />
     <Compile Include="IDataCommonServices.cs" />
     <Compile Include="ICxlMonthAnalizeServers.cs" />
     <Compile Include="IHotService.cs" />

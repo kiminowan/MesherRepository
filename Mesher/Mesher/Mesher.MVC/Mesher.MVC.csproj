@@ -161,6 +161,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AnalyzeEchartsController.cs" />
+    <Compile Include="Controllers\HotController.cs" />
     <Compile Include="Controllers\MonitorPointController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,6 +207,8 @@
     <Content Include="Views\AnalyzeEcharts\Index2.cshtml" />
     <Content Include="Views\AnalyzeEcharts\SingleSite.cshtml" />
     <Content Include="Views\AnalyzeEcharts\ManyPollutants.cshtml" />
+    <Content Include="Views\Hot\AllIndex.cshtml" />
+    <Content Include="Views\Hot\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

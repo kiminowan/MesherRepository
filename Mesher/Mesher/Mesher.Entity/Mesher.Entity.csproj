@@ -51,6 +51,7 @@
     <Compile Include="MonitorPointPollutan.cs" />
     <Compile Include="MonthAnalizeData.cs" />
     <Compile Include="MonthData.cs" />
+    <Compile Include="NationalControl.cs" />
     <Compile Include="PointType.cs" />
     <Compile Include="Pollutant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

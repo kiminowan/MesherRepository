@@ -50,6 +50,11 @@ namespace Mesher.MVC.Controllers
 
             return View();
         }
+        public ActionResult CxlMonEcharts()
+        {
+
+            return View();
+        }
     }
 
     

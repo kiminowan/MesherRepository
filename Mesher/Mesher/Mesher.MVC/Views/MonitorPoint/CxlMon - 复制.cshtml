@@ -1,0 +1,386 @@
+﻿<!DOCTYPE html>
+<script src="Script/jquery-1.7.2-min.js"></script>
+<html style="height: 100%">
+
+<head>
+    <meta charset="utf-8">
+
+</head>
+<body style="height: 100%; margin: 0">
+    <div style="height: 100%;width:10%;float:left;background-color:aqua;">
+        <input id="h1" type="hidden" value="@Request.QueryString["Code"]"/>
+    </div>
+    <div style="height: 100%;width:90%;float:left">
+        <div style="height: 50%;width:100%;float:left">
+            <div id="container" style="height: 100%;width:50%;float:left"></div>
+            <div id="container1" style="height: 100%;width:50%;float:left"></div>
+        </div>
+        <div style="height: 50%;width:100%;float:left">
+            <div id="container2" style="height: 100%;width:50%;float:left"></div>
+            <div id="container3" style="height: 100%;width:50%;float:left"></div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="lib/reset.css" />
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+    <script type="text/javascript">
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+            var dom1 = document.getElementById("container1");
+            var myChart1 = echarts.init(dom1);
+            var dom2 = document.getElementById("container2");
+            var myChart2 = echarts.init(dom2);
+            var dom3 = document.getElementById("container3");
+            var myChart3 = echarts.init(dom3);
+            var app = {};
+            option = null;
+            var data = [["2000-06-05", 116.2356], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654]]
+            myChart.setOption(option = {
+                title: {
+                    text: '6参数AQI'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    data: data.map(function (item) {
+                        return item[0];
+                    })
+                },
+                yAxis: {
+                    splitLine: {
+                        show: false
+                    }
+                },
+
+                dataZoom: [{
+                    startValue: '2014-06-01'
+                }, {
+                    type: 'inside'
+                }],
+                visualMap: {
+                    top: 10,
+                    right: 10,
+                    pieces: [{
+                        gt: 0,
+                        lte: 50,
+                        color: '#096'
+                    }, {
+                        gt: 50,
+                        lte: 100,
+                        color: '#ffde33'
+                    }, {
+                        gt: 100,
+                        lte: 150,
+                        color: '#ff9933'
+                    }, {
+                        gt: 150,
+                        lte: 200,
+                        color: '#cc0033'
+                    }, {
+                        gt: 200,
+                        lte: 300,
+                        color: '#660099'
+                    }, {
+                        gt: 300,
+                        color: '#7e0023'
+                    }],
+                    outOfRange: {
+                        color: '#999'
+                    }
+                },
+                series: {
+                    name: 'AQI',
+                    type: 'line',
+                    data: data.map(function (item) {
+                        return item[1];
+                    }),
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 50
+                        }, {
+                            yAxis: 100
+                        }, {
+                            yAxis: 150
+                        }, {
+                            yAxis: 200
+                        }, {
+                            yAxis: 300
+                        }]
+                    }
+                }
+            });
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+            myChart1.setOption(option = {
+                title: {
+                    text: '臭氧微型站AQI'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    data: data.map(function (item) {
+                        return item[0];
+                    })
+                },
+                yAxis: {
+                    splitLine: {
+                        show: false
+                    }
+                },
+
+                dataZoom: [{
+                    startValue: '2014-06-01'
+                }, {
+                    type: 'inside'
+                }],
+                visualMap: {
+                    top: 10,
+                    right: 10,
+                    pieces: [{
+                        gt: 0,
+                        lte: 50,
+                        color: '#096'
+                    }, {
+                        gt: 50,
+                        lte: 100,
+                        color: '#ffde33'
+                    }, {
+                        gt: 100,
+                        lte: 150,
+                        color: '#ff9933'
+                    }, {
+                        gt: 150,
+                        lte: 200,
+                        color: '#cc0033'
+                    }, {
+                        gt: 200,
+                        lte: 300,
+                        color: '#660099'
+                    }, {
+                        gt: 300,
+                        color: '#7e0023'
+                    }],
+                    outOfRange: {
+                        color: '#999'
+                    }
+                },
+                series: {
+                    name: 'AQI',
+                    type: 'line',
+                    data: data.map(function (item) {
+                        return item[1];
+                    }),
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 50
+                        }, {
+                            yAxis: 100
+                        }, {
+                            yAxis: 150
+                        }, {
+                            yAxis: 200
+                        }, {
+                            yAxis: 300
+                        }]
+                    }
+                }
+            });
+            if (option && typeof option === "object") {
+                myChart1.setOption(option, true);
+            }
+            myChart2.setOption(option = {
+                title: {
+                    text: '颗粒物微型站AQI'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    data: data.map(function (item) {
+                        return item[0];
+                    })
+                },
+                yAxis: {
+                    splitLine: {
+                        show: false
+                    }
+                },
+
+                dataZoom: [{
+                    startValue: '2014-06-01'
+                }, {
+                    type: 'inside'
+                }],
+                visualMap: {
+                    top: 10,
+                    right: 10,
+                    pieces: [{
+                        gt: 0,
+                        lte: 50,
+                        color: '#096'
+                    }, {
+                        gt: 50,
+                        lte: 100,
+                        color: '#ffde33'
+                    }, {
+                        gt: 100,
+                        lte: 150,
+                        color: '#ff9933'
+                    }, {
+                        gt: 150,
+                        lte: 200,
+                        color: '#cc0033'
+                    }, {
+                        gt: 200,
+                        lte: 300,
+                        color: '#660099'
+                    }, {
+                        gt: 300,
+                        color: '#7e0023'
+                    }],
+                    outOfRange: {
+                        color: '#999'
+                    }
+                },
+                series: {
+                    name: 'AQI',
+                    type: 'line',
+                    data: data.map(function (item) {
+                        return item[1];
+                    }),
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 50
+                        }, {
+                            yAxis: 100
+                        }, {
+                            yAxis: 150
+                        }, {
+                            yAxis: 200
+                        }, {
+                            yAxis: 300
+                        }]
+                    }
+                }
+            });
+            if (option && typeof option === "object") {
+                myChart2.setOption(option, true);
+            }
+            myChart3.setOption(option = {
+                title: {
+                    text: '小型空气微型站AQI'
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                xAxis: {
+                    data: data.map(function (item) {
+                        return item[0];
+                    })
+                },
+                yAxis: {
+                    splitLine: {
+                        show: false
+                    }
+                },
+
+                dataZoom: [{
+                    startValue: '2014-06-01'
+                }, {
+                    type: 'inside'
+                }],
+                visualMap: {
+                    top: 10,
+                    right: 10,
+                    pieces: [{
+                        gt: 0,
+                        lte: 50,
+                        color: '#096'
+                    }, {
+                        gt: 50,
+                        lte: 100,
+                        color: '#ffde33'
+                    }, {
+                        gt: 100,
+                        lte: 150,
+                        color: '#ff9933'
+                    }, {
+                        gt: 150,
+                        lte: 200,
+                        color: '#cc0033'
+                    }, {
+                        gt: 200,
+                        lte: 300,
+                        color: '#660099'
+                    }, {
+                        gt: 300,
+                        color: '#7e0023'
+                    }],
+                    outOfRange: {
+                        color: '#999'
+                    }
+                },
+                series: {
+                    name: 'AQI',
+                    type: 'line',
+                    data: data.map(function (item) {
+                        return item[1];
+                    }),
+                    markLine: {
+                        silent: true,
+                        data: [{
+                            yAxis: 50
+                        }, {
+                            yAxis: 100
+                        }, {
+                            yAxis: 150
+                        }, {
+                            yAxis: 200
+                        }, {
+                            yAxis: 300
+                        }]
+                    }
+                }
+            });
+           
+    </script>
+</body>
+</html>
+<script src="~/Script/jquery-3.1.1.js"></script>
+<script>
+    $(function () {
+        alert($("#h1").val());
+        $.ajax({
+            url: 'http://localhost:8099/cxl/GetMonthAnalizeDatas?Code=' + $("#h1").val(),
+            
+            type: 'get',
+            success: function (recc) {
+                console.log(recc);
+                alert("获取数据成功！！！");
+                if (option && typeof option === "object") {
+                    myChart3.setOption(option, true);
+                }
+            }
+
+
+
+        })
+
+
+    })
+
+</script>

@@ -23,7 +23,5 @@ namespace Mesher.Entity
         public string Token { get; set; }
         //行政区主键
         public int RegionId { get; set; }
-
-        public string code { get; set; }
     }
 }

@@ -151,7 +151,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\Models\" />
-    <Folder Include="System\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mesher.Entity\Mesher.Entity.csproj">

@@ -9,7 +9,6 @@ namespace Mesher.IServices
     using Mesher.Entity;
     public interface ICxlMonthAnalizeServers
     {
-        List<MonthAnalizeData> GetMonthAnalizeDatas(int Code, DateTime time);
-        List<MonitorPoint> GetMonitorPoints(int Code);
+        List<MonthAnalizeData> GetMonthAnalizeDatas(string Code);
     }
 }

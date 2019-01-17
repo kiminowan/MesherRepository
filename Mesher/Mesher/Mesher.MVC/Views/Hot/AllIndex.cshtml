@@ -18,22 +18,30 @@
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
     <script src="~/Script/jquery-3.1.1.js"></script>
+    <script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 
 </head>
-                <body>
-                    <div id="container" style="height: 100%"></div>
-                </body>
+<body style="height:1200px">
+    <div>
+        <span>年份：</span><input name="time" class="Wdate" type="text" onClick="WdatePicker({el:this,dateFmt:'yyyy'})">
+        <select name="Id">
+            <option value="0">--请择--</option>
+        </select>
+        <input type="button" value="搜索" onclick="btnSearch()" />
+    </div>选
+    <div id="container" style="height: 100%; width:200%"></div>
+</body>
 
 </html >
 <script type="text/javascript">
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
-    option = null;
+    var option = null;
     app.title = '笛卡尔坐标系上的热力图';
 
-    var month = ['1', '2', '3', '4', '5', '6', '7',
-        '8', '9', '10', '11', '12'
+    var month = [1, 2, 3, 4, 5, 6, 7,
+        8, 9, 10, 11, 12
     ];
 
     var Days = [];
@@ -43,23 +51,74 @@
    
 
     var datas = [];
+    //文档就绪函数
     $(function () {
-
+        show();
+        showpolluant();
     })
 
+    //显示数据echarts图
     function show() {
         $.ajax({
-            url: 'http://localhost:8099/GetHourDatas',
+            url: 'http://localhost:8099/GetMonthDatas',
             type: 'get',
             data: {
-                polluantid: 11,
+                polluantid: 17,
                 monitortime:2018
             },
             success: function (data) {
+                console.log(data);
                 $(data).each(function (index, data) {
-                    var date = new Date(data.MonitorTime)
-                    datas.push([Math.ceil((date - new Date(date.getFullYear().toString()) + 1000 * 60 * 60 * 9) / (24 * 60 * 60 * 1000)) - 1, date.getHours(), data.AVGValue])
+                                    
+                    var date = new Date(data.MonitorTime.toString())
+                    console.log(date.getMonth())                  
+                    option = {
+                        tooltip: {
+                            position: 'top'
+                        },
+                        animation: true,
+                        grid: {
+                            height: '50%',
+                            y: '10%'
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: Days,
+                            splitArea: {
+                                show: true
+                            }
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: month,
+                            splitArea: {
+                                show: true
+                            }
+                        },
+                        visualMap: {
+                            min: 0,
+                            max: 300,
+                            calculable: true,
+                            orient: 'horizontal',
+                            left: 'center',
+                            bottom: '15%'
+                        },
+                        series: [{
+                            name: 'Punch Card',
+                            type: 'heatmap',
+                            data: datas,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }]
+                    };;
+                    datas.push([index%100, date.getMonth(), data.AVGValue])
                 })
+                myChart.setOption(option,true);
+                console.log(datas)
             }
         })
     }
@@ -68,56 +127,87 @@
         return [item[1], item[0], item[2] || '-'];
     });
 
-    option = {
-        tooltip: {
-            position: 'top'
-        },
-        animation: false,
-        grid: {
-            height: '50%',
-            y: '10%'
-        },
-        xAxis: {
-            type: 'category',
-            data: Days,
-            splitArea: {
-                show: true
+    //显示所有污染物
+    function showpolluant() {
+        $.ajax({
+            url: 'http://localhost:8099/GetPollutants',
+            type: 'get',
+            success: function (data) {
+                $(data).each(function (index, data) {
+                    $("select[name=Id]").append("<option value=" + data.Id + ">" + data.PollutantName + "</option>")
+                })
             }
-        },
-        yAxis: {
-            type: 'category',
-            data: month,
-            splitArea: {
-                show: true
-            }
-        },
-        visualMap: {
-            min: 0,
-            max: 10,
-            calculable: true,
-            orient: 'horizontal',
-            left: 'center',
-            bottom: '15%'
-        },
-        series: [{
-            name: 'Punch Card',
-            type: 'heatmap',
-            data: datas,
-            label: {
-                normal: {
-                    show: true
-                }
-            },
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        }]
-    };;
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
+        })
     }
 
+    //根据年份和污染物进行查询
+    function btnSearch() {
+        $.ajax({
+            url: 'http://localhost:8099/GetMonthDatas',
+            type: 'get',
+            data: {
+                polluantid: $("select[name=Id]").val(),
+                monitortime: $("input[name=time]").val()
+            },
+            success: function (data) {
+                console.log(data);
+                $(data).each(function (index, data) {
+
+                    var date = new Date(data.MonitorTime.toString())
+                    console.log(date.getMonth())
+                    //datas.push([Math.ceil((date - new Date(date.getFullYear().toString()) + 1000 * 60 * 60 * 9) / (24 * 60 * 60 * 1000)) - 1, date.getHours(), data.AVGValue])
+                    option = {
+                        tooltip: {
+                            position: 'top'
+                        },
+                        animation: true,
+                        grid: {
+                            height: '50%',
+                            y: '10%'
+                        },
+                        xAxis: {
+                            type: 'category',
+                            data: Days,
+                            splitArea: {
+                                show: true
+                            }
+                        },
+                        yAxis: {
+                            type: 'category',
+                            data: month,
+                            splitArea: {
+                                show: true
+                            }
+                        },
+                        visualMap: {
+                            min: 0,
+                            max: 300,
+                            calculable: true,
+                            orient: 'horizontal',
+                            left: 'center',
+                            bottom: '15%'
+                        },
+                        series: [{
+                            name: 'Punch Card',
+                            type: 'heatmap',
+                            data: datas,
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }]
+                    };;
+                    datas.push([index % 100, date.getMonth(), data.AVGValue])
+
+
+
+
+                })
+                myChart.setOption(option, true);
+                console.log(datas)
+            }
+        })
+    }
 </script>

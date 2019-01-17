@@ -73,11 +73,32 @@ namespace Mesher.Services
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
             {
+                if (polluantid == 0)
+                {
+                    string sql = @"select a.avgvalue,a.monitortime from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id where  monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
+                    var condition = new { Monitortime = monitortime };
+                    var collectList = conn.Query<MonthData>(sql, condition);
+                    return collectList.ToList();
+                }
+                else if (monitortime == null)
+                {
+                    string sql = @"select a.avgvalue,a.monitortime from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id where c.id=:polluantid  order by a.monitortime";
+                    var condition = new { Polluantid = polluantid };
+                    var collectList = conn.Query<MonthData>(sql, condition);
+                    return collectList.ToList();
+                }
+                else
+                {
+                    string sql = @"select a.avgvalue,a.monitortime from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id where c.id=:polluantid and monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
+                    var condition = new { Polluantid = polluantid, Monitortime = monitortime };
+                    var collectList = conn.Query<MonthData>(sql, condition);
+                    return collectList.ToList();
+                }
 
-                string sql = @"select * from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id where c.id=:polluantid and monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
-                var condition = new {  Polluantid = polluantid, Monitortime = monitortime };
-                var collectList = conn.Query<MonthData>(sql, condition);
-                return collectList.ToList();
+                //string sql = @"select a.avgvalue,a.monitortime from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id where c.id=:polluantid and monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
+                //var condition = new {  Polluantid = polluantid, Monitortime = monitortime };
+                //var collectList = conn.Query<MonthData>(sql, condition);
+                //return collectList.ToList();
 
             }
         }

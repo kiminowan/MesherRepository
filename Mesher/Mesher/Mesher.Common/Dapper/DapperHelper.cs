@@ -12,7 +12,7 @@ using Oracle.ManagedDataAccess;
 
     public class DapperHelper
     {
-        public static string connString = ConfigurationManager.AppSettings["connString"].ToString();
+        public static string connString = ConfigurationManager.ConnectionStrings["connString"].ConnectionString;
 
         /// <summary>
         /// 获取连接数据库的字符串

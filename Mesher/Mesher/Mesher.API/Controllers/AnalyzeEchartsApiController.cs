@@ -20,9 +20,9 @@ namespace Mesher.API.Controllers
 
         [HttpGet]
         [Route("GetAnalyzeEcharts")]
-        public List<AnalyzeEcharts> GetAnalyzeEcharts()//string StartTime,string EndTime)
+        public List<AnalyzeEcharts> GetAnalyzeEcharts(string StartTime, string EndTime)
         {
-            var result = analyzeEcharts.GetAnalyzeEcharts();
+            var result = analyzeEcharts.GetAnalyzeEcharts(StartTime,EndTime);
             //if (!string.IsNullOrWhiteSpace(StartTime))
             //{
             //    result = result.Where(r => r.StartTime.ToString().Contains(StartTime)).ToList();

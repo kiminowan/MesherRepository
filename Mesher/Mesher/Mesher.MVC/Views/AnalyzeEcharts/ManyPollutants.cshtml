@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>ManyPollutants</title>
 </head>
-<body style="height: 100%; margin: 0">
+<body style="height: 730px; margin: 0">
     <div style="height: 100%;width:10%;float:left;background-color:aqua;">
         <br />
         <input type="text" style="width:110px;" name="PointName" />  <button onclick="btnSearch()">搜索</button>
@@ -98,7 +98,7 @@
             $.ajax({
                 url: 'http://localhost:8099/AnalyzeEcharts/GetAnalyzeEcharts',
                 data: {
-                    StartName: $("input[name=StartName]").val(),
+                    StartTime: $("input[name=StartTime]").val(),
                     EndTime: $("input[name=EndTime]").val()
                 },
                 type: 'get',

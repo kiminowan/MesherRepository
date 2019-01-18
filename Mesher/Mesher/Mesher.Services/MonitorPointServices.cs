@@ -56,7 +56,7 @@ namespace Mesher.Services
             {
                 string sql = "select monitortime from minutedata order by monitortime desc ";
                 var dateTime = conn.Query<DateTime>(sql, null).ToList().FirstOrDefault();
-                string sqlMinute = "select a.pointname,d.avgvalue,b.pollutantid from monitorpoint a inner join MonitorPointPollutan b on a.id=b.pointid inner join minutedata d on b.id=d.monitor_pollutionid where regioncode=(select b.region_code from \"User\" a inner join Region b on a.regionid=b.id where a.id=:userid) and monitortime>=:time";
+                string sqlMinute = "select a.pointtype,a.longitude,a.latitude,a.pointname,d.avgvalue,b.pollutantid from monitorpoint a inner join MonitorPointPollutan b on a.id=b.pointid inner join minutedata d on b.id=d.monitor_pollutionid where regioncode=(select b.region_code from \"User\" a inner join Region b on a.regionid=b.id where a.id=:userid) and monitortime>=:time";
                 var conditon = new { Id = id, Userid = userid, time = dateTime };
                 var collectList = conn.Query<MinuteDealData>(sqlMinute, conditon);
                 List<string> monitors = (from c in collectList select c.PointName).Distinct().ToList();
@@ -65,10 +65,14 @@ namespace Mesher.Services
                 {
                     MinuteShowData minuteShowData = new MinuteShowData();
                     minuteShowData.PointName = monitor;
+                    
                     foreach (MinuteDealData minuteDealData in collectList)
                     {
                         if (minuteDealData.PointName == monitor)
                         {
+                            minuteShowData.Latitude = minuteDealData.Latitude;
+                            minuteShowData.Longitude = minuteDealData.Longitude;
+                            minuteShowData.PointType = minuteDealData.PointType;
                             switch (minuteDealData.PollutantID)
                             {
                                 case 11: minuteShowData.AQI = minuteDealData.AVGValue; break;

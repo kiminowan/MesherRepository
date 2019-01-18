@@ -402,7 +402,7 @@
             success: function (data) {
                 
                 $(data).each(function (index, data) {
-                    cxl(data.PointName, $(obj).attr("cxl"))
+                    cxl(data.PointName, $(obj).attr("cxl"), $(obj).val())
                         
 
                     $("#div1").append("<a value='" + data.PointName + "' href='javascript:;' onclick=cxl('" + data.PointName + "','" + $(obj).attr("cxl")+"')>'" + data.PointName + "'</a>");
@@ -420,12 +420,13 @@
             }
         })
     }
-    function cxl(obj,n) {
+    function cxl(obj,n,va) {
         alert(n);
 
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
             type: 'get',
+            async: false,
             data: {
                 "Code": n,
                 "pollname": $('input[Name="gender"]:checked').val(),
@@ -433,18 +434,13 @@
             },
             success: function (data) {
                 i = [];
-                $(data).each(function (index, data) {
-
-                    
-                    i.push([data.MonitorTime, data.AVGValue]);
-
-
-
-
-
-                })
+                    $(data).each(function (index, data) {
+                        console.log(data)
+                        i.push([data.MonitorTime, data.AVGValue]);
+                    })
                 arr.push({
-
+                    type: 'line',
+                    name: obj,
                     data: i.map(function (item) {
                         return item[1];
                     }),

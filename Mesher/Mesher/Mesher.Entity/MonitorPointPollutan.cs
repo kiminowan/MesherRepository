@@ -17,5 +17,7 @@ namespace Mesher.Entity
         public int PointId { get; set; }
         //污染物主键
         public int PollutantId { get; set; }
+        //站点名称
+        public string PointName { get; set; }
     }
 }

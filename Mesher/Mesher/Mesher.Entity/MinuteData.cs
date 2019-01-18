@@ -42,6 +42,11 @@ namespace Mesher.Entity
         public string PointName { get; set; }
         //污染物ID
         public int PollutantID { get; set; }
+        //经度
+        public decimal Longitude { get; set; }
+        //纬度
+        public decimal Latitude { get; set; }
+        public int PointType { get; set; }
     }
     public class MinuteShowData
     {
@@ -53,5 +58,10 @@ namespace Mesher.Entity
         public decimal NO2 { get; set; }
         public decimal O3 { get; set; }
         public decimal SO2 { get; set; }
+        //经度
+        public decimal Longitude { get; set; }
+        //纬度
+        public decimal Latitude { get; set; }
+        public int PointType { get; set; }
     }
 }

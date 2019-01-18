@@ -6,7 +6,7 @@
 }
 
 <!DOCTYPE html>
-    
+
 <html>
 <head>
     <meta charset="utf-8">
@@ -88,22 +88,17 @@
                 统计分析<span class="caret"></span>
             </button>
             <ul style="z-index:100000001" class="dropdown-menu">
-                <li><a href="/AnalyzeEcharts/Index">多站点污染物分析</a></li>
-                <li><a href="/AnalyzeEcharts/Index">单站点污染物分析</a></li>
+                <li><a href="/AnalyzeEcharts/ManyPollutants">多站点污染物分析</a></li>
+                <li><a href="/AnalyzeEcharts/SingleSite">单站点污染物分析</a></li>
                 <li><a href="/MonitorPoint/CxlMon?Code=@Request.QueryString["data"]">月度数据分析</a></li>
 
 
                 <li><a href="/MonitorPoint/CxlMonEcharts?Code=@Request.QueryString["data"]">大气常规站污染分析</a></li>
-                <li><a href="/AnalyzeEcharts/Index">多站点年度污染分析</a></li>
-                <li><a href="/AnalyzeEcharts/Index">单站点年度污染分析</a></li>
+                <li><a href="/Hot/AllIndex">多站点年度污染分析</a></li>
+                <li><a href="/Hot/Index">单站点年度污染分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">超国控点预警数据统计</a></li>
                 <li><a href="/AnalyzeEcharts/Index">站点数据排名统计</a></li>
-                <li><a href="/AnalyzeEcharts/Index">预警信息查询</a></li>
                 <li><a href="/AnalyzeEcharts/Index">站点基本信息查询</a></li>
-                <li><a href="/AnalyzeEcharts/Index">污染分析报告</a></li>
-                <li><a href="/AnalyzeEcharts/Index">监测数据查询</a></li>
-                <li><a href="/AnalyzeEcharts/Index">城市历史变化趋势</a></li>
-                <li><a href="/AnalyzeEcharts/Index">城市累积变化趋势</a></li>
             </ul>
         </span>
 
@@ -149,33 +144,37 @@
             center: [116.397428, 39.90923],
             zoom: 6
         });
+        var dataList = [];
         var positions = [];
-        $.ajax({
-            url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
-            data: {
-                id: 11,
-                userid: ids,
-            },
-            type: 'get',
-            success: function (data) {
+        //$.ajax({
+        //    url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
+        //    data: {
+        //        id: 11,
+        //        userid: ids,
+        //    },
+        //    type: 'get',
+        //    success: function (data) {
 
-                console.log(data)
-                $(data).each(function (index, data) {
-                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue.toFixed(0) + "</td></tr>")
-                })
-            }
-        })
+        //        console.log(data)
+        //        $(data).each(function (index, data) {
+        //            $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue.toFixed(0) + "</td></tr>")
+        //        })
+        //    }
+        //})
         $.ajax({
-            url: "http://localhost:8099/MonitorPoints/GetMonitorPoint",
+            url: "http://localhost:8099/MonitorPoints/GetMinuteDatas",
             type: "get",
             data: {
-                id: ids
+                id: 11,
+                userid: ids
             },
             success: function (data) {
-
+                dataList = data;
                 console.log(data);
                 positions = [];
                 $(data).each(function (index, data) {
+                    $("#tan").append("<tr><td>" + (index + 1) + "</td><td>" + data.PointName + "</td><td>" + data.AQI.toFixed(0) + "</td></tr>")
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td>" + data.PointName + "</td><td>" + data.AQI.toFixed(0) + "</td></tr>")
                     //console.log(data);
                     if (data.PointType == 9) {
                         //添加点标记信息窗体
@@ -234,7 +233,7 @@
 
                     //marker.content = '监测点名称：' + data.PointName + "</br>" + '设备编号：' + data.EquipmentCode + "</br>" + '监测点类型：' + data.PointType + "</br>" + '行政区编号：' + data.RegionCode + "</br>" + '状态：' + data.Status + "</br>" + '更新时间：' + data.UpdateDate + "</br>";
                     //marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointType + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
-                    marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>" + '设备编号：' + "</td><td>" + data.EquipmentCode + "</td></tr><tr><td>" + '类型：' + "</td><td>" + data.PointTypeName + "</td></tr><tr><td>" + '行政区：' + "</td><td>" + data.RegionCode + "</td></tr><tr><td>" + '状态：' + "</td><td>" + data.Status + "</td></tr><tr><td>" + '更新时间：' + "</td><td>" + data.UpdateDate + "</td></tr></table>";
+                    marker.content = "<table><tr><td>" + '名称：' + "</td><td>" + data.PointName + "</td></tr><tr><td>AQI：</td><td>" + data.AQI + "</td><td>PM2.5：</td><td>" + data.PM2 + "</td><td>PM10：</td><td>" + data.PM10 + "</td></tr><tr><td>CO</td><td>" + data.CO + "</td><td>NO2</td><td>" + data.NO2 + "</td><td>O3</td><td>" + data.O3 + "</td></tr><tr><td>SO2</td><td>" + data.SO2 + "</td><td>经度</td><td>" + data.Longitude + "</td><td>纬度</td><td>" + data.Latitude + "</td></tr></table>";
                     marker.on('click', markerClick);
                     //marker.emit('click', { target: marker });
 
@@ -255,7 +254,7 @@
             //show();
             showPolluation();
             GetRegion();
-            Warning();
+           // Warning();
         })
 
 
@@ -298,27 +297,30 @@
         //根据不同按钮获取不同污染物浓度
         function btnPo(id, name) {
             $("#pollution").text(name);
-            $.ajax({
-                url: 'http://localhost:8099/MonitorPoints/GetMinuteDatas',
-                data: {
-                    Id: id,
-                    userid: ids
-                },
-                type: 'get',
-                success: function (data) {
-                    $("#tab tr").not(":first").remove();
-                    if (id == 13) {
-                        $(data).each(function (index, data) {
-                            $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue.toFixed(4) + "</td></tr>")
-                        })
-                    }
-                    else {
-                        $(data).each(function (index, data) {
-                            $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AVGValue.toFixed(0) + "</td></tr>")
-                        })
-                    }
-                }
-            })
+            $("#tab tr").not(":first").remove();
+            switch (id) {
+                case 11: $(dataList).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AQI.toFixed(0) + "</td></tr>")
+                }); break;
+                case 12: $(dataList).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.PM2.toFixed(0) + "</td></tr>")
+                }); break;
+                case 13: $(dataList).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.CO.toFixed(4) + "</td></tr>")
+                }); break;
+                case 14: $(dataList).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.NO2.toFixed(0) + "</td></tr>")
+                }); break;
+                case 15: $(dataList).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.O3.toFixed(0) + "</td></tr>")
+                }); break;
+                case 16: $(dataList).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.SO2.toFixed(0) + "</td></tr>")
+                }); break;
+                case 17: $(dataList).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.PM10.toFixed(0) + "</td></tr>")
+                }); break;
+            }
         }
         //调天气预报接口
         function GetRegion() {
@@ -353,19 +355,19 @@
         }
 
         //预警排名
-        function Warning() {
-            $.ajax({
-                url: "http://localhost:8099/MonitorPoints/GetMinuteDatas",
-                type: "get",
-                data: { id: 11, userid:ids },
-                success: function (data) {
+        //function Warning() {
+        //    $.ajax({
+        //        url: "http://localhost:8099/MonitorPoints/GetMinuteDatas",
+        //        type: "get",
+        //        data: { id: 11, userid:ids },
+        //        success: function (data) {
 
-                    $(data).each(function (index, data) {
-                        $("#tan").append("<tr><td>" + (index+1) + "</td><td>" + data.PointName + "</td><td>" + data.AVGValue.toFixed(0) + "</td></tr>")
-                    })
-                }
-            })
-        }
+        //            $(data).each(function (index, data) {
+        //                $("#tan").append("<tr><td>" + (index + 1) + "</td><td>" + data.PointName + "</td><td>" + data.AQI.toFixed(0) + "</td></tr>")
+        //            })
+        //        }
+        //    })
+        //}
 
 
 

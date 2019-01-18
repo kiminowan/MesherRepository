@@ -632,6 +632,7 @@
     })
     //通过国控点id 站到距离最近的微站点
     function fun(obj) {
+        //PM2.5
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetZh',
             type: 'get',
@@ -639,6 +640,7 @@
                 "cor": $(obj).attr("cxl"),
             },
             success: function (data) {
+                console.log(data)
                 var flag = arrPM2_5;
                 arrPM2_5 = [];
                 $(data).each(function (index, data) {
@@ -750,6 +752,7 @@
                         })
                     })
                 }
+
                 myChart3.setOption({
                     xAxis: xray,
                     series: arrNO2

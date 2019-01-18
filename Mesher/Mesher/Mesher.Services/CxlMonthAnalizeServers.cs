@@ -220,7 +220,7 @@ namespace Mesher.Services
 
 
                 //获取到大气污染物的数据    获取到 离国控点最近的微站点 pm2.5的数据
-                string sql = string.Format("select a.avgvalue,a.MonitorTime,c.pointname,d.pollutantname from hourdata a,MonitorPointPollutan b,MonitorPoint c,Pollutant d where a.monitor_pollutionid=b.id and b.pointid=c.id and b.pollutantid=d.id and c.NearlyStation='" + Code + "' and d.pollutantname='" + pollname + "' AND a.monitortime<to_date('" + time1 + "','yyyy-MM-dd hh24:mi:ss') and  a.monitortime>to_date('" + tim2 + "','yyyy-MM-dd hh24:mi:ss') and c.pointname='"+name+"'");
+                string sql = string.Format("select a.avgvalue,a.MonitorTime,c.pointname,d.pollutantname from hourdata a,MonitorPointPollutan b,MonitorPoint c,Pollutant d where a.monitor_pollutionid=b.id and b.pointid=c.id and b.pollutantid=d.id and c.NearlyStation='" + Code + "' and d.pollutantname='" + pollname + "' AND a.monitortime<to_date('" + time1 + "','yyyy-MM-dd hh24:mi:ss') and  a.monitortime>to_date('" + tim2 + "','yyyy-MM-dd hh24:mi:ss') and c.pointname='"+name+ "' order by a.monitortime");
                 //接收
                 var collectList = conn.Query<NationalControl>(sql, null);
                 //按照站名进行排序，并获得所有的站名

@@ -432,8 +432,6 @@
                 "name": obj
             },
             success: function (data) {
-
-
                 i = [];
                 $(data).each(function (index, data) {
 
@@ -447,8 +445,7 @@
                 })
                 arr.push({
 
-                   
-                    : i.map(function (item) {
+                    data: i.map(function (item) {
                         return item[1];
                     }),
                 })

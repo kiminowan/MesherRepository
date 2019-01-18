@@ -8,18 +8,22 @@
 </head>
 <body style="height: 100%; margin: 0">
     <div id="div1" style="height: 100%;width:10%;float:left;background-color:aqua;">
-        <input id="Button1" type="button" value="button" style="width:100%;height:50px" onclick="fun()" cxl=""/>
+
         <input id="h1" type="hidden" value="@Request.QueryString["Code"]" />
+        <input id="Radio1" type="radio" Name="gender" value="PM2.5" />PM2.5<br /><input id="Radio1" type="radio" Name="gender" value="PM10" />PM10<br /><input id="Radio1" type="radio" Name="gender" value="SO2" />SO2<br />
+        <input id="Radio1" type="radio" Name="gender" value="O3" />O3<br /><input id="Radio1" type="radio" Name="gender" value="CO" />CO<br /><input id="Radio1" type="radio" Name="gender" value="AQI" />AQI<br />
     </div>
+
     <div style="height: 100%;width:90%;float:left">
         <div style="height: 50%;width:100%;float:left">
-            <div id="container" style="height: 100%;width:50%;float:left"></div>
+            <div id="container" style="height: 100%;width:50%;float:left" ></div>
             <div id="container1" style="height: 100%;width:50%;float:left"></div>
         </div>
         <div style="height: 50%;width:100%;float:left">
             <div id="container2" style="height: 100%;width:50%;float:left"></div>
             <div id="container3" style="height: 100%;width:50%;float:left"></div>
         </div>
+
     </div>
     <link rel="stylesheet" href="lib/reset.css" />
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
@@ -33,330 +37,329 @@
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
 
     <script type="text/javascript">
-            var dom = document.getElementById("container");
-            var myChart = echarts.init(dom);
-            var dom1 = document.getElementById("container1");
-            var myChart1 = echarts.init(dom1);
-            var dom2 = document.getElementById("container2");
-            var myChart2 = echarts.init(dom2);
-            var dom3 = document.getElementById("container3");
-            var myChart3 = echarts.init(dom3);
-            var app = {};
-            option = null;
-            var data = [["2000-06-05", 116.2356], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654]]
-            myChart.setOption(option = {
-                title: {
-                    text: '6参数AQI'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    data: data.map(function (item) {
-                        return item[0];
-                    })
-                },
-                yAxis: {
-                    splitLine: {
-                        show: false
-                    }
-                },
-
-                dataZoom: [{
-                    startValue: '2014-06-01'
-                }, {
-                    type: 'inside'
-                }],
-                visualMap: {
-                    top: 10,
-                    right: 10,
-                    pieces: [{
-                        gt: 0,
-                        lte: 50,
-                        color: '#096'
-                    }, {
-                        gt: 50,
-                        lte: 100,
-                        color: '#ffde33'
-                    }, {
-                        gt: 100,
-                        lte: 150,
-                        color: '#ff9933'
-                    }, {
-                        gt: 150,
-                        lte: 200,
-                        color: '#cc0033'
-                    }, {
-                        gt: 200,
-                        lte: 300,
-                        color: '#660099'
-                    }, {
-                        gt: 300,
-                        color: '#7e0023'
-                    }],
-                    outOfRange: {
-                        color: '#999'
-                    }
-                },
-                series: {
-                    name: 'AQI',
-                    type: 'line',
-                    data: data.map(function (item) {
-                        return item[1];
-                    }),
-                    markLine: {
-                        silent: true,
-                        data: [{
-                            yAxis: 50
-                        }, {
-                            yAxis: 100
-                        }, {
-                            yAxis: 150
-                        }, {
-                            yAxis: 200
-                        }, {
-                            yAxis: 300
-                        }]
-                    }
+        var dom = document.getElementById("container");
+        var myChart = echarts.init(dom);
+        var dom1 = document.getElementById("container1");
+        var myChart1 = echarts.init(dom1);
+        var dom2 = document.getElementById("container2");
+        var myChart2 = echarts.init(dom2);
+        var dom3 = document.getElementById("container3");
+        var myChart3 = echarts.init(dom3);
+        var app = {};
+        var xray = null;
+        var arr = [];
+        option = null;
+        var data = [["2000-06-05", 116.2356], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654], ["2000-06-05", 129.369854], ["2000-06-05", 135.3654]]
+        myChart.setOption(option = {
+            title: {
+                text: '6参数AQI'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: data.map(function (item) {
+                    return item[0];
+                })
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
                 }
-            });
-            if (option && typeof option === "object") {
-                myChart.setOption(option, true);
+            },
+
+            dataZoom: [{
+                startValue: '2014-06-01'
+            }, {
+                type: 'inside'
+            }],
+            visualMap: {
+                pieces: [{
+                    gt: 0,
+                    lte: 50,
+                    color: '#096'
+                }, {
+                    gt: 50,
+                    lte: 100,
+                    color: '#ffde33'
+                }, {
+                    gt: 100,
+                    lte: 150,
+                    color: '#ff9933'
+                }, {
+                    gt: 150,
+                    lte: 200,
+                    color: '#cc0033'
+                }, {
+                    gt: 200,
+                    lte: 300,
+                    color: '#660099'
+                }, {
+                    gt: 300,
+                    color: '#7e0023'
+                }],
+                outOfRange: {
+                    color: '#999'
+                }
+            },
+            series: [{
+                name: 'AQI',
+                type: 'line',
+                data: data.map(function (item) {
+                    return item[1];
+                }),
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 50
+                    }, {
+                        yAxis: 100
+                    }, {
+                        yAxis: 150
+                    }, {
+                        yAxis: 200
+                    }, {
+                        yAxis: 300
+                    }]
+                }
+            }]
+        });
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
+        myChart1.setOption(option = {
+            title: {
+                text: '臭氧微型站AQI'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: data.map(function (item) {
+                    return item[0];
+                })
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
+                }
+            },
+
+            dataZoom: [{
+                startValue: '2014-06-01'
+            }, {
+                type: 'inside'
+            }],
+            visualMap: {
+                pieces: [{
+                    gt: 0,
+                    lte: 50,
+                    color: '#096'
+                }, {
+                    gt: 50,
+                    lte: 100,
+                    color: '#ffde33'
+                }, {
+                    gt: 100,
+                    lte: 150,
+                    color: '#ff9933'
+                }, {
+                    gt: 150,
+                    lte: 200,
+                    color: '#cc0033'
+                }, {
+                    gt: 200,
+                    lte: 300,
+                    color: '#660099'
+                }, {
+                    gt: 300,
+                    color: '#7e0023'
+                }],
+                outOfRange: {
+                    color: '#999'
+                }
+            },
+            series: {
+                name: 'AQI',
+                type: 'line',
+                data: data.map(function (item) {
+                    return item[1];
+                }),
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 50
+                    }, {
+                        yAxis: 100
+                    }, {
+                        yAxis: 150
+                    }, {
+                        yAxis: 200
+                    }, {
+                        yAxis: 300
+                    }]
+                }
             }
-            myChart1.setOption(option = {
-                title: {
-                    text: '臭氧微型站AQI'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    data: data.map(function (item) {
-                        return item[0];
-                    })
-                },
-                yAxis: {
-                    splitLine: {
-                        show: false
-                    }
-                },
-
-                dataZoom: [{
-                    startValue: '2014-06-01'
-                }, {
-                    type: 'inside'
-                }],
-                visualMap: {
-                    top: 10,
-                    right: 10,
-                    pieces: [{
-                        gt: 0,
-                        lte: 50,
-                        color: '#096'
-                    }, {
-                        gt: 50,
-                        lte: 100,
-                        color: '#ffde33'
-                    }, {
-                        gt: 100,
-                        lte: 150,
-                        color: '#ff9933'
-                    }, {
-                        gt: 150,
-                        lte: 200,
-                        color: '#cc0033'
-                    }, {
-                        gt: 200,
-                        lte: 300,
-                        color: '#660099'
-                    }, {
-                        gt: 300,
-                        color: '#7e0023'
-                    }],
-                    outOfRange: {
-                        color: '#999'
-                    }
-                },
-                series: {
-                    name: 'AQI',
-                    type: 'line',
-                    data: data.map(function (item) {
-                        return item[1];
-                    }),
-                    markLine: {
-                        silent: true,
-                        data: [{
-                            yAxis: 50
-                        }, {
-                            yAxis: 100
-                        }, {
-                            yAxis: 150
-                        }, {
-                            yAxis: 200
-                        }, {
-                            yAxis: 300
-                        }]
-                    }
+        });
+        if (option && typeof option === "object") {
+            myChart1.setOption(option, true);
+        }
+        myChart2.setOption(option = {
+            title: {
+                text: '颗粒物微型站AQI'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: data.map(function (item) {
+                    return item[0];
+                })
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
                 }
-            });
-            if (option && typeof option === "object") {
-                myChart1.setOption(option, true);
+            },
+
+            dataZoom: [{
+                startValue: '2014-06-01'
+            }, {
+                type: 'inside'
+            }],
+            visualMap: {
+                top: 10,
+                right: 10,
+                pieces: [{
+                    gt: 0,
+                    lte: 50,
+                    color: '#096'
+                }, {
+                    gt: 50,
+                    lte: 100,
+                    color: '#ffde33'
+                }, {
+                    gt: 100,
+                    lte: 150,
+                    color: '#ff9933'
+                }, {
+                    gt: 150,
+                    lte: 200,
+                    color: '#cc0033'
+                }, {
+                    gt: 200,
+                    lte: 300,
+                    color: '#660099'
+                }, {
+                    gt: 300,
+                    color: '#7e0023'
+                }],
+                outOfRange: {
+                    color: '#999'
+                }
+            },
+            series: {
+                name: 'AQI',
+                type: 'line',
+                data: data.map(function (item) {
+                    return item[1];
+                }),
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 50
+                    }, {
+                        yAxis: 100
+                    }, {
+                        yAxis: 150
+                    }, {
+                        yAxis: 200
+                    }, {
+                        yAxis: 300
+                    }]
+                }
             }
-            myChart2.setOption(option = {
-                title: {
-                    text: '颗粒物微型站AQI'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    data: data.map(function (item) {
-                        return item[0];
-                    })
-                },
-                yAxis: {
-                    splitLine: {
-                        show: false
-                    }
-                },
-
-                dataZoom: [{
-                    startValue: '2014-06-01'
-                }, {
-                    type: 'inside'
-                }],
-                visualMap: {
-                    top: 10,
-                    right: 10,
-                    pieces: [{
-                        gt: 0,
-                        lte: 50,
-                        color: '#096'
-                    }, {
-                        gt: 50,
-                        lte: 100,
-                        color: '#ffde33'
-                    }, {
-                        gt: 100,
-                        lte: 150,
-                        color: '#ff9933'
-                    }, {
-                        gt: 150,
-                        lte: 200,
-                        color: '#cc0033'
-                    }, {
-                        gt: 200,
-                        lte: 300,
-                        color: '#660099'
-                    }, {
-                        gt: 300,
-                        color: '#7e0023'
-                    }],
-                    outOfRange: {
-                        color: '#999'
-                    }
-                },
-                series: {
-                    name: 'AQI',
-                    type: 'line',
-                    data: data.map(function (item) {
-                        return item[1];
-                    }),
-                    markLine: {
-                        silent: true,
-                        data: [{
-                            yAxis: 50
-                        }, {
-                            yAxis: 100
-                        }, {
-                            yAxis: 150
-                        }, {
-                            yAxis: 200
-                        }, {
-                            yAxis: 300
-                        }]
-                    }
+        });
+        if (option && typeof option === "object") {
+            myChart2.setOption(option, true);
+        }
+        myChart3.setOption(option = {
+            title: {
+                text: '小型空气微型站AQI'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            xAxis: {
+                data: data.map(function (item) {
+                    return item[0];
+                })
+            },
+            yAxis: {
+                splitLine: {
+                    show: false
                 }
-            });
-            if (option && typeof option === "object") {
-                myChart2.setOption(option, true);
+            },
+
+            dataZoom: [{
+                startValue: '2014-06-01'
+            }, {
+                type: 'inside'
+            }],
+            visualMap: {
+                top: 10,
+                right: 10,
+                pieces: [{
+                    gt: 0,
+                    lte: 50,
+                    color: '#096'
+                }, {
+                    gt: 50,
+                    lte: 100,
+                    color: '#ffde33'
+                }, {
+                    gt: 100,
+                    lte: 150,
+                    color: '#ff9933'
+                }, {
+                    gt: 150,
+                    lte: 200,
+                    color: '#cc0033'
+                }, {
+                    gt: 200,
+                    lte: 300,
+                    color: '#660099'
+                }, {
+                    gt: 300,
+                    color: '#7e0023'
+                }],
+                outOfRange: {
+                    color: '#999'
+                }
+            },
+            //控制多线条显示  数组形式
+            series: {
+                name: 'AQI',
+                type: 'line',
+                data: data.map(function (item) {
+                    return item[1];
+                }),
+                markLine: {
+                    silent: true,
+                    data: [{
+                        yAxis: 50
+                    }, {
+                        yAxis: 100
+                    }, {
+                        yAxis: 150
+                    }, {
+                        yAxis: 200
+                    }, {
+                        yAxis: 300
+                    }]
+                }
             }
-            myChart3.setOption(option = {
-                title: {
-                    text: '小型空气微型站AQI'
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    data: data.map(function (item) {
-                        return item[0];
-                    })
-                },
-                yAxis: {
-                    splitLine: {
-                        show: false
-                    }
-                },
-
-                dataZoom: [{
-                    startValue: '2014-06-01'
-                }, {
-                    type: 'inside'
-                }],
-                visualMap: {
-                    top: 10,
-                    right: 10,
-                    pieces: [{
-                        gt: 0,
-                        lte: 50,
-                        color: '#096'
-                    }, {
-                        gt: 50,
-                        lte: 100,
-                        color: '#ffde33'
-                    }, {
-                        gt: 100,
-                        lte: 150,
-                        color: '#ff9933'
-                    }, {
-                        gt: 150,
-                        lte: 200,
-                        color: '#cc0033'
-                    }, {
-                        gt: 200,
-                        lte: 300,
-                        color: '#660099'
-                    }, {
-                        gt: 300,
-                        color: '#7e0023'
-                    }],
-                    outOfRange: {
-                        color: '#999'
-                    }
-                },
-                series: {
-                    name: 'AQI',
-                    type: 'line',
-                    data: data.map(function (item) {
-                        return item[1];
-                    }),
-                    markLine: {
-                        silent: true,
-                        data: [{
-                            yAxis: 50
-                        }, {
-                            yAxis: 100
-                        }, {
-                            yAxis: 150
-                        }, {
-                            yAxis: 200
-                        }, {
-                            yAxis: 300
-                        }]
-                    }
-                }
-            });
+        });
 
     </script>
 </body>
@@ -364,21 +367,20 @@
 <script src="~/Script/jquery-3.1.1.js"></script>
 <script>
     $(function () {
+
         alert($("#h1").val());
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetMonitorPoints?Code=' + $("#h1").val(),
 
             type: 'get',
             success: function (recc) {
-                console.log(recc);
-                $(recc).each(function (index,recc) {
-                    $("#div1").append("<input id=\"Button1\" type=\"button\" value=\"" + recc.PointName + "\" style=\"width:127.3px; height: 50px\" onclick=\"fun()\" cxl=\""+recc.+"\"/>");
+
+                $(recc).each(function (index, recc) {
+                    $("#div1").append("<input id=\"div2\" type=\"button\" value=\"" + recc.PointName + "\" style=\"width:127.3px; height: 50px\" onclick=\"fun(this)\" cxl=\"" + recc.Id + "\" class='btn'/>");
 
                 })
-               
-                if (option && typeof option === "object") {
-                    myChart3.setOption(option, true);
-                }
+
+
             }
 
 
@@ -387,8 +389,77 @@
 
 
     })
-    function fun() {
-        alert(this.text);
-    }
+    function fun(obj) {
+        alert($('input:radio:checked').val());
 
+        $.ajax({
+            url: 'http://localhost:8099/caoxiaole/GetZh',
+            type: 'get',
+            data: {
+                "cor": $(obj).attr("cxl"),
+                
+            },
+            success: function (data) {
+                
+                $(data).each(function (index, data) {
+                    cxl(data.PointName, $(obj).attr("cxl"))
+                        
+
+                    $("#div1").append("<a value='" + data.PointName + "' href='javascript:;' onclick=cxl('" + data.PointName + "','" + $(obj).attr("cxl")+"')>'" + data.PointName + "'</a>");
+
+
+
+                })
+                myChart.setOption({
+                    xAxis: xray,
+                    series: arr
+                });
+                //cxl($(obj).attr("cxl"));
+               
+                
+            }
+        })
+    }
+    function cxl(obj,n) {
+        alert(n);
+
+        $.ajax({
+            url: 'http://localhost:8099/caoxiaole/GetNationalControls',
+            type: 'get',
+            data: {
+                "Code": n,
+                "pollname": $('input[Name="gender"]:checked').val(),
+                "name": obj
+            },
+            success: function (data) {
+
+
+                i = [];
+                $(data).each(function (index, data) {
+
+                    
+                    i.push([data.MonitorTime, data.AVGValue]);
+
+
+
+
+
+                })
+                arr.push({
+
+                   
+                    : i.map(function (item) {
+                        return item[1];
+                    }),
+                })
+                xray = {
+                    data: i.map(function (item) {
+                        return item[0];
+                    })
+                }
+                
+                console.log(i);
+            }
+        })
+    }
 </script>

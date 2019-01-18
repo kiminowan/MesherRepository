@@ -7,7 +7,7 @@
 
 </head>
 <body style="height: 100%; margin: 0">
-    <div id="div1" style="height: 100%;width:10%;float:left;background-color:aqua;">
+    <div id="div1" style="height: 100%;width:10%;float:left;">
 
         <input id="h1" type="hidden" value="@Request.QueryString["Code"]" />
         
@@ -626,7 +626,7 @@
     //通过用户id 获取到该地区的国控点
     $(function () {
 
-        alert($("#h1").val());
+        
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetMonitorPoints?Code=' + $("#h1").val(),
 
@@ -649,7 +649,7 @@
     })
     //通过国控点id 站到距离最近的微站点
     function fun(obj) {
-        alert($('input:radio:checked').val());
+       
 
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetZh',
@@ -853,7 +853,7 @@
         })
     }
     function cxl(obj,n,va) {
-        alert(n);
+        
 
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
@@ -869,7 +869,7 @@
                 
                 i = [];
                     $(data).each(function (index, data) {
-                        console.log(data)
+                        
                         i.push([data.MonitorTime, data.AVGValue]);
                     })
                 arrPM2_5.push({
@@ -885,12 +885,12 @@
                     })
                 }
                 
-                console.log(i);
+                
             }
         })
     }
     function cxle(obj, n, va) {
-        alert(n);
+       
 
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
@@ -906,7 +906,7 @@
 
                 i = [];
                 $(data).each(function (index, data) {
-                    console.log(data)
+                  
                     i.push([data.MonitorTime, data.AVGValue]);
                 })
                 arrPM10.push({
@@ -922,13 +922,12 @@
                     })
                 }
 
-                console.log(i);
+                
             }
         })
     }
     function cxleS(obj, n, va) {
-        alert(n);
-
+        
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
             type: 'get',
@@ -943,7 +942,7 @@
 
                 i = [];
                 $(data).each(function (index, data) {
-                    console.log(data)
+                    
                     i.push([data.MonitorTime, data.AVGValue]);
                 })
                 arrSO2.push({
@@ -959,12 +958,12 @@
                     })
                 }
 
-                console.log(i);
+                
             }
         })
     }
     function cxlen(obj, n, va) {
-        alert(n);
+       
 
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
@@ -980,8 +979,8 @@
 
                 i = [];
                 $(data).each(function (index, data) {
-                    console.log(data)
-                    i.push([data.MonitorTime, data.AVGValue]);
+                   
+                    i.push([data.MonitorTime.toString(), data.AVGValue]);
                 })
                 arrNO2.push({
                     type: 'line',
@@ -996,12 +995,12 @@
                     })
                 }
 
-                console.log(i);
+               
             }
         })
     }
     function cxleo(obj, n, va) {
-        alert(n);
+   
 
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
@@ -1017,7 +1016,7 @@
 
                 i = [];
                 $(data).each(function (index, data) {
-                    console.log(data)
+                    
                     i.push([data.MonitorTime, data.AVGValue]);
                 })
                 arrO3.push({
@@ -1033,12 +1032,12 @@
                     })
                 }
 
-                console.log(i);
+                
             }
         })
     }
     function cxlec(obj, n, va) {
-        alert(n);
+       
 
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
@@ -1054,7 +1053,7 @@
 
                 i = [];
                 $(data).each(function (index, data) {
-                    console.log(data)
+                    
                     i.push([data.MonitorTime, data.AVGValue]);
                 })
                 arrCO.push({
@@ -1070,13 +1069,12 @@
                     })
                 }
 
-                console.log(i);
+                
             }
         })
     }
     function cxlea(obj, n, va) {
-        alert(n);
-
+    
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
             type: 'get',
@@ -1091,7 +1089,7 @@
 
                 i = [];
                 $(data).each(function (index, data) {
-                    console.log(data)
+                  
                     i.push([data.MonitorTime, data.AVGValue]);
                 })
                 arrAQI.push({
@@ -1107,7 +1105,7 @@
                     })
                 }
 
-                console.log(i);
+                
             }
         })
     }

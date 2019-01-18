@@ -9,7 +9,7 @@ namespace Mesher.IServices
     using Mesher.Entity;
     public interface IAnalyzeEchartsServices
     {
-        List<AnalyzeEcharts> GetAnalyzeEcharts(string StartTime, string EndTime);
+        List<AnalyzeEcharts> GetAnalyzeEcharts(string StartTime, string EndTime, int PollutantId);
         //获取监测点名称
         List<MonitorPoint> GetMonitorPoints();
         //单站点多污染物

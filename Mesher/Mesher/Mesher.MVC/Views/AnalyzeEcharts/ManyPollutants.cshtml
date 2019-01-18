@@ -23,9 +23,7 @@
         </table>
 
     </div>
-    <div id="div1" style="position:fixed;top:70px;left:400px;width:350px;height:25px;z-index:10000000">
-
-    </div>
+    <div id="div1" style="position:fixed;top:70px;left:400px;width:350px;height:25px;z-index:10000000"></div>
 
     <div style="margin-left:500px; height:80px;">
         <br />
@@ -35,9 +33,8 @@
 
     </div>
 
-    <div id="container" style="height: 90%;width:90%;float:left">
+    <div id="container" style="height: 90%;width:90%;float:left"></div>
 
-    </div>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
@@ -52,14 +49,18 @@
     <script src="~/Content/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 
     <script type="text/javascript">
-
+        var starttime = "2019-01-01";
+        var endtime = "2019-01-05";
+        var pollutantId = "11";
         $(function () {
             show();
             AnalyzeEchart();
             showPolluation();
         })
         function btnSearch() {
-            AnalyzeEchart();
+            starttime = $("input[name=StartTime]").val();
+            endtime = $("input[name=EndTime]").val(),
+            AnalyzeEchart(starttime,endtime);
         }
         //污染物
         function showPolluation() {
@@ -70,11 +71,16 @@
 
                     $(data).each(function (index, data) {
                         //alert(data.Id);
-                        $("#div1").append("<input style='width: 50px; height: 25px;' type='button' value=" + data.PollutantName + " />")
+                        $("#div1").append("<input style='width: 50px; height: 25px;' type='button' value=" + data.PollutantName + " onclick=\"btnGetId(" + data.Id + ")\"/>")
                     })
                 }
 
             })
+        }
+        function btnGetId(id) {
+            pollutantId = id;
+            AnalyzeEchart(pollutantId);
+            //alert(pollutantId);
         }
         var datas = [];
         //左侧边栏
@@ -98,8 +104,9 @@
             $.ajax({
                 url: 'http://localhost:8099/AnalyzeEcharts/GetAnalyzeEcharts',
                 data: {
-                    StartTime: $("input[name=StartTime]").val(),
-                    EndTime: $("input[name=EndTime]").val()
+                    StartTime: starttime,
+                    EndTime: endtime,
+                    PollutantId: pollutantId
                 },
                 type: 'get',
                 success: function (data) {

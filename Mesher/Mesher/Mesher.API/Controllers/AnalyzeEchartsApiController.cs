@@ -20,17 +20,9 @@ namespace Mesher.API.Controllers
 
         [HttpGet]
         [Route("GetAnalyzeEcharts")]
-        public List<AnalyzeEcharts> GetAnalyzeEcharts(string StartTime, string EndTime)
+        public List<AnalyzeEcharts> GetAnalyzeEcharts(string StartTime, string EndTime,int PollutantId)
         {
-            var result = analyzeEcharts.GetAnalyzeEcharts(StartTime,EndTime);
-            //if (!string.IsNullOrWhiteSpace(StartTime))
-            //{
-            //    result = result.Where(r => r.StartTime.ToString().Contains(StartTime)).ToList();
-            //}
-            //if (!string.IsNullOrWhiteSpace(EndTime))
-            //{
-            //    result = result.Where(r => r.EndTime.ToString().Contains(EndTime)).ToList();
-            //}
+            var result = analyzeEcharts.GetAnalyzeEcharts(StartTime, EndTime, PollutantId);
             return result;
         }
         //获取监测点名称

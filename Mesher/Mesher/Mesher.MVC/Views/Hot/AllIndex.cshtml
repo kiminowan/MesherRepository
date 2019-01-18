@@ -34,6 +34,7 @@
 
 </html >
 <script type="text/javascript">
+    var userids=@Request.QueryString["Code"];
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
     var app = {};
@@ -64,7 +65,8 @@
             type: 'get',
             data: {
                 polluantid: 17,
-                monitortime:2018
+                monitortime: 2018,
+                userid: userids
             },
             success: function (data) {
                 console.log(data);
@@ -147,7 +149,8 @@
             type: 'get',
             data: {
                 polluantid: $("select[name=Id]").val(),
-                monitortime: $("input[name=time]").val()
+                monitortime: $("input[name=time]").val(),
+                userid: userids
             },
             success: function (data) {
                 console.log(data);

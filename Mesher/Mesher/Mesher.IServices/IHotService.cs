@@ -22,7 +22,7 @@ namespace Mesher.IServices
         /// 获取所有站点
         /// </summary>
         /// <returns></returns>
-        List<MonitorPoint> GetMonitorPoints();
+        List<MonitorPoint> GetMonitorPoints(int userid);
 
         /// <summary>
         /// 获取所有污染物
@@ -36,6 +36,6 @@ namespace Mesher.IServices
         /// <param name="polluantid"></param>
         /// <param name="monitortime"></param>
         /// <returns></returns>
-        List<MonthData> GetMonthDatas(int polluantid, string monitortime);
+        List<MonthData> GetMonthDatas(int polluantid, string monitortime, int userid);
     }
 }

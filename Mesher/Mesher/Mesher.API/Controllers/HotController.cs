@@ -26,9 +26,9 @@ namespace Mesher.API.Controllers
         }
         [HttpGet]
         [Route("GetMonitorPoints")]
-        public List<MonitorPoint> GetMonitorPoints(string pointname)
+        public List<MonitorPoint> GetMonitorPoints(string pointname,int userid)
         {
-            List<MonitorPoint> monitorPoints= hotService.GetMonitorPoints();
+            List<MonitorPoint> monitorPoints= hotService.GetMonitorPoints(userid);
             if (!string.IsNullOrWhiteSpace(pointname))
             {
                 monitorPoints = monitorPoints.Where(r => r.PointName.Contains(pointname)).ToList();
@@ -46,9 +46,9 @@ namespace Mesher.API.Controllers
 
         [HttpGet]
         [Route("GetMonthDatas")]
-        public List<MonthData> GetMonthDatas(int polluantid, string monitortime)
+        public List<MonthData> GetMonthDatas(int polluantid, string monitortime,int userid)
         {
-            var result = hotService.GetMonthDatas(polluantid, monitortime);
+            var result = hotService.GetMonthDatas(polluantid, monitortime, userid);
             return result;
         }
     }

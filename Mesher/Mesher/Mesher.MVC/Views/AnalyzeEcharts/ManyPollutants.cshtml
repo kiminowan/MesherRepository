@@ -52,6 +52,8 @@
         var starttime = "2019-01-01";
         var endtime = "2019-01-05";
         var pollutantId = "11";
+        var Id = "138";
+        var RegionCode = "110000";
         $(function () {
             show();
             AnalyzeEchart();
@@ -65,7 +67,7 @@
         //污染物
         function showPolluation() {
             $.ajax({
-                url: "http://localhost:8099/AnalyzeEcharts/GetSingleSite",
+                url: "http://localhost:8099/AnalyzeEcharts/GetPollutant",
                 type: "get",
                 success: function (data) {
 
@@ -83,18 +85,23 @@
             //alert(pollutantId);
         }
         var datas = [];
+        function btnId(id) {
+            Id = id;
+            AnalyzeEchart(Id);
+        }
         //左侧边栏
         function show() {
             $.ajax({
                 url: 'http://localhost:8099/AnalyzeEcharts/GetMonitorPoints',
                 type: 'get',
                 data: {
-                    PointName: $("input[name=PointName]").val()
+                    PointName: $("input[name=PointName]").val(),
+                    RegionCode: RegionCode
                 },
                 success: function (data) {
                     $("#tab tr").not(":first").remove();
                     $(data).each(function (index, data) {
-                        $("#tab").append("<tr><td><input type=\"checkbox\" name=" + data.Id + " onclick=\"alert(" + data.Id + ")\" />" + data.PointName + "</td></tr>")
+                        $("#tab").append("<tr><td><input type=\"checkbox\" name=" + data.Id + " onclick=\"btnId(" + data.Id + ")\" />" + data.PointName + "</td></tr>")
                     })
                 }
             })
@@ -102,7 +109,7 @@
         //Echarts图
         function AnalyzeEchart() {
             $.ajax({
-                url: 'http://localhost:8099/AnalyzeEcharts/GetAnalyzeEcharts',
+                url: 'http://localhost:8099/AnalyzeEcharts/GetManyPollutants',
                 data: {
                     StartTime: starttime,
                     EndTime: endtime,

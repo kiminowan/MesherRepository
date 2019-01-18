@@ -17,20 +17,28 @@ namespace Mesher.API.Controllers
     public class AnalyzeEchartsApiController : ApiController
     {
         public IAnalyzeEchartsServices analyzeEcharts { get; set; }
-
+        //多站点
         [HttpGet]
-        [Route("GetAnalyzeEcharts")]
-        public List<AnalyzeEcharts> GetAnalyzeEcharts(string StartTime, string EndTime,int PollutantId)
+        [Route("GetManyPollutants")]
+        public List<AnalyzeEcharts> GetManyPollutants(string StartTime, string EndTime,int PollutantId)
         {
-            var result = analyzeEcharts.GetAnalyzeEcharts(StartTime, EndTime, PollutantId);
+            var result = analyzeEcharts.GetManyPollutants(StartTime, EndTime, PollutantId);
+            return result;
+        }
+        //单站点
+        [HttpGet]
+        [Route("GetSingleSite")]
+        public List<AnalyzeEcharts> GetSingleSite(string StartTime, string EndTime, int PollutantId,int Id,string RegionCode)
+        {
+            var result = analyzeEcharts.GetSingleSite(StartTime, EndTime, PollutantId, Id,RegionCode);
             return result;
         }
         //获取监测点名称
         [HttpGet]
         [Route("GetMonitorPoints")]
-        public List<MonitorPoint> GetMonitorPoints( string PointName)
+        public List<MonitorPoint> GetMonitorPoints( string PointName, string RegionCode)
         {
-            var result = analyzeEcharts.GetMonitorPoints();
+            var result = analyzeEcharts.GetMonitorPoints(RegionCode);
             if (!string.IsNullOrWhiteSpace(PointName))
             {
                 result = result.Where(r => r.PointName.Contains(PointName)).ToList();
@@ -40,10 +48,10 @@ namespace Mesher.API.Controllers
         }
         //单站点多污染物
         [HttpGet]
-        [Route("GetSingleSite")]
-        public List<AnalyzeEcharts> GetSingleSite()
+        [Route("GetPollutant")]
+        public List<AnalyzeEcharts> GetPollutant()
         {
-            var result = analyzeEcharts.GetSingleSite();
+            var result = analyzeEcharts.GetPollutant();
             return result;
             
         }

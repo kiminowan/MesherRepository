@@ -208,6 +208,7 @@
     <Content Include="Views\AnalyzeEcharts\ManyPollutants.cshtml" />
     <Content Include="Views\Hot\AllIndex.cshtml" />
     <Content Include="Views\Hot\Index.cshtml" />
+    <Content Include="Views\MonitorPoint\Rangking.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

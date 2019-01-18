@@ -56,6 +56,11 @@ namespace Mesher.MVC.Controllers
 
             return View();
         }
+        public ActionResult Rangking()
+        {
+
+            return View();
+        }
     }
 
     

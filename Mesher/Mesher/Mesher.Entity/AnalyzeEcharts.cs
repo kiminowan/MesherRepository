@@ -22,5 +22,9 @@ namespace Mesher.Entity
         public DateTime StartTime { get; set; }
         //开始时间
         public DateTime EndTime { get; set; }
+        //污染物类别
+        public int PollutantId { get; set; }
+        //监测点ID
+        public int MonitorpointId { get; set; }
     }
 }

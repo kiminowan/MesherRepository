@@ -104,12 +104,13 @@ namespace Mesher.Services
             }
         }
 
-        public List<PoitInfo> GetPoitInfos()
+        public List<PoitInfo> GetPoitInfos(int userid)
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
             {
-                string sql = @"select a.pointname,c.pointtypename,b.regionname,a.updatedate from monitorpoint a inner join region b on a.regioncode=b.region_code inner join pointtype c on a.pointtype=c.id";
-                var result = conn.Query<PoitInfo>(sql, null);
+                string sql = "select a.pointname,c.pointtypename,b.regionname,a.updatedate from monitorpoint a inner join region b on a.regioncode=b.region_code inner join pointtype c on a.pointtype=c.id inner join \"User\" d on b.id=d.regionid where d.id=:userid";
+                var condtion = new { Userid = userid };
+                var result = conn.Query<PoitInfo>(sql, condtion);
                 return result.ToList();
             }
         }

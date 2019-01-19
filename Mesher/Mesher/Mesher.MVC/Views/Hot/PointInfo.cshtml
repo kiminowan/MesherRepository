@@ -36,15 +36,19 @@
 </body>
 </html>
 <script type="text/javascript">
+    var userids = @Request.QueryString["Code"];
     $(function () {
         show();
     })
-
+    
     function show() {
         $.ajax({
             url: "http://localhost:8099/GetPoitInfos",
             type: "get",
-            data: { pointname: $("input[name=PointName]").val() },
+            data: {
+                pointname: $("input[name=PointName]").val(),
+                userid: userids
+            },
             success: function (data) {
                 $("#tab tr").not(":first").remove();
                 $(data).each(function (index, data) {

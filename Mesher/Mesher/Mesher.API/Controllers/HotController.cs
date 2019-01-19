@@ -54,9 +54,9 @@ namespace Mesher.API.Controllers
 
         [HttpGet]
         [Route("GetPoitInfos")]
-        public List<PoitInfo> GetPoitInfos(string pointname)
+        public List<PoitInfo> GetPoitInfos(string pointname, int userid)
         {
-            var result = hotService.GetPoitInfos();
+            var result = hotService.GetPoitInfos(userid);
             if (!string.IsNullOrWhiteSpace(pointname))
             {
                 result = result.Where(r => r.PointName.Contains(pointname)).ToList();

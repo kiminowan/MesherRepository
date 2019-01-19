@@ -38,6 +38,6 @@ namespace Mesher.IServices
         /// <returns></returns>
         List<MonthData> GetMonthDatas(int polluantid, string monitortime, int userid);
 
-        List<PoitInfo> GetPoitInfos();
+        List<PoitInfo> GetPoitInfos(int userid);
     }
 }

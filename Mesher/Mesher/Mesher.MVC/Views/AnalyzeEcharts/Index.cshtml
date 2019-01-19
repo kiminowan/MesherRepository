@@ -42,8 +42,9 @@
             var dom3 = document.getElementById("container3");
             var myChart3 = echarts.init(dom3);
             var app = {};
-            option = null;
-            var data = [["2000-06-05", 116], ["2000-06-05", 129], ["2000-06-05", 135]]
+        option = null;
+        var x_ray = ["2000-06-05", "2000-06-06", "2000-06-07"];
+            var data = [["2000-06-05", 116], ["2000-06-07", 135]]
             myChart.setOption(option = {
                 title: {
                     text: '6参数AQI'
@@ -52,9 +53,7 @@
                     trigger: 'axis'
                 },
                 xAxis: {
-                    data: data.map(function (item) {
-                        return item[0];
-                    })
+                    data: x_ray
                 },
                 yAxis: {
                     splitLine: {
@@ -101,9 +100,7 @@
                 series: {
                     name: 'AQI',
                     type: 'line',
-                    data: data.map(function (item) {
-                        return item[1];
-                    }),
+                    data: data,
                     markLine: {
                         silent: true,
                         data: [{
@@ -299,11 +296,9 @@
                     }
                 },
 
-                dataZoom: [{
-                    startValue: '2014-06-01'
-                }, {
-                    type: 'inside'
-                }],
+                dataZoom: {
+                        type: 'slider',
+                },
                 visualMap: {
                     top: 10,
                     right: 10,

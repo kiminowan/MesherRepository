@@ -87,7 +87,7 @@ namespace Mesher.Services
                     }
                     minuteShowDatas.Add(minuteShowData);
                 }
-                return minuteShowDatas;
+                return minuteShowDatas.OrderByDescending(m=>m.AQI).ToList();
             }
         }
         /// <summary>

@@ -29,7 +29,7 @@
         </select>
         <input type="button" value="搜索" onclick="btnSearch()" />
     </div>选
-    <div id="container" style="height: 100%; width:200%"></div>
+    <div id="container" style="height: 100%; width:100%"></div>
 </body>
 
 </html >
@@ -46,9 +46,6 @@
     ];
 
     var Days = [];
-    for (var i = 1; i < 100; i++) {
-        Days.push(i);
-    } 
    
 
     var datas = [];
@@ -70,55 +67,62 @@
             },
             success: function (data) {
                 console.log(data);
+                var count = data.length;
+
+                var month = new Date(data[0].MonitorTime.toString()).getMonth();
+                var i = 1;
                 $(data).each(function (index, data) {
-                                    
                     var date = new Date(data.MonitorTime.toString())
-                    console.log(date.getMonth())                  
-                    option = {
-                        tooltip: {
-                            position: 'top'
-                        },
-                        animation: true,
-                        grid: {
-                            height: '50%',
-                            y: '10%'
-                        },
-                        xAxis: {
-                            type: 'category',
-                            data: Days,
-                            splitArea: {
-                                show: true
-                            }
-                        },
-                        yAxis: {
-                            type: 'category',
-                            data: month,
-                            splitArea: {
-                                show: true
-                            }
-                        },
-                        visualMap: {
-                            min: 0,
-                            max: 300,
-                            calculable: true,
-                            orient: 'horizontal',
-                            left: 'center',
-                            bottom: '15%'
-                        },
-                        series: [{
-                            name: 'Punch Card',
-                            type: 'heatmap',
-                            data: datas,
-                            itemStyle: {
-                                emphasis: {
-                                    shadowBlur: 10,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
-                            }
-                        }]
-                    };;
-                    datas.push([index%100, date.getMonth(), data.AVGValue])
+                    console.log(date.getMonth())
+                    if (date.getMonth() == month) {
+                        Days.push(i);
+                        i++;
+                    }
+                    datas.push([index % Days.length, date.getMonth(), data.AVGValue])
                 })
+                option = {
+                    tooltip: {
+                        position: 'top'
+                    },
+                    animation: true,
+                    grid: {
+                        height: '50%',
+                        y: '10%'
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: Days,
+                        splitArea: {
+                            show: true
+                        }
+                    },
+                    yAxis: {
+                        type: 'category',
+                        data: month,
+                        splitArea: {
+                            show: true
+                        }
+                    },
+                    visualMap: {
+                        min: 0,
+                        max: 300,
+                        calculable: true,
+                        orient: 'horizontal',
+                        left: 'center',
+                        bottom: '15%'
+                    },
+                    series: [{
+                        name: 'Punch Card',
+                        type: 'heatmap',
+                        data: datas,
+                        itemStyle: {
+                            emphasis: {
+                                shadowBlur: 10,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }]
+                };
                 myChart.setOption(option,true);
                 console.log(datas)
             }
@@ -153,10 +157,18 @@
                 userid: userids
             },
             success: function (data) {
+                datas = [];
+                Days = [];
                 console.log(data);
+                var month = new Date(data[0].MonitorTime.toString()).getMonth();
+                var i =1;
                 $(data).each(function (index, data) {
 
                     var date = new Date(data.MonitorTime.toString())
+                    if (date.getMonth() == month) {
+                        Days.push(i);
+                        i++;
+                    }
                     console.log(date.getMonth())
                     //datas.push([Math.ceil((date - new Date(date.getFullYear().toString()) + 1000 * 60 * 60 * 9) / (24 * 60 * 60 * 1000)) - 1, date.getHours(), data.AVGValue])
                     option = {
@@ -202,7 +214,7 @@
                             }
                         }]
                     };;
-                    datas.push([index % 100, date.getMonth(), data.AVGValue])
+                    datas.push([index % Days.length, date.getMonth(), data.AVGValue])
 
 
 

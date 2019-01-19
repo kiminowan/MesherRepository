@@ -1,0 +1,63 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="~/Script/jquery-3.1.1.js"></script>
+    <style>
+        #tab {
+            
+        }
+        #tab tr td {
+            border: 1px solid;
+            width:200px;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+    <div><span>站点名称：</span><input type="text" name="PointName" /><input type="button" value="搜索" onclick="btnSearch()" /></div>
+    <div>
+        <table id="tab" cellpadding="0" cellspacing="0">
+            <tr>
+                <td style="background-color:aqua">序号</td>
+                <td style="background-color:aqua">站点名称</td>
+                <td style="background-color:aqua">所属区域</td>
+                <td style="background-color:aqua">设备类型</td>
+                <td style="background-color:aqua">站点安装时间</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(function () {
+        show();
+    })
+
+    function show() {
+        $.ajax({
+            url: "http://localhost:8099/GetPoitInfos",
+            type: "get",
+            data: { pointname: $("input[name=PointName]").val() },
+            success: function (data) {
+                $("#tab tr").not(":first").remove();
+                $(data).each(function (index, data) {
+                    $("#tab").append("<tr><td>" + index + "</td><td>" + data.PointName + "</td><td>" + data.RegionName + "</td><td>" + data.PointTypeName + "</td><td>" + data.UpdateDate + "</td></tr>")
+                })
+            }
+        })
+    }
+
+
+    function btnSearch() {
+        show();
+    }
+
+
+</script>

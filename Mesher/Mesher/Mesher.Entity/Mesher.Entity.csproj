@@ -54,6 +54,7 @@
     <Compile Include="MonthData.cs" />
     <Compile Include="NationalControl.cs" />
     <Compile Include="PointType.cs" />
+    <Compile Include="PoitInfo.cs" />
     <Compile Include="Pollutant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealData.cs" />

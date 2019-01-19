@@ -25,10 +25,10 @@
     <div>
         <span>年份：</span><input name="time" class="Wdate" type="text" onClick="WdatePicker({el:this,dateFmt:'yyyy'})">
         <select name="Id">
-            <option value="0">--请择--</option>
+            <option value="0">--请选择--</option>
         </select>
         <input type="button" value="搜索" onclick="btnSearch()" />
-    </div>选
+    </div>
     <div id="container" style="height: 100%; width:100%"></div>
 </body>
 
@@ -41,7 +41,7 @@
     var option = null;
     app.title = '笛卡尔坐标系上的热力图';
 
-    var month = [1, 2, 3, 4, 5, 6, 7,
+    var months = [1, 2, 3, 4, 5, 6, 7,
         8, 9, 10, 11, 12
     ];
 
@@ -70,13 +70,11 @@
                 var count = data.length;
 
                 var month = new Date(data[0].MonitorTime.toString()).getMonth();
-                var i = 1;
                 $(data).each(function (index, data) {
                     var date = new Date(data.MonitorTime.toString())
                     console.log(date.getMonth())
                     if (date.getMonth() == month) {
-                        Days.push(i);
-                        i++;
+                        Days.push(data.PointName);
                     }
                     datas.push([index % Days.length, date.getMonth(), data.AVGValue])
                 })
@@ -98,7 +96,7 @@
                     },
                     yAxis: {
                         type: 'category',
-                        data: month,
+                        data: months,
                         splitArea: {
                             show: true
                         }

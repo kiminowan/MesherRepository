@@ -18,5 +18,10 @@ namespace Mesher.MVC.Controllers
         {
             return View();
         }
+
+        public ActionResult PointInfo()
+        {
+            return View();
+        }
     }
 }

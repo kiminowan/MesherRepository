@@ -16,10 +16,12 @@
     <title>大气环境网格化监管系统 </title>
     <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css" />
     <link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
-    <script src="~/Content/jquery-1.10.2.js"></script>
-    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
-    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!--下拉框样式--->
+    <link href="/Content/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+
+    <script src="/Script/jquery-3.1.1.js"></script>
+    <!--下拉框js脚本--->
+    <script src="/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
     <style>
         html, body, #container {
             height: 100%;
@@ -50,10 +52,6 @@
             list-style: none;
             width: 100px;
         }
-
-            ul li {
-                width: 100px;
-            }
 
         #tab td {
             width: 100px;
@@ -99,7 +97,7 @@
                 <li><a href="/Hot/Index?Code=@Request.QueryString["data"]">单站点年度污染分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">超国控点预警数据统计</a></li>
                 <li><a href="/AnalyzeEcharts/Index">站点数据排名统计</a></li>
-                <li><a href="/AnalyzeEcharts/Index">站点基本信息查询</a></li>
+                <li><a href="/Hot/PointInfo?Code=@Request.QueryString["data"]">站点基本信息查询</a></li>
             </ul>
         </span>
 
@@ -135,7 +133,6 @@
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=	7a7783a78617cf97207a84f671999cee"></script>
     @*左上角控件引用*@
     <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
-    <script src="~/Script/jquery-3.1.1.js"></script>
     <script type="text/javascript">
         //登录用户Id
         var ids =@Request.QueryString["data"];
@@ -177,10 +174,10 @@
                     $("#tan").append("<tr><td>" + (index + 1) + "</td><td>" + data.PointName + "</td><td>" + data.AQI.toFixed(0) + "</td></tr>")
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td>" + data.PointName + "</td><td>" + data.AQI.toFixed(0) + "</td></tr>")
                     //console.log(data);
-                    if (data.PointType == 9) {
                         //添加点标记信息窗体
-                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
-                        isCustom: true,  //使用自定义窗体
+                    var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
+                    isCustom: true; //使用自定义窗体
+                    if (data.PointType == 9) {
                             marker = new AMap.Marker({
                                 icon: "http://localhost:8099/Content/dian.ico",
                                 position: [data.Longitude, data.Latitude],
@@ -188,9 +185,6 @@
                             });
                     }
                     else if (data.PointType == 10) {
-                        //添加点标记信息窗体
-                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
-                        isCustom: true,  //使用自定义窗体
                             marker = new AMap.Marker({
                                 icon: "http://localhost:8099/Content/6.ico",
                                 position: [data.Longitude, data.Latitude],
@@ -199,9 +193,6 @@
 
                     }
                     else if (data.PointType == 11) {
-                        //添加点标记信息窗体
-                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
-                        isCustom: true,  //使用自定义窗体
                             marker = new AMap.Marker({
                                 icon: "http://localhost:8099/Content/o3.ico",
                                 position: [data.Longitude, data.Latitude],
@@ -210,9 +201,6 @@
 
                     }
                     else if (data.PointType == 12) {
-                        //添加点标记信息窗体
-                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
-                        isCustom: true,  //使用自定义窗体
                             marker = new AMap.Marker({
                                 icon: "http://localhost:8099/Content/kl.ico",
                                 position: [data.Longitude, data.Latitude],
@@ -221,9 +209,6 @@
 
                     }
                     else if (data.PointType == 13) {
-                        //添加点标记信息窗体
-                        var infoWindow = new AMap.InfoWindow({ offset: new AMap.Pixel(10, -50) });
-                        isCustom: true,  //使用自定义窗体
                             marker = new AMap.Marker({
                                 icon: "http://localhost:8099/Content/xx.ico",
                                 position: [data.Longitude, data.Latitude],
@@ -256,6 +241,8 @@
             showPolluation();
             GetRegion();
            // Warning();
+            map.on('mapmove', mapMove);
+            map.on('click', showInfoClick);
         })
 
 
@@ -299,26 +286,48 @@
         function btnPo(id, name) {
             $("#pollution").text(name);
             $("#tab tr").not(":first").remove();
+            
             switch (id) {
-                case 11: $(dataList).each(function (index, data) {
+                case 11: dataList.sort(function (a, b) {
+                    return b.AQI - a.AQI
+                });
+                    $(dataList).each(function (index, data) {
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.AQI.toFixed(0) + "</td></tr>")
                 }); break;
-                case 12: $(dataList).each(function (index, data) {
+                case 12: dataList.sort(function (a, b) {
+                    return b.PM2 - a.PM2
+                });
+                    $(dataList).each(function (index, data) {
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.PM2.toFixed(0) + "</td></tr>")
                 }); break;
-                case 13: $(dataList).each(function (index, data) {
+                case 13: dataList.sort(function (a, b) {
+                    return b.CO - a.CO
+                });
+                    $(dataList).each(function (index, data) {
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.CO.toFixed(4) + "</td></tr>")
                 }); break;
-                case 14: $(dataList).each(function (index, data) {
+                case 14: dataList.sort(function (a, b) {
+                    return b.NO2 - a.NO2
+                });
+                    $(dataList).each(function (index, data) {
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.NO2.toFixed(0) + "</td></tr>")
                 }); break;
-                case 15: $(dataList).each(function (index, data) {
+                case 15: dataList.sort(function (a, b) {
+                    return b.O3 - a.O3
+                });
+                    $(dataList).each(function (index, data) {
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.O3.toFixed(0) + "</td></tr>")
                 }); break;
-                case 16: $(dataList).each(function (index, data) {
+                case 16: dataList.sort(function (a, b) {
+                    return b.SO2 - a.SO2
+                });
+                    $(dataList).each(function (index, data) {
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.SO2.toFixed(0) + "</td></tr>")
                 }); break;
-                case 17: $(dataList).each(function (index, data) {
+                case 17: dataList.sort(function (a, b) {
+                    return b.PM10 - a.PM10
+                });
+                    $(dataList).each(function (index, data) {
                     $("#tab").append("<tr><td>" + (index + 1) + "</td><td><a onclick='bntLj()'>" + data.PointName + "</a></td><td>" + data.PM10.toFixed(0) + "</td></tr>")
                 }); break;
             }

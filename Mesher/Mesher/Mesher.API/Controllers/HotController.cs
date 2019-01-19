@@ -51,5 +51,18 @@ namespace Mesher.API.Controllers
             var result = hotService.GetMonthDatas(polluantid, monitortime, userid);
             return result;
         }
+
+        [HttpGet]
+        [Route("GetPoitInfos")]
+        public List<PoitInfo> GetPoitInfos(string pointname, int userid)
+        {
+            var result = hotService.GetPoitInfos(userid);
+            if (!string.IsNullOrWhiteSpace(pointname))
+            {
+                result = result.Where(r => r.PointName.Contains(pointname)).ToList();
+            }
+            
+            return result;
+        }
     }
 }

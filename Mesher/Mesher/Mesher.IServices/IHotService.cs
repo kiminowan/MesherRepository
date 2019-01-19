@@ -37,5 +37,7 @@ namespace Mesher.IServices
         /// <param name="monitortime"></param>
         /// <returns></returns>
         List<MonthData> GetMonthDatas(int polluantid, string monitortime, int userid);
+
+        List<PoitInfo> GetPoitInfos(int userid);
     }
 }

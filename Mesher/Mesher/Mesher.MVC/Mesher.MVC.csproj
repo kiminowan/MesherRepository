@@ -211,6 +211,7 @@
     <Content Include="Views\Hot\AllIndex.cshtml" />
     <Content Include="Views\Hot\Index.cshtml" />
     <Content Include="Views\MonitorPoint\Rangking.cshtml" />
+    <Content Include="Views\Hot\PointInfo.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -76,21 +76,21 @@ namespace Mesher.Services
             {
                 if (polluantid == 0)
                 {
-                    string sql = "select a.avgvalue,a.monitortime from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id inner join region e on d.regioncode=e.region_code inner join \"User\" f on e.id=f.regionid  where  f.id=:userid and monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
+                    string sql = "select a.avgvalue,a.monitortime,d.pointname from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id inner join region e on d.regioncode=e.region_code inner join \"User\" f on e.id=f.regionid  where  f.id=:userid and monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
                     var condition = new { Monitortime = monitortime,Userid=userid };
                     var collectList = conn.Query<MonthData>(sql, condition);
                     return collectList.ToList();
                 }
                 else if (monitortime == null)
                 {
-                    string sql = "select a.avgvalue,a.monitortime from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id inner join region e on d.regioncode=e.region_code inner join \"User\" f on e.id=f.regionid  where c.id=:polluantid and f.id=:userid ";
+                    string sql = "select a.avgvalue,a.monitortime,d.pointname from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id inner join region e on d.regioncode=e.region_code inner join \"User\" f on e.id=f.regionid  where c.id=:polluantid and f.id=:userid ";
                     var condition = new { Polluantid = polluantid,Userid=userid };
                     var collectList = conn.Query<MonthData>(sql, condition);
                     return collectList.ToList();
                 }
                 else
                 {
-                    string sql = "select a.avgvalue,a.monitortime from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id inner join region e on d.regioncode=e.region_code inner join \"User\" f on e.id=f.regionid  where c.id=:polluantid and f.id=:userid and monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
+                    string sql = "select a.avgvalue,a.monitortime,d.pointname from monthdata a inner join monitorpointpollutan b on a.monitor_pollutionid=b.id inner join pollutant c on b.pollutantid=c.id inner join monitorpoint d on b.pointid=d.id inner join region e on d.regioncode=e.region_code inner join \"User\" f on e.id=f.regionid  where c.id=:polluantid and f.id=:userid and monitortime>to_date(:monitortime,'yyyy') and monitortime<to_date(:monitortime+1,'yyyy') order by a.monitortime";
                     var condition = new { Polluantid = polluantid, Monitortime = monitortime,Userid=userid };
                     var collectList = conn.Query<MonthData>(sql, condition);
                     return collectList.ToList();

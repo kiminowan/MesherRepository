@@ -96,7 +96,7 @@
                 <li><a href="/Hot/AllIndex?Code=@Request.QueryString["data"]">多站点年度污染分析</a></li>
                 <li><a href="/Hot/Index?Code=@Request.QueryString["data"]">单站点年度污染分析</a></li>
                 <li><a href="/AnalyzeEcharts/Index">超国控点预警数据统计</a></li>
-                <li><a href="/AnalyzeEcharts/Index">站点数据排名统计</a></li>
+                <li><a href="Rangking?Code=@Request.QueryString["data"]">站点数据排名统计</a></li>
                 <li><a href="/Hot/PointInfo?Code=@Request.QueryString["data"]">站点基本信息查询</a></li>
             </ul>
         </span>
@@ -109,13 +109,11 @@
             <iframe scrolling="no" src="https://tianqiapi.com/api.php?style=ta&skin=peach" frameborder="0" style="color:white" width="260" height="24" allowtransparency="true"></iframe>
         </span>
         <h4 style="background-color:aquamarine;">天气预报</h4>
-        <ul>
-            <li>高温:</li>
-            <li>低温:</li>
-            <li>风向:</li>
-            <li>天气:</li>
-        </ul>
-        <ul id="tal"></ul>
+        <table id="weather">
+            <tr>
+                <td></td>
+            </tr>
+        </table>
         <h5 style="text-align:center;">预警排名</h5>
         <table id="tan">
             <tr>
@@ -227,7 +225,11 @@
                         infoWindow.setContent(e.target.content);
                         infoWindow.open(map, e.target.getPosition());
                     }
-
+                    function hiddenInfoWindow() {
+                        infoWindow.close()
+                    }
+                    map.on('mapmove', hiddenInfoWindow);
+                    map.on('click', hiddenInfoWindow);
                     map.setFitView();
                 })
             }
@@ -241,8 +243,6 @@
             showPolluation();
             GetRegion();
            // Warning();
-            map.on('mapmove', mapMove);
-            map.on('click', showInfoClick);
         })
 
 
@@ -350,9 +350,9 @@
                                 url: "http://t.weather.sojson.com/api/weather/city/" + data,
                                 type: "get",
                                 success: function (data) {
-
+                                    console.log(data)
                                     $(data).each(function (index, data) {
-                                        $("#tal").append("<li>" + data.data.forecast[0].high + "</li><li>" + data.data.forecast[0].low + "</li><li>" + data.data.forecast[0].fx + "</li><li>" + data.data.forecast[0].type + "</li>")
+                                        $("#weather").append("<tr><td>" + data.cityInfo.city+"</td><td>" + data.data.forecast[0].high + "</li><li>" + data.data.forecast[0].low + "</li><li>" + data.data.forecast[0].fx + "</li><li>" + data.data.forecast[0].type + "</li>")
 
                                     })
                                 }

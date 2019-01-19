@@ -67,5 +67,11 @@ namespace Mesher.API.Controllers
         {
             return cxlMonthAnalizeServers.GetZh(cor);
         }
+        [Route("GetSum")]
+        [HttpGet]
+        public List<NationalControl> GetSum(int Code, string time, string pullname)
+        {
+            return cxlMonthAnalizeServers.GetSum(Code,time,pullname);
+        }
     }
 }

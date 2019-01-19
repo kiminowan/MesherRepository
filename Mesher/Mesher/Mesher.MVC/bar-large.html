@@ -1,25 +1,10 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html style="height: 100%">
 <head>
     <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
-    <div>
-        <input id="h1" type="hidden" value="@Request.QueryString["Code"]" />
-        <input id="Button1" type="button" value="PM2.5" onclick="fun('PM2.5')" />
-        <input id="Button1" type="button" value="PM10" onclick="fun('PM10')" />
-        <input id="Button1" type="button" value="CO" onclick="fun('CO')" />
-        <input id="Button1" type="button" value="NO2" onclick="fun('NO')" />
-        <input id="Button1" type="button" value="SO2" onclick="fun('SO2')" />
-        <input id="Button1" type="button" value="AQI" onclick="fun('AQI')" />
-        <input id="Button1" type="button" value="O3" onclick="fun('O3')" />
-    </div>
     <div id="container" style="height: 100%"></div>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
@@ -38,15 +23,15 @@
     </script>
 </body>
 </html>
-<script src="~/Script/jquery-3.1.1.js"></script>
+<script src="Script/jquery-3.1.1.js"></script>
 <script>
     var i = [];
     var j = [];
-    $(function () {
+    $(function () {    
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetSum',
             data: {
-                "Code": $("#h1").val(),
+                "Code": 11,
                 "time": "2019 - 1 - 13",
                 "pullname": "PM2.5",
             },
@@ -54,11 +39,11 @@
             async: false,
             success: function (data) {
                 $(data).each(function (index, data) {
-                    i.push(data.PointName);
-                    j.push(data.AVGValue);
-                })
+                    i.push(data.MonitorTime);
+                    j.push(data.AVGValue);  
+                })  
                 //控制线条的条数
-                var dataCount = data.length;
+                var dataCount = data.length;               
                 var option = {
                     title: {
                         text: echarts.format.addCommas(dataCount) + ' Data',
@@ -117,61 +102,9 @@
                 };
                 if (option && typeof option === "object") {
                     myChart.setOption(option, true);
-                }
+                }              
             }
         })
-        
-    })
-    
-    function fun(obj) {
-        i = [];
-        j = [];
-        $.ajax({
-            url: 'http://localhost:8099/caoxiaole/GetSum',
-            data: {
-                "Code": $("#h1").val(),
-                "time": "2019 - 1 - 13",
-                "pullname": obj,
-            },
-            type: 'get',
-            async: false,
-            success: function (data) {
-                $(data).each(function (index, data) {
-                    i.push(data.PointName);
-                    j.push(data.AVGValue);
-                })
-                //控制线条的条数
-                var dataCount = data.length;
-                var option = {
-                    xAxis: {
-                        type: 'value',
-                        data: j,
-                        silent: false,
-                        splitLine: {
-                            show: false
-                        },
-                        splitArea: {
-                            show: false
-                        }
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: i,
-                        splitArea: {
-                            show: false
-                        }
-                    },
-                    series: [{
-                        type: 'bar',
-                        data: j,
-                        // Set `large` for large data amount
-                        large: true
-                    }]
-                };
-                if (option && typeof option === "object") {
-                    myChart.setOption(option, true);
-                }
-            }
-        })
-    }
+
+    })  
 </script>

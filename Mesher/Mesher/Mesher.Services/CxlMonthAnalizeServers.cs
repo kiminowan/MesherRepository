@@ -196,12 +196,6 @@ namespace Mesher.Services
                 return list;
             }
         }
-
-
-
-
-
-
         /// <summary>
         /// 大气污染物分析
         /// </summary>
@@ -251,7 +245,6 @@ namespace Mesher.Services
 
             }
         }
-
         /// <summary>
         /// 获取当前行政区的国控点
         /// </summary>
@@ -280,6 +273,22 @@ namespace Mesher.Services
             using (OracleConnection conn = DapperHelper.GetConnString())
             {
                 string sql = string.Format("select * from MonitorPoint where NearlyStation='"+cor+"'");
+                var collectList = conn.Query<NationalControl>(sql, null);
+                return collectList.ToList();
+            }
+        }
+
+        public List<NationalControl> GetSum(int Code,string time,string pullname)
+        {
+            using (OracleConnection conn = DapperHelper.GetConnString())
+            {
+                //传回的是用户id
+                string sql1 = string.Format("select a.region_code from Region a,\"User\" b where a.id=b.RegionId and b.id='" + Code + "'");
+                string collectList1 = conn.Query<string>(sql1, null).FirstOrDefault();
+                //获取到用户当前的行政区的编号
+                string code1 = collectList1;
+
+                string sql = string.Format("SELECT A.AVGVALUE,C.POINTNAME,A.MONITORTIME FROM DAYDATA A, MonitorPointPollutan B,MonitorPoint C, Pollutant D WHERE A.Monitor_PollutionId = B.ID AND B.POINTID = C.ID AND B.POLLUTANTID = D.ID AND A.MONITORTIME = to_date('"+ time + "', 'yyyy-MM-dd') AND C.Regioncode = '"+ code1 + "' AND D.POLLUTANTNAME = '"+ pullname + "' order by C.POINTNAME");
                 var collectList = conn.Query<NationalControl>(sql, null);
                 return collectList.ToList();
             }

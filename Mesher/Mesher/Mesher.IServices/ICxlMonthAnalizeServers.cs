@@ -13,5 +13,6 @@ namespace Mesher.IServices
         List<MonitorPoint> GetMonitorPoints(int Code);
         List<NationalControl> GetNationalControls(int Code, string pollname, string name);
         List<NationalControl> GetZh(int cor);
+        List<NationalControl> GetSum(int Code, string time, string pullname);
     }
 }

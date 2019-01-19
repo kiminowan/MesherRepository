@@ -4,21 +4,22 @@
 }
 
 <!DOCTYPE html>
-
+<script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 <html style="height: 100%">
 <head>
     <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
-    <div>
+    <div style="padding:50px;margin-left:600px;" >
         <input id="h1" type="hidden" value="@Request.QueryString["Code"]" />
-        <input id="Button1" type="button" value="PM2.5" onclick="fun('PM2.5')" />
-        <input id="Button1" type="button" value="PM10" onclick="fun('PM10')" />
-        <input id="Button1" type="button" value="CO" onclick="fun('CO')" />
-        <input id="Button1" type="button" value="NO2" onclick="fun('NO')" />
-        <input id="Button1" type="button" value="SO2" onclick="fun('SO2')" />
-        <input id="Button1" type="button" value="AQI" onclick="fun('AQI')" />
-        <input id="Button1" type="button" value="O3" onclick="fun('O3')" />
+        <input class="Wdate" type="text" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" id="time" value="2019-01-13"  style="width:180px;height:50px">
+        <input id="Button1" type="button" value="PM2.5" onclick="fun('PM2.5')" style="width:80px;height:50px"/>
+        <input id="Button1" type="button" value="PM10" onclick="fun('PM10')"  style="width:80px;height:50px"/>
+        <input id="Button1" type="button" value="CO" onclick="fun('CO')"  style="width:80px;height:50px"/>
+        <input id="Button1" type="button" value="NO2" onclick="fun('NO')"  style="width:80px;height:50px"/>
+        <input id="Button1" type="button" value="SO2" onclick="fun('SO2')"  style="width:80px;height:50px"/>
+        <input id="Button1" type="button" value="AQI" onclick="fun('AQI')"  style="width:80px;height:50px"/>
+        <input id="Button1" type="button" value="O3" onclick="fun('O3')"  style="width:80px;height:50px"/>
     </div>
     <div id="container" style="height: 100%"></div>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
@@ -47,7 +48,7 @@
             url: 'http://localhost:8099/caoxiaole/GetSum',
             data: {
                 "Code": $("#h1").val(),
-                "time": "2019 - 1 - 13",
+                "time": $("#time").val().toString(),
                 "pullname": "PM2.5",
             },
             type: 'get',
@@ -130,7 +131,7 @@
             url: 'http://localhost:8099/caoxiaole/GetSum',
             data: {
                 "Code": $("#h1").val(),
-                "time": "2019 - 1 - 13",
+                "time": $("#time").val().toString(),
                 "pullname": obj,
             },
             type: 'get',

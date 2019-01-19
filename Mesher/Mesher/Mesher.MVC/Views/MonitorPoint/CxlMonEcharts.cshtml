@@ -632,6 +632,49 @@
     })
     //通过国控点id 站到距离最近的微站点
     function fun(obj) {
+        //AQI
+        $.ajax({
+            url: 'http://localhost:8099/caoxiaole/GetZh',
+            type: 'get',
+            async: false,
+            data: {
+                "cor": $(obj).attr("cxl"),
+            },
+            success: function (data) {
+                var flag = arrAQI;
+                arrAQI = [];
+                $(flag).each(function (index, data) {
+                    arrAQI.push({
+                        type: 'line',
+                        name: obj,
+                        data: []
+                    })
+                })
+                myChart6.setOption({
+                    xAxis: xray,
+                    series: arrAQI
+                });
+                arrAQI = [];
+                $(data).each(function (index, data) {
+                    //微站名称          国控点id            国控点名称
+                    GetAQI(data.PointName, $(obj).attr("cxl"), $(obj).val())
+
+                    //$("#div1").append("<a value='" + data.PointName + "' href='javascript:;' onclick=cxl('" + data.PointName + "','" + $(obj).attr("cxl")+"')>'" + data.PointName + "'</a>");
+                })
+                if (arrAQI.length <= 0) {
+                    $(flag).each(function (index, data) {
+                        arrAQI.push({
+                            type: 'line',
+                            data: []
+                        })
+                    })
+                }
+                myChart6.setOption({
+                    xAxis: xray,
+                    series: arrAQI
+                });
+            }
+        })
         //PM2.5
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetZh',
@@ -640,8 +683,19 @@
                 "cor": $(obj).attr("cxl"),
             },
             success: function (data) {
-                console.log(data)
                 var flag = arrPM2_5;
+                arrPM2_5 = [];
+                $(flag).each(function (index, data) {
+                    arrPM2_5.push({
+                        type: 'line',
+                        name: obj,
+                        data: []
+                    })
+                })
+                myChart.setOption({
+                    xAxis: xray,
+                    series: arrPM2_5
+                });
                 arrPM2_5 = [];
                 $(data).each(function (index, data) {
                     //微站名称          国控点id            国控点名称
@@ -653,7 +707,6 @@
                     $(flag).each(function (index, data) {
                         arrPM2_5.push({
                             type: 'line',
-                            name: obj,
                             data: []
                         })
                     })
@@ -674,6 +727,18 @@
             success: function (data) {
                 var flag = arrPM10;
                 arrPM10 = [];
+                $(flag).each(function (index, data) {
+                    arrPM10.push({
+                        type: 'line',
+                        name: obj,
+                        data: []
+                    })
+                })
+                myChart1.setOption({
+                    xAxis: xray,
+                    series: arrPM10
+                });
+                arrPM10 = [];
                 $(data).each(function (index, data) {
                     //微站名称          国控点id            国控点名称
                     GetPM10(data.PointName, $(obj).attr("cxl"), $(obj).val())
@@ -684,7 +749,6 @@
                     $(flag).each(function (index, data) {
                         arrPM10.push({
                             type: 'line',
-                            name: obj,
                             data: []
                         })
                     })
@@ -705,22 +769,34 @@
             success: function (data) {
                 var flag = arrSO2;
                 arrSO2 = [];
+                $(flag).each(function (index, data) {
+                    arrSO2.push({
+                        type: 'line',
+                        name: obj,
+                        data: []
+                    })
+                })
+                myChart2.setOption({
+                    xAxis: xray,
+                    series: arrSO2
+                });
+                arrSO2 = [];
                 $(data).each(function (index, data) {
                     //微站名称          国控点id            国控点名称
-                    GetSO2(data.PointName, $(obj).attr("cxl"), $(obj).val())
+                    GetSO2(data.PointName, $(obj).attr("cxl"), $(obj).val(), flag)
 
                     //$("#div1").append("<a value='" + data.PointName + "' href='javascript:;' onclick=cxl('" + data.PointName + "','" + $(obj).attr("cxl")+"')>'" + data.PointName + "'</a>");
                 })
-                console.log(arrSO2);
-                if (arrSO2.length <= 0) {
+                
+                if (data.length <= 0) {
                     $(flag).each(function (index, data) {
                         arrSO2.push({
                             type: 'line',
-                            name: obj,
                             data: []
                         })
                     })
                 }
+                
                 myChart2.setOption({
                     xAxis: xray,
                     series: arrSO2
@@ -737,6 +813,18 @@
             success: function (data) {
                 var flag = arrNO2;
                 arrNO2 = [];
+                $(flag).each(function (index, data) {
+                    arrNO2.push({
+                        type: 'line',
+                        name: obj,
+                        data: []
+                    })
+                })
+                myChart3.setOption({
+                    xAxis: xray,
+                    series: arrNO2
+                });
+                arrNO2 = [];
                 $(data).each(function (index, data) {
                     //微站名称          国控点id            国控点名称
                     GetNO2(data.PointName, $(obj).attr("cxl"), $(obj).val())
@@ -747,7 +835,6 @@
                     $(flag).each(function (index, data) {
                         arrNO2.push({
                             type: 'line',
-                            name: obj,
                             data: []
                         })
                     })
@@ -769,6 +856,18 @@
             success: function (data) {
                 var flag = arrO3
                 arrO3 = [];
+                $(flag).each(function (index, data) {
+                    arrO3.push({
+                        type: 'line',
+                        name: obj,
+                        data: []
+                    })
+                })
+                myChart4.setOption({
+                    xAxis: xray,
+                    series: arrO3
+                });
+                arrO3 = [];
                 $(data).each(function (index, data) {
                     //微站名称          国控点id            国控点名称
                     GetO3(data.PointName, $(obj).attr("cxl"), $(obj).val())
@@ -779,7 +878,6 @@
                     $(flag).each(function (index, data) {
                         arrO3.push({
                             type: 'line',
-                            name: obj,
                             data: []
                         })
                     })
@@ -800,6 +898,18 @@
             success: function (data) {
                 var flag = arrCO;
                 arrCO = [];
+                $(flag).each(function (index, data) {
+                    arrCO.push({
+                        type: 'line',
+                        name: obj,
+                        data: []
+                    })
+                })
+                myChart5.setOption({
+                    xAxis: xray,
+                    series: arrCO
+                });
+                arrCO = [];
                 $(data).each(function (index, data) {
                     //微站名称          国控点id            国控点名称
                     GetCO(data.PointName, $(obj).attr("cxl"), $(obj).val())
@@ -810,7 +920,6 @@
                     $(flag).each(function (index, data) {
                         arrCO.push({
                             type: 'line',
-                            name: obj,
                             data: []
                         })
                     })
@@ -821,37 +930,7 @@
                 });
             }
         })
-        //AQI
-        $.ajax({
-            url: 'http://localhost:8099/caoxiaole/GetZh',
-            type: 'get',
-            data: {
-                "cor": $(obj).attr("cxl"),
-            },
-            success: function (data) {
-                var flag = arrAQI;
-                arrAQI = [];
-                $(data).each(function (index, data) {
-                    //微站名称          国控点id            国控点名称
-                    GetAQI(data.PointName, $(obj).attr("cxl"), $(obj).val())
-
-                    //$("#div1").append("<a value='" + data.PointName + "' href='javascript:;' onclick=cxl('" + data.PointName + "','" + $(obj).attr("cxl")+"')>'" + data.PointName + "'</a>");
-                })
-                if (arrAQI.length <= 0) {
-                    $(flag).each(function (index, data) {
-                        arrAQI.push({
-                            type: 'line',
-                            name: obj,
-                            data: []
-                        })
-                    })
-                }
-                myChart6.setOption({
-                    xAxis: xray,
-                    series: arrAQI
-                });
-            }
-        })
+        
     }
     function GetPM2_5(obj, n, va) {
         $.ajax({
@@ -877,11 +956,6 @@
                         return item[1];
                     }),
                 })
-                xray = {
-                    data: i.map(function (item) {
-                        return item[0];
-                    })
-                }
             }
         })
     }
@@ -908,15 +982,10 @@
                         return item[1];
                     }),
                 })
-                xray = {
-                    data: i.map(function (item) {
-                        return item[0];
-                    })
-                }
             }
         })
     }
-    function GetSO2(obj, n, va) {
+    function GetSO2(obj, n, va, flag) {
         $.ajax({
             url: 'http://localhost:8099/caoxiaole/GetNationalControls',
             type: 'get',
@@ -932,16 +1001,20 @@
                 $(data).each(function (index, data) {
                     i.push([data.MonitorTime, data.AVGValue]);
                 })
-                arrSO2.push({
-                    type: 'line',
-                    name: obj,
-                    data: i.map(function (item) {
-                        return item[1];
-                    }),
-                })
-                xray = {
-                    data: i.map(function (item) {
-                        return item[0];
+                if (data.length <= 0) {
+                    $(flag).each(function (index, data) {
+                        arrSO2.push({
+                            type: 'line',
+                            data: []    
+                        })
+                    })
+                } else {
+                    arrSO2.push({
+                        type: 'line',
+                        name: obj,
+                        data: i.map(function (item) {
+                            return item[1];
+                        }),
                     })
                 }
             }
@@ -970,11 +1043,6 @@
                         return item[1];
                     }),
                 })
-                xray = {
-                    data: i.map(function (item) {
-                        return item[0];
-                    })
-                }
             }
         })
     }
@@ -1001,11 +1069,6 @@
                         return item[1];
                     }),
                 })
-                xray = {
-                    data: i.map(function (item) {
-                        return item[0];
-                    })
-                }
             }
         })
     }
@@ -1032,11 +1095,6 @@
                         return item[1];
                     }),
                 })
-                xray = {
-                    data: i.map(function (item) {
-                        return item[0];
-                    })
-                }
             }
         })
     }

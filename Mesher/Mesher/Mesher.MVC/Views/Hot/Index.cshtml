@@ -8,6 +8,8 @@
 <head>
     <meta name="viewport" />
     <title></title>
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Script/jquery-3.1.1.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
@@ -19,8 +21,29 @@
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
     <script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </head>
 <body style="height:1200px">
+    <div style="width:100%;height:50px;background-color:black;z-index:10000000">
+        <span style="color:white;font-size:35px;">大气环境网格化监管系统</span>
+        <span style="color:white;margin-left:600px;"><a href="/MonitorPoint/Index?data=@Request.QueryString["Code"]" style="color:white">实时监测</a></span>
+        <span style="margin-left:15px;display: inline-block;position: relative;">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                统计分析<span class="caret"></span>
+            </button>
+            <ul style="z-index:100000001" class="dropdown-menu">
+                <li><a href="/AnalyzeEcharts/ManyPollutants?Code=@Request.QueryString["Code"]">多站点污染物分析</a></li>
+                <li><a href="/AnalyzeEcharts/SingleSite?Code=@Request.QueryString["Code"]">单站点污染物分析</a></li>
+                <li><a href="/MonitorPoint/CxlMon?Code=@Request.QueryString["Code"]">月度数据分析</a></li>
+                <li><a href="/MonitorPoint/CxlMonEcharts?Code=@Request.QueryString["Code"]">大气常规站污染分析</a></li>
+                <li><a href="/Hot/AllIndex?Code=@Request.QueryString["Code"]">多站点年度污染分析</a></li>
+                <li><a href="/Hot/Index?Code=@Request.QueryString["Code"]">单站点年度污染分析</a></li>
+                <li><a href="Rangking?Code=@Request.QueryString["Code"]">站点数据排名统计</a></li>
+                <li><a href="/Hot/PointInfo?Code=@Request.QueryString["Code"]">站点基本信息查询</a></li>
+            </ul>
+        </span>
+
+    </div>
     <div style="position:fixed;left:0;width:200px;height:100%;background-color:red;z-index:10000000">
         <input type="text" name="PointName" /><input type="button" value="搜索" onclick="btnSearch()" />
 

@@ -47,6 +47,7 @@ namespace Mesher.Entity
         //纬度
         public decimal Latitude { get; set; }
         public int PointType { get; set; }
+        public int PointTypeName { get; set; }
     }
     public class MinuteShowData
     {
@@ -63,5 +64,6 @@ namespace Mesher.Entity
         //纬度
         public decimal Latitude { get; set; }
         public int PointType { get; set; }
+        public int PointTypeName { get; set; }
     }
 }

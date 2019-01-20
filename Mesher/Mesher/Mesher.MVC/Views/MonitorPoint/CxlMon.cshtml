@@ -1,32 +1,56 @@
 ﻿<!DOCTYPE html>
 
-<script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 
 <html style="height: 100%">
 
 <head>
     <meta charset="utf-8">
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Content/jquery-1.10.2.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 
 </head>
 <body style="height: 100%; margin: 0">
-    <input class="Wdate" type="text" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM'})" id="time" value="2019-01"><input id="Button1" type="button" value="查询" onclick="fun()"/>
-    <input id="hi" type="hidden" value="@Request.QueryString["Code"]"/>
+    <div style="width:100%;height:50px;background-color:black;z-index:10000000">
+        <span style="color:white;font-size:35px;">大气环境网格化监管系统</span>
+        <span style="color:white;margin-left:600px;"><a href="/MonitorPoint/Index?data=@Request.QueryString["Code"]" style="color:white">实时监测</a></span>
+        <span style="margin-left:15px;display: inline-block;position: relative;">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                统计分析<span class="caret"></span>
+            </button>
+            <ul style="z-index:100000001" class="dropdown-menu">
+                <li><a href="/AnalyzeEcharts/ManyPollutants?Code=@Request.QueryString["Code"]">多站点污染物分析</a></li>
+                <li><a href="/AnalyzeEcharts/SingleSite?Code=@Request.QueryString["Code"]">单站点污染物分析</a></li>
+                <li><a href="/MonitorPoint/CxlMon?Code=@Request.QueryString["Code"]">月度数据分析</a></li>
+                <li><a href="/MonitorPoint/CxlMonEcharts?Code=@Request.QueryString["Code"]">大气常规站污染分析</a></li>
+                <li><a href="/Hot/AllIndex?Code=@Request.QueryString["Code"]">多站点年度污染分析</a></li>
+                <li><a href="/Hot/Index?Code=@Request.QueryString["Code"]">单站点年度污染分析</a></li>
+                <li><a href="Rangking?Code=@Request.QueryString["Code"]">站点数据排名统计</a></li>
+                <li><a href="/Hot/PointInfo?Code=@Request.QueryString["Code"]">站点基本信息查询</a></li>
+            </ul>
+        </span>
+
+    </div>
+    <input class="Wdate" type="text" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM'})" id="time" value="2019-01"><input id="Button1" type="button" value="查询" onclick="fun()" />
+    <input id="hi" type="hidden" value="@Request.QueryString["Code"]" />
     <link href="~/BootstrapSouce/css/bootstrap.css" rel="stylesheet" />
-    <table id="t1" class="table table-hover" border="1" align="center" >
+    <table id="t1" class="table table-hover" border="1" align="center">
         <tr>
             <td></td>
             <td>城市名称</td>
-            <td colspan="3" align="center" >PM10</td>
+            <td colspan="3" align="center">PM10</td>
 
-            <td colspan="3" align="center" >PM2.5</td>
+            <td colspan="3" align="center">PM2.5</td>
 
-            <td colspan="3" align="center" >SO2</td>
+            <td colspan="3" align="center">SO2</td>
 
-            <td colspan="3" align="center" >CO</td>
+            <td colspan="3" align="center">CO</td>
 
-            <td colspan="3" align="center" >O3</td>
+            <td colspan="3" align="center">O3</td>
 
-            <td colspan="3" align="center" >NO2</td>
+            <td colspan="3" align="center">NO2</td>
 
         </tr>
         <tr>
@@ -59,19 +83,19 @@
 <script>
     $(function () {
         var i = [];
-        
+
         $.ajax({
             type: 'get',
             url: 'http://localhost:8099/caoxiaole/GetMonthAnalizeDatas',
             data: {
-                
+
                 "Code": $("#hi").val(),
                 "time": $("#time").val()
             },
-           
+
             success: function (recc) {
                 console.log(recc);
-                
+
                 //$(recc).each(function (index, recc) {
                 //    i.push([recc.AVGValue, recc.PointName]);
 
@@ -79,7 +103,7 @@
                 //})
                 //console.log(i);
                 $(recc).each(function (index, recc) {
-                    $("#t1").append("<tr><td>" + (index+1) + "</td><td>" + recc.PointName + "</td><td>" + (recc.PM10AVGValue).toFixed(2) + "</td><td>" + (recc.TPM10AVGValue).toFixed(2) + "</td><td>" + (recc.HPM10AVGValue).toFixed(2) + "</td><td>" + (recc.PM2AVGValue).toFixed(2) + "</td><td>" + (recc.TPM2AVGValue).toFixed(2) + "</td><td>" + (recc.HPM2AVGValue).toFixed(2) + "</td><td>" + (recc.SO2AVGValue).toFixed(2) + "</td><td>" + (recc.TSO2AVGValue).toFixed(2) + "</td><td>" + (recc.HSO2AVGValue).toFixed(2) + "</td><td>" + (recc.COAVGValue).toFixed(2) + "</td><td>" + (recc.TCOAVGValue).toFixed(2) + "</td><td>" + (recc.HCOAVGValue).toFixed(2) + "</td><td>" + (recc.O3AVGValue).toFixed(2) + "</td><td>" + (recc.TO3AVGValue).toFixed(2) + "</td><td>" + (recc.HO3AVGValue).toFixed(2) + "</td><td>" + (recc.N02AVGValue).toFixed(2) + "</td><td>" + (recc.TN02AVGValue).toFixed(2) + "</td><td>" + (recc.HN02AVGValue).toFixed(2) + "</td></tr>");
+                    $("#t1").append("<tr><td>" + (index + 1) + "</td><td>" + recc.PointName + "</td><td>" + (recc.PM10AVGValue).toFixed(2) + "</td><td>" + (recc.TPM10AVGValue).toFixed(2) + "</td><td>" + (recc.HPM10AVGValue).toFixed(2) + "</td><td>" + (recc.PM2AVGValue).toFixed(2) + "</td><td>" + (recc.TPM2AVGValue).toFixed(2) + "</td><td>" + (recc.HPM2AVGValue).toFixed(2) + "</td><td>" + (recc.SO2AVGValue).toFixed(2) + "</td><td>" + (recc.TSO2AVGValue).toFixed(2) + "</td><td>" + (recc.HSO2AVGValue).toFixed(2) + "</td><td>" + (recc.COAVGValue).toFixed(2) + "</td><td>" + (recc.TCOAVGValue).toFixed(2) + "</td><td>" + (recc.HCOAVGValue).toFixed(2) + "</td><td>" + (recc.O3AVGValue).toFixed(2) + "</td><td>" + (recc.TO3AVGValue).toFixed(2) + "</td><td>" + (recc.HO3AVGValue).toFixed(2) + "</td><td>" + (recc.N02AVGValue).toFixed(2) + "</td><td>" + (recc.TN02AVGValue).toFixed(2) + "</td><td>" + (recc.HN02AVGValue).toFixed(2) + "</td></tr>");
 
                 })
 
@@ -93,7 +117,7 @@
     })
     function fun() {
 
-        
+
         $.ajax({
             type: 'get',
             url: 'http://localhost:8099/caoxiaole/GetMonthAnalizeDatas',

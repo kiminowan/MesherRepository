@@ -203,7 +203,7 @@ namespace Mesher.Services
         /// <param name="name">距离最近的微站点的名称</param>
         /// <param name="pollname">污染物的名称</param>
         /// <returns></returns>
-        public List<NationalControl> GetNationalControls(int Code, string pollname,string name)
+        public List<NationalControl> GetNationalControls(int Code, string pollname, string name)
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
             {
@@ -214,7 +214,7 @@ namespace Mesher.Services
 
 
                 //获取到大气污染物的数据    获取到 离国控点最近的微站点 pm2.5的数据
-                string sql = string.Format("select a.avgvalue,a.MonitorTime,c.pointname,d.pollutantname from hourdata a,MonitorPointPollutan b,MonitorPoint c,Pollutant d where a.monitor_pollutionid=b.id and b.pointid=c.id and b.pollutantid=d.id and c.NearlyStation='" + Code + "' and d.pollutantname='" + pollname + "' AND a.monitortime<to_date('" + time1 + "','yyyy-MM-dd hh24:mi:ss') and  a.monitortime>to_date('" + tim2 + "','yyyy-MM-dd hh24:mi:ss') and c.pointname='"+name+ "' order by a.monitortime");
+                string sql = string.Format("select a.avgvalue,a.MonitorTime,c.pointname,d.pollutantname from hourdata a,MonitorPointPollutan b,MonitorPoint c,Pollutant d where a.monitor_pollutionid=b.id and b.pointid=c.id and b.pollutantid=d.id and c.NearlyStation='" + Code + "' and d.pollutantname='" + pollname + "' AND a.monitortime<to_date('" + time1 + "','yyyy-MM-dd hh24:mi:ss') and  a.monitortime>to_date('" + tim2 + "','yyyy-MM-dd hh24:mi:ss') and c.pointname='" + name + "' order by a.monitortime");
                 //接收
                 var collectList = conn.Query<NationalControl>(sql, null);
                 //按照站名进行排序，并获得所有的站名
@@ -272,13 +272,13 @@ namespace Mesher.Services
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
             {
-                string sql = string.Format("select * from MonitorPoint where NearlyStation='"+cor+"'");
+                string sql = string.Format("select * from MonitorPoint where NearlyStation='" + cor + "'");
                 var collectList = conn.Query<NationalControl>(sql, null);
                 return collectList.ToList();
             }
         }
 
-        public List<NationalControl> GetSum(int Code,string time,string pullname)
+        public List<NationalControl> GetSum(int Code, DateTime time, string pullname)
         {
             using (OracleConnection conn = DapperHelper.GetConnString())
             {
@@ -288,8 +288,8 @@ namespace Mesher.Services
                 //获取到用户当前的行政区的编号
                 string code1 = collectList1;
 
-                string sql = string.Format("SELECT A.AVGVALUE,C.POINTNAME,A.MONITORTIME FROM DAYDATA A, MonitorPointPollutan B,MonitorPoint C, Pollutant D WHERE A.Monitor_PollutionId = B.ID AND B.POINTID = C.ID AND B.POLLUTANTID = D.ID AND A.MONITORTIME = to_date('"+ time + "', 'yyyy-MM-dd') AND C.Regioncode = '"+ code1 + "' AND D.POLLUTANTNAME = '"+ pullname + "' order by C.POINTNAME");
-                var collectList = conn.Query<NationalControl>(sql, null);
+                string sql = string.Format("SELECT A.AVGVALUE,C.POINTNAME,A.MONITORTIME FROM DAYDATA A, MonitorPointPollutan B,MonitorPoint C, Pollutant D WHERE A.Monitor_PollutionId = B.ID AND B.POINTID = C.ID AND B.POLLUTANTID = D.ID AND A.MONITORTIME >= :time and A.MONITORTIME < :time1 AND C.Regioncode = '" + code1 + "' AND D.POLLUTANTNAME = '" + pullname + "' order by A.AVGVALUE");
+                var collectList = conn.Query<NationalControl>(sql, new { time, time1 = time.AddDays(1) });
                 return collectList.ToList();
             }
         }

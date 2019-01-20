@@ -44,7 +44,7 @@ namespace MinuteDataService
             timer1.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed);
             timer1.Enabled = true;
             timer2 = new System.Timers.Timer();
-            timer2.Interval = 60000; // 600000*6;
+            timer2.Interval = 60000;  // 600000*6;
             timer2.Elapsed += new System.Timers.ElapsedEventHandler(timer2_Elapsed);
             timer2.Enabled = true;
             timer3 = new System.Timers.Timer();
@@ -259,7 +259,7 @@ namespace MinuteDataService
                 List<MonitorPointPollutan> monitorPoints = GetMonitorPointPollutansby9();
                 foreach (Region region in regions)
                 {
-                    String querys = "pubtime=2019-01-11+14%3A00%3A00&station_code=" + region.station_code;
+                    String querys = "pubtime="+ DateTime.Now.ToShortDateString()+ "+"+ (DateTime.Now.Hour-1).ToString() + "%3A00%3A00&station_code=" + region.station_code;
                     String bodys = "";
                     String url = host + path;
                     HttpWebRequest httpRequest = null;

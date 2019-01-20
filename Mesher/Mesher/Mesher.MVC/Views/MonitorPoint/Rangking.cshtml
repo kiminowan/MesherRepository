@@ -4,22 +4,46 @@
 }
 
 <!DOCTYPE html>
-<script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 <html style="height: 100%">
 <head>
     <meta charset="utf-8">
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Script/jquery-3.1.1.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/My97DatePicker/My97DatePicker/WdatePicker.js"></script>
 </head>
 <body style="height: 100%; margin: 0">
-    <div style="padding:50px;margin-left:600px;" >
+    <div style="width:100%;height:50px;background-color:black;z-index:10000000">
+        <span style="color:white;font-size:35px;">大气环境网格化监管系统</span>
+        <span style="color:white;margin-left:600px;"><a href="/MonitorPoint/Index?data=@Request.QueryString["Code"]" style="color:white">实时监测</a></span>
+        <span style="margin-left:15px;display: inline-block;position: relative;">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                统计分析<span class="caret"></span>
+            </button>
+            <ul style="z-index:100000001" class="dropdown-menu">
+                <li><a href="/AnalyzeEcharts/ManyPollutants?Code=@Request.QueryString["Code"]">多站点污染物分析</a></li>
+                <li><a href="/AnalyzeEcharts/SingleSite?Code=@Request.QueryString["Code"]">单站点污染物分析</a></li>
+                <li><a href="/MonitorPoint/CxlMon?Code=@Request.QueryString["Code"]">月度数据分析</a></li>
+                <li><a href="/MonitorPoint/CxlMonEcharts?Code=@Request.QueryString["Code"]">大气常规站污染分析</a></li>
+                <li><a href="/Hot/AllIndex?Code=@Request.QueryString["Code"]">多站点年度污染分析</a></li>
+                <li><a href="/Hot/Index?Code=@Request.QueryString["Code"]">单站点年度污染分析</a></li>
+                <li><a href="Rangking?Code=@Request.QueryString["Code"]">站点数据排名统计</a></li>
+                <li><a href="/Hot/PointInfo?Code=@Request.QueryString["Code"]">站点基本信息查询</a></li>
+            </ul>
+        </span>
+
+    </div>
+    <div style="padding:50px;margin-left:600px;">
         <input id="h1" type="hidden" value="@Request.QueryString["Code"]" />
-        <input class="Wdate" type="text" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" id="time" value="2019-01-13"  style="width:180px;height:50px">
-        <input id="Button1" type="button" value="PM2.5" onclick="fun('PM2.5')" style="width:80px;height:50px"/>
-        <input id="Button1" type="button" value="PM10" onclick="fun('PM10')"  style="width:80px;height:50px"/>
-        <input id="Button1" type="button" value="CO" onclick="fun('CO')"  style="width:80px;height:50px"/>
-        <input id="Button1" type="button" value="NO2" onclick="fun('NO')"  style="width:80px;height:50px"/>
-        <input id="Button1" type="button" value="SO2" onclick="fun('SO2')"  style="width:80px;height:50px"/>
-        <input id="Button1" type="button" value="AQI" onclick="fun('AQI')"  style="width:80px;height:50px"/>
-        <input id="Button1" type="button" value="O3" onclick="fun('O3')"  style="width:80px;height:50px"/>
+        <input class="Wdate" type="text" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd'})" id="time" value="2019-01-13" style="width:180px;height:50px">
+        <input id="Button1" type="button" value="PM2.5" onclick="fun('PM2.5')" style="width:80px;height:50px" />
+        <input id="Button1" type="button" value="PM10" onclick="fun('PM10')" style="width:80px;height:50px" />
+        <input id="Button1" type="button" value="CO" onclick="fun('CO')" style="width:80px;height:50px" />
+        <input id="Button1" type="button" value="NO2" onclick="fun('NO')" style="width:80px;height:50px" />
+        <input id="Button1" type="button" value="SO2" onclick="fun('SO2')" style="width:80px;height:50px" />
+        <input id="Button1" type="button" value="AQI" onclick="fun('AQI')" style="width:80px;height:50px" />
+        <input id="Button1" type="button" value="O3" onclick="fun('O3')" style="width:80px;height:50px" />
     </div>
     <div id="container" style="height: 100%"></div>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
@@ -39,7 +63,6 @@
     </script>
 </body>
 </html>
-<script src="~/Script/jquery-3.1.1.js"></script>
 <script>
     var i = [];
     var j = [];
@@ -48,7 +71,7 @@
             url: 'http://localhost:8099/caoxiaole/GetSum',
             data: {
                 "Code": $("#h1").val(),
-                "time": $("#time").val().toString(),
+                "time": $("#time").val(),
                 "pullname": "PM2.5",
             },
             type: 'get',
@@ -121,9 +144,9 @@
                 }
             }
         })
-        
+
     })
-    
+
     function fun(obj) {
         i = [];
         j = [];
@@ -144,6 +167,13 @@
                 //控制线条的条数
                 var dataCount = data.length;
                 var option = {
+                    dataZoom: [{
+                        yAxisIndex: 0,
+                        type: 'inside'
+                    }, {
+                        yAxisIndex: 0,
+                        type: 'slider'
+                    }],
                     xAxis: {
                         type: 'value',
                         data: j,
